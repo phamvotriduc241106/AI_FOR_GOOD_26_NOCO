@@ -53,6 +53,8 @@ def test_building_is_complete_and_in_buffalo(b):
     assert b.sources["footprint_sqft"].source == "osm"
     if "COMMON WALL" in b.use_class:
         assert "common walls" in b.sources["perimeter_ft"].note
+    if b.sources["floors"].source == "assumed":  # never inflate: assumed floors stay at 1
+        assert b.floors == 1 and b.sources["floors"].confidence <= 0.3
 
 
 @pytest.mark.parametrize("b", BUILDINGS, ids=lambda b: b.address)

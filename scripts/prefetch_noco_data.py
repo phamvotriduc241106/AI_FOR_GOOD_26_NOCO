@@ -8,6 +8,7 @@ through geo._http_get_json (disk cache, >= 1 s between Overpass calls), so re-ru
 fetches what is missing; --offline uses the cache alone.
 
 Run:  python scripts/prefetch_noco_data.py [--target 300] [--geocode 30] [--offline]
+      [--osm-floors-only]
 """
 
 from __future__ import annotations
@@ -31,6 +32,23 @@ NEIGHBORHOOD_CAP = 0.4  # no neighbourhood takes more than 40% of the set
 EXCLUDED_CLASSES = {"PARKING GARAGE"}  # unheated: wall insulation saves nothing
 COMMON_WALL = "COMMON WALL"
 COMMON_WALL_WEIGHT = 0.5  # shared walls are not exposed: rank these lower
+# Most buildings outside Downtown have no building:levels in OSM. Assuming one floor
+# understates wall area (never inflates savings); these rank after buildings with known floors.
+ASSUMED_FLOORS = 1
+FLOOR_SOURCES = {
+    "building:levels": FieldSource(source="osm", confidence=0.9, note="OSM building:levels tag"),
+    "height": FieldSource(
+        source="osm", confidence=0.4, note="OSM height tag, estimated at 12 ft per floor"
+    ),
+    "roll class": FieldSource(
+        source="assessor", confidence=0.7, note="Buffalo assessment roll class: one story"
+    ),
+    "assumed": FieldSource(
+        source="assumed",
+        confidence=0.3,
+        note="No OSM building:levels or height; assumed 1 floor (conservative)",
+    ),
+}
 OUT = geo.DEMO_BUILDINGS_PATH
 
 # Only the building's own facts and location. Owner and mailing columns are never requested.
@@ -135,7 +153,17 @@ def _osm_street_line(parcel: dict, tags: dict) -> str | None:
     return osm_street if osm_street.split()[1:2] == street[:1] else None
 
 
-def join(parcels: list[dict], ways: dict[int, dict]) -> list[dict]:
+def _floors(tags: dict, use_class: str, assume: bool) -> tuple[int | None, str | None]:
+    """Floors and where they came from: OSM tags, the roll class, or a conservative 1."""
+    floors, origin = geo._parse_floors(tags)
+    if floors is None and use_class.startswith("ONE STORY"):
+        return 1, "roll class"
+    if floors is None and assume:
+        return ASSUMED_FLOORS, "assumed"
+    return floors, origin
+
+
+def join(parcels: list[dict], ways: dict[int, dict], assume_floors: bool = True) -> list[dict]:
     """One candidate per OSM way that contains at least one commercial parcel point."""
     cell = 0.002  # ~200 m grid index so each parcel only tests nearby ways
     index: dict[tuple[int, int], list[dict]] = {}
@@ -157,10 +185,10 @@ def join(parcels: list[dict], ways: dict[int, dict]) -> list[dict]:
     for way_id, found in inside.items():
         way = ways[way_id]
         area, perimeter = geo._ring_area_perimeter_ft(way["ring"])
-        floors, floors_from = geo._parse_floors(way["tags"])
+        parcel = max(found, key=lambda p: p["story_height_ft"] or 0)
+        floors, floors_from = _floors(way["tags"], parcel["use_class"], assume_floors)
         if floors is None or area < MIN_FOOTPRINT_SQFT:
             continue
-        parcel = max(found, key=lambda p: p["story_height_ft"] or 0)
         street_line = _osm_street_line(parcel, way["tags"])
         if len(found) > 1:
             join_conf, join_note = 0.6, f"{len(found)} assessment parcels inside this footprint"
@@ -190,9 +218,13 @@ def join(parcels: list[dict], ways: dict[int, dict]) -> list[dict]:
 
 
 def select(candidates: list[dict], target: int) -> list[dict]:
-    """Highest wall-area score first, but no neighbourhood above NEIGHBORHOOD_CAP of target."""
+    """Known floors before assumed ones, then highest wall-area score, with no neighbourhood
+    above NEIGHBORHOOD_CAP of the target."""
     cap = max(1, math.ceil(target * NEIGHBORHOOD_CAP))
-    ranked = sorted(candidates, key=lambda c: (-c["score"], c["way"]["id"]))
+    ranked = sorted(
+        candidates,
+        key=lambda c: (c["floors_from"] == "assumed", -c["score"], c["way"]["id"]),
+    )
     chosen, overflow, per_hood = [], [], Counter()
     for c in ranked:
         hood = c["parcel"]["neighborhood"] or "Unknown"
@@ -241,11 +273,7 @@ def to_facts(c: dict, geocoded: tuple[float, float, str] | None) -> BuildingFact
         "footprint_geojson": osm,
         "footprint_sqft": osm,
         "perimeter_ft": osm.model_copy(update={"note": osm.note + wall_note}),
-        "floors": FieldSource(
-            source="osm",
-            confidence=0.9 if c["floors_from"] == "building:levels" else 0.4,
-            note=f"OSM {c['floors_from']} tag",
-        ),
+        "floors": FLOOR_SOURCES[c["floors_from"]],
         "use_class": FieldSource(source="assessor", confidence=0.7, note=roll + wall_note),
         "join": FieldSource(source="assessor", confidence=c["join"][0], note=c["join"][1]),
     }
@@ -300,10 +328,10 @@ def write(buildings: list[BuildingFacts], path: Path) -> None:
 def summary(buildings: list[BuildingFacts]) -> str:
     hoods = Counter(b.neighborhood or "Unknown" for b in buildings)
     joins = Counter(b.sources["join"].confidence for b in buildings)
-    levels = sum(b.sources["floors"].note.endswith("building:levels tag") for b in buildings)
+    floors = Counter(b.sources["floors"].source for b in buildings)
     return (
         f"{len(buildings)} buildings | neighbourhoods {dict(hoods.most_common())} | "
-        f"join {dict(sorted(joins.items()))} | floors from building:levels {levels}"
+        f"join {dict(sorted(joins.items()))} | floors by source {dict(floors)}"
     )
 
 
@@ -315,6 +343,11 @@ def main(argv: list[str] | None = None) -> int:
         "--tiles", type=int, default=GRID * GRID, help="tiles to fetch, Downtown first"
     )
     parser.add_argument("--offline", action="store_true", help="cached responses only")
+    parser.add_argument(
+        "--osm-floors-only",
+        action="store_true",
+        help="skip buildings without OSM floors instead of assuming 1 floor",
+    )
     parser.add_argument("--out", type=Path, default=OUT)
     args = parser.parse_args(argv)
     if args.offline:
@@ -333,7 +366,8 @@ def main(argv: list[str] | None = None) -> int:
             failed += 1
             print(f"tile {k}/{args.tiles} {tile}: skipped ({exc}); re-run to fill it")
             continue
-        buildings = build(join(parcels, ways), args.target, args.geocode)
+        candidates = join(parcels, ways, assume_floors=not args.osm_floors_only)
+        buildings = build(candidates, args.target, args.geocode)
         write(buildings, args.out)
         print(f"tile {k}/{args.tiles}: {len(ways)} ways -> {summary(buildings)}")
 

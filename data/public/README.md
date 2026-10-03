@@ -22,3 +22,7 @@ responses are cached in `data/public/cache/`, which is git-ignored).
   OSM <-> assessment-roll match.
 - Row buildings with common walls are noted in `sources` and ranked lower: part of their
   perimeter is a shared wall, so the default 100 % exposed wall overstates their savings.
+- Floors come from OSM `building:levels` (0.9) or `height` (0.4), or from a "ONE STORY" roll
+  class (0.7). Buildings with none of these get 1 floor labelled `assumed` (0.3), which
+  understates their wall area, and rank after buildings with known floors. Use
+  `--osm-floors-only` to leave them out.

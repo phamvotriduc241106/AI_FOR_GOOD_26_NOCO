@@ -5,6 +5,7 @@ from __future__ import annotations
 import streamlit as st
 from pages.noco_shared import (
     _optional_module,
+    apply_style,
     customer_report_button,
     load_buildings,
     offline_mode,
@@ -17,6 +18,7 @@ from pages.noco_shared import (
 from features.noco_scout.contract import OSM_ATTRIBUTION, Assumptions, Prospect
 
 st.set_page_config(page_title="Prospect Map · NOCO", layout="wide")
+apply_style()
 
 st.title("Prospect Map")
 st.caption("Buffalo, NY · ranked insulation opportunities from saved public building data")
@@ -62,14 +64,14 @@ if st.button("Show potential customers", type="primary"):
     st.session_state["noco_show_potential"] = True
 show_potential = st.session_state.get("noco_show_potential", False)
 
-map_col, detail_col = st.columns([2, 1])
+map_col, detail_col = st.columns([2, 1], gap="medium")
 with map_col:
     st.subheader("Buffalo buildings in 3D")
     clicked = render_map(
         filtered,
         key="noco_prospect_map",
         ranked=show_potential,
-        height=620,
+        height=680,
     )
     st.caption(
         "Blue → orange: lower → higher annual savings, calculated from NOCO inputs and GIS. "

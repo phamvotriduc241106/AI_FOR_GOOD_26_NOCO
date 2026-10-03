@@ -214,7 +214,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - **Chưa có:** chi phí lắp đặt (A4), cho phép dùng số của NOCO trong slide (A6), câu trả lời ban tổ chức (O1 đến O4).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 14:46 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 14:47 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -232,7 +232,6 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 **🔄 ĐANG LÀM**
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
-- `T20` [SHOULD, UI báo cáo] Bỏ ngoặc vuông nhãn nguồn ("[noco_sheet]", "[assumed]") trong 2 báo cáo HTML: tách thành cột "Source" dễ đọc (NOCO calculator (v5), Assumption, DEMO value); chuỗi giả định của máy tính giữ nguyên. Cập nhật kịch bản pitch và hướng dẫn cho số DEMO tô đỏ — Nguyen-Le-Tuan (tôi)
 
 **✅ XONG**
 - `T1` [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút — Anh-08 (Claude Code)
@@ -252,6 +251,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - `T17` [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ — Anh-08 (Claude Code)
 - `T18` [MUST, sửa lỗi demo + dữ liệu minh hoạ] Hai PR. PR1 (hạn 14:40): (1) tooltip Prospect Map bay ra khỏi màn hình: rút còn tối đa 6 dòng ngắn, rộng tối đa khoảng 300 px, tự kiểm tra trong trình duyệt ở mép trên/giữa/dưới; (2) bỏ câu lỗi thời "inferred HDD/CDD remain unconfirmed". PR2 (hạn 14:55, quá hạn thì KHÔNG merge): giá trị DEMO thay cho chỗ trống "needs cost/margin": DEMO_COST_PER_SQFT=8.0 (đội HELIX chọn, không phải giá NOCO), DEMO_MARGIN_PCT=0.35 (giữa khoảng 30-40% NOCO nói miệng), định nghĩa MỘT chỗ ở tầng app, toggle bật sẵn, tắt được; KHÔNG đổi giá trị mặc định trong contract.py. Mọi giá trị DEMO (chi phí lắp đặt, chi phí dự án/doanh thu, hoàn vốn, biên, lợi nhuận) tô ĐỎ (#EF4444) có chú thích ở giao diện web và trong 2 báo cáo HTML; báo cáo khách vẫn KHÔNG có doanh thu/lợi nhuận/biên NOCO — phamvotriduc241106 (Codex)
 - `T19` [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50 — Anh-08 (Claude Code)
+- `T20` [SHOULD, UI báo cáo] Bỏ ngoặc vuông nhãn nguồn ("[noco_sheet]", "[assumed]") trong 2 báo cáo HTML: tách thành cột "Source" dễ đọc (NOCO calculator (v5), Assumption, DEMO value); chuỗi giả định của máy tính giữ nguyên. Cập nhật kịch bản pitch và hướng dẫn cho số DEMO tô đỏ — Nguyen-Le-Tuan (tôi)
 
 ### Các đợt (thứ tự tối ưu, tính từ phụ thuộc)
 
@@ -310,7 +310,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T17 | [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ | Anh-08 | `task/t17` | T12 (phamvotriduc241106) | merged |
 | T18 | [MUST, sửa lỗi demo + dữ liệu minh hoạ] Hai PR. PR1 (hạn 14:40): (1) tooltip Prospect Map bay ra khỏi màn hình: rút còn tối đa 6 dòng ngắn, rộng tối đa khoảng 300 px, tự kiểm tra trong trình duyệt ở mép trên/giữa/dưới; (2) bỏ câu lỗi thời "inferred HDD/CDD remain unconfirmed". PR2 (hạn 14:55, quá hạn thì KHÔNG merge): giá trị DEMO thay cho chỗ trống "needs cost/margin": DEMO_COST_PER_SQFT=8.0 (đội HELIX chọn, không phải giá NOCO), DEMO_MARGIN_PCT=0.35 (giữa khoảng 30-40% NOCO nói miệng), định nghĩa MỘT chỗ ở tầng app, toggle bật sẵn, tắt được; KHÔNG đổi giá trị mặc định trong contract.py. Mọi giá trị DEMO (chi phí lắp đặt, chi phí dự án/doanh thu, hoàn vốn, biên, lợi nhuận) tô ĐỎ (#EF4444) có chú thích ở giao diện web và trong 2 báo cáo HTML; báo cáo khách vẫn KHÔNG có doanh thu/lợi nhuận/biên NOCO | phamvotriduc241106 | `task/t18` | T15 (Anh-08) | merged |
 | T19 | [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50 | Anh-08 | `task/t19` | T15 (Anh-08) | merged |
-| T20 | [SHOULD, UI báo cáo] Bỏ ngoặc vuông nhãn nguồn ("[noco_sheet]", "[assumed]") trong 2 báo cáo HTML: tách thành cột "Source" dễ đọc (NOCO calculator (v5), Assumption, DEMO value); chuỗi giả định của máy tính giữ nguyên. Cập nhật kịch bản pitch và hướng dẫn cho số DEMO tô đỏ | Nguyen-Le-Tuan (tôi) | `task/t20` | T18 (phamvotriduc241106) | doing |
+| T20 | [SHOULD, UI báo cáo] Bỏ ngoặc vuông nhãn nguồn ("[noco_sheet]", "[assumed]") trong 2 báo cáo HTML: tách thành cột "Source" dễ đọc (NOCO calculator (v5), Assumption, DEMO value); chuỗi giả định của máy tính giữ nguyên. Cập nhật kịch bản pitch và hướng dẫn cho số DEMO tô đỏ | Nguyen-Le-Tuan (tôi) | `task/t20` | T18 (phamvotriduc241106) | merged |
 ### Tin nhắn cho nhóm chat (copy)
 
 ```text
@@ -319,24 +319,6 @@ LÀM NGAY:
 ```
 
 ### Lệnh cho từng người (copy–paste)
-
-#### Nguyen-Le-Tuan (tôi)
-
-**T20: [SHOULD, UI báo cáo] Bỏ ngoặc vuông nhãn nguồn ("[noco_sheet]", "[assumed]") trong 2 báo cáo HTML: tách thành cột "Source" dễ đọc (NOCO calculator (v5), Assumption, DEMO value); chuỗi giả định của máy tính giữ nguyên. Cập nhật kịch bản pitch và hướng dẫn cho số DEMO tô đỏ** — _đang làm_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-make test && make lint && make demo   # kiểm tra nhanh trước khi làm
-```
-Việc thủ công: [SHOULD, UI báo cáo] Bỏ ngoặc vuông nhãn nguồn ("[noco_sheet]", "[assumed]") trong 2 báo cáo HTML: tách thành cột "Source" dễ đọc (NOCO calculator (v5), Assumption, DEMO value); chuỗi giả định của máy tính giữ nguyên. Cập nhật kịch bản pitch và hướng dẫn cho số DEMO tô đỏ. File được sửa: (không sửa file).
-Nếu việc này có sửa file, làm trên nhánh riêng rồi mở PR:
-```bash
-git switch -c task/t20
-# ...làm việc, có thể mở claude hoặc codex để hỗ trợ...
-git add -A && git commit -m "T20: cập nhật" && git push -u origin task/t20
-gh pr create --base main --fill
-```
 
 #### NguyenQBao
 

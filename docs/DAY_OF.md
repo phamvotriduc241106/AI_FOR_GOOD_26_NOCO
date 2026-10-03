@@ -214,13 +214,13 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - **Quyết định đang chờ bạn:** lớp cộng đồng thiệt thòi (DAC), chỉ làm nếu T11 và R1 xong sớm (xem `docs/DATA.md`).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 13:42 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 13:46 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
 | Người | Công cụ | Vai trò: việc |
 |---|---|---|
-| Anh-08 | Claude Code | claude (agent): T1, T3, T7, T10, T14, R1 |
+| Anh-08 | Claude Code | claude (agent): T1, T3, T7, T10, T14, R1, T15 |
 | phamvotriduc241106 | Codex | codex (agent): T2, T4, T5, T11, T12 |
 | Nguyen-Le-Tuan (tôi) | — | human-a (điều phối, review và merge PR): — |
 | NguyenQBao | — | human-b (QA, chạy demo): T9; human-c (pitch, Devpost): T8; partner-qa (hỏi đối tác): —; researcher (tìm dữ liệu công khai): T6; backup-integrator (merge dự phòng): — |
@@ -230,6 +230,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý — NguyenQBao
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
+- `T15` [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo — Anh-08 (Claude Code)
 
 **🔄 ĐANG LÀM**
 - `T11` [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
@@ -268,8 +269,9 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - `T11` [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
 - `T14` [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà — Anh-08 (Claude Code)
 
-**Đợt 4**
+**Đợt 4** (chạy song song)
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
+- `T15` [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo — Anh-08 (Claude Code)
 
 ### Bảng chi tiết
 
@@ -289,12 +291,14 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T14 | [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà | Anh-08 | `task/t14` | T10 (Anh-08) | merged |
 | T9 | [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint | NguyenQBao | `task/t9` | T4 (phamvotriduc241106), T5 (phamvotriduc241106), T7 (Anh-08), T10 (Anh-08), T14 (Anh-08), T12~ (phamvotriduc241106, chỉ để hoàn tất) | todo |
 | R1 | Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa | Anh-08 | (không cần, chỉ đọc) | T2 (phamvotriduc241106) | doing |
+| T15 | [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo | Anh-08 | `task/t15` | T14 (Anh-08) | todo |
 ### Tin nhắn cho nhóm chat (copy)
 
 ```text
 LÀM NGAY:
 @NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý
 @NguyenQBao -> T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint
+@Anh-08 -> T15: [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo
 ```
 
 ### Lệnh cho từng người (copy–paste)
@@ -312,6 +316,26 @@ Lời nhắc cho agent:
 ```text
 Review nhánh origin/task/t2 so với main (git diff origin/main...origin/task/t2). Đối chiếu với phần Contract trong docs/TASKS.md. Chỉ báo cáo lỗi và rủi ro theo mức độ, không sửa file nào.
 ```
+
+**T15: [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo** — _sẵn sàng_
+
+```bash
+cd AI_FOR_GOOD   # thư mục repo bạn đã clone
+git switch main && git pull origin main
+git switch -c task/t15
+claude
+```
+Lời nhắc cho agent:
+```text
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T15: [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo. Chỉ sửa các file: các file được giao trong docs/TASKS.md. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+```
+Khi agent báo xong:
+```bash
+make test && make lint
+git push -u origin task/t15
+gh pr create --base main --fill
+```
+Rồi nhắn cho tôi số PR.
 
 #### phamvotriduc241106
 
@@ -390,7 +414,7 @@ Người merge dự phòng khi tôi bận: NguyenQBao (chỉ merge PR xanh, khô
 - merge `T7` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
 - merge `T10` → báo Anh-08 (T14), NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
 - merge `T12` → báo phamvotriduc241106 (T11), NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
-- merge `T14` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
+- merge `T14` → báo NguyenQBao (T9), Anh-08 (T15): chạy `git fetch origin && git merge origin/main`
 
 <!-- LANES:END -->
 

@@ -1,0 +1,109 @@
+T8: SLIDE DESIGN, 4-MINUTE PITCH   (owner: NguyenQBao, role human-C; presenter: Nguyen-Le-Tuan; demo driver: NguyenQBao)
+========================================================================================================================
+Ghi chu cho Bao (tieng Viet): day la thiet ke tung slide cho ban pitch dai 4 phut. Slide VIET BANG TIENG ANH (giam khao la nguoi My).
+Moi slide: toi da ~12 chu, mot y, mot con so. Chi nop PDF hoac PowerPoint (ban to chuc, [09:01]); co the cam laptop len man hinh ([08:41]).
+Xuat CA HAI: PDF va PPTX. Han nop cuoi 3:30 PM, mo nop khoang 2:45 PM; co mat trong phong luc 3:00 PM.
+
+PROJECT NAME (proposal): NOCO Scout. Tagline: "From an address to a customer-ready quote in seconds."
+RULE: every claim on a slide must be (a) shown by the live demo, (b) computed by our code, or (c) labelled ILLUSTRATIVE / ASSUMED.
+
+--------------------------------------------------------------------------------------------------------------------------
+TIMING (240 s)
+  S1 Title+hook 0:00-0:15 | S2 Problem 0:15-0:40 | S3 How it works 0:40-1:05 | DEMO 1:05-2:55 (110 s) | S4 Trust 2:55-3:15
+  S5 Impact 3:15-3:30 | S6 Innovation + future 3:30-3:50 | S7 Close / ask 3:50-4:00
+  (S5 and S6 may be merged if the demo runs long; the demo is NEVER cut.)
+--------------------------------------------------------------------------------------------------------------------------
+
+S1  TITLE + HOOK                                                                                           [0:00-0:15, 15 s]
+  On slide : "NOCO Scout"  /  "From an address to a customer-ready quote in seconds."  /  AI for Good Hackathon - NOCO challenge
+             Team: Nguyen-Le-Tuan, Anh-08, phamvotriduc241106, NguyenQBao
+  Visual   : full-bleed Buffalo map at dusk with glowing 3D building blocks (screenshot of our map). One accent colour.
+  Say      : "A NOCO rep today has to visit a building, collect data, and go back to the office before quoting. We do it from an address."
+  Rubric   : Presentation and Communication.
+
+S2  PROBLEM                                                                                                [0:15-0:40, 25 s]
+  On slide : "Today: site visit  ->  back-office research  ->  quote."   Big line under it: "All of it takes time." (organizers' words)
+  Visual   : three icons in a row (truck/clipboard/desk) with arrows. NO invented numbers: do not write "days" unless NOCO confirms (question B1).
+  Say      : "Your own team told us it takes time. And a rep cannot visit every building in the city, so most are never quoted."
+  Source   : briefing [03:49]-[04:13].   Rubric: Impact and Feasibility.
+
+S3  HOW IT WORKS                                                                                           [0:40-1:05, 25 s]
+  On slide : flow diagram:  ADDRESS -> Census geocoder -> OpenStreetMap footprint -> Buffalo assessment roll -> NOCO's calculator -> QUOTE
+             Under it: "Public data fills the inputs. Every number shows its source."
+  Visual   : 5 chips with small logos/labels; footer "(c) OpenStreetMap contributors" (REQUIRED).
+  Say      : "Public map and property data give us perimeter, floors and building type. Then we run NOCO's own calculator."
+  Rubric   : Innovation and Creativity.
+
+DEMO (LIVE)                                                                                              [1:05-2:55, 110 s]
+  Divider slide (2 s): black, white text "Live demo". Presenter keeps talking while NguyenQBao drives. Have the app already open, offline mode ON.
+  D1 [40 s] Address-to-Quote: type a prepared Buffalo address -> map flies there, 3D block rises, "What we found" table with a source badge on
+            every row -> click "Estimate insulation upgrade" -> savings, incentive, payback (or "needs cost").
+  D2 [50 s] Prospect Map: click "Show potential customers" -> ranked Buffalo buildings light up -> HOVER 2-3 buildings (tooltip with facts and sources)
+            -> click one for the detail panel. Say: "Hover anywhere and you see where each number comes from."
+  D3 [20 s] Exports: click "Customer report" (one page) and "Manager report" (ranked list + CSV). Show the customer page for 5 seconds.
+  Backup   : if the app fails, switch to the 60-second screen recording (docs/pitch/demo_backup.mp4) and say "Here is the recorded run."
+  Rubric   : Solution Execution, Presentation.
+
+S4  TRUST: "REPRODUCES NOCO'S OWN CALCULATOR"                                                              [2:55-3:15, 20 s]
+  On slide : small table, NOCO sheet vs ours (your Buffalo example):
+               Cooling load (Btu/yr)  2,412,718  |  2,412,718
+               Heating energy (kWh)   8,812      |  8,811.9
+               Annual savings ($)     1,448      |  1,447.6
+               Incentive ($)          15,600     |  15,600
+             Footer: "Two constants are inferred and being confirmed with NOCO."
+  RULE     : show this slide ONLY after the T2 golden test passes AND NOCO answered A6 (permission to show their numbers).
+             If A6 is refused or the test fails, replace with "Tested against a reference case" and show no sheet numbers.
+  Say      : "We rebuilt your sheet and match your example. That is why you can trust the quote."
+  Rubric   : Solution Execution ("no mistakes").
+
+S5  IMPACT                                                                                                 [3:15-3:30, 15 s]
+  On slide : three audiences, one line each:  Rep: "a quote in seconds"  |  Manager: "a ranked list of prospects"  |  Customer: "a one-page report"
+             Footer: "NOCO opportunity figures are ILLUSTRATIVE until NOCO provides margins and costs."
+  Optional : "~[N] Buffalo commercial buildings mapped" (fill N from the demo dataset size, T7; never write a number we did not load).
+  Say      : "The same tool serves the rep, the manager and the building owner."
+  Rubric   : Impact and Feasibility.
+
+S6  INNOVATION + FUTURE                                                                                   [3:30-3:50, 20 s]
+  On slide : left "Why it is different": GIS-derived inputs, hover provenance, prospect map.
+             right "Next": more measures (windows, HVAC, solar from the roof outline), more incentives, utility-bill upload, NOCO CRM, more cities.
+  Say      : "Insulation is the first measure. The same pipeline extends to windows, HVAC and solar, and to every city NOCO serves."
+  Rubric   : Innovation and Creativity, Potential for Future Development.
+
+S7  CLOSE / ASK                                                                                            [3:50-4:00, 10 s]
+  On slide : "Pilot with your sales team on 50 Buffalo buildings."  Team names, GitHub link or QR, "Thank you".
+  Say      : "Give us 50 buildings and a week, and we will show your reps what a quote from an address looks like."
+  Rubric   : Presentation and Communication.
+
+--------------------------------------------------------------------------------------------------------------------------
+RUBRIC COVERAGE (5 categories, each scored out of 3)
+  Impact and Feasibility ............ S2, S5, demo D1/D2 (works today, uses public data)
+  Innovation and Creativity ......... S3, S6, demo D2 (hover provenance, prospect map)
+  Presentation and Communication .... S1, S7, plain-language script, one idea per slide, report for a non-technical owner
+  Potential for Future Development .. S6, S7
+  Solution Execution ................ S4, demo D1-D3 (offline, tests, no mistakes)
+
+VISUAL STYLE
+  - 16:9. Dark map screenshots + white text; ONE accent colour; large type (min 28 pt body, 44 pt titles); no bullet walls.
+  - Take screenshots from the REAL app (offline mode). Add alt text. Footer on every map slide: "(c) OpenStreetMap contributors".
+  - Same font everywhere; no animations except the demo; speaker notes hold the script above (English).
+
+SPEAKING PLAN
+  Presenter: Nguyen-Le-Tuan (S1-S3, S4-S7).  Demo driver: NguyenQBao (D1-D3).  Anh-08 and phamvotriduc241106: standby for questions.
+  Rehearse 3 times with a timer; the demo must land at 2:55. Keep 10 seconds of slack.
+
+EXPECTED QUESTIONS (honest answers)
+  Q "Where do the profit numbers come from?"      A "They are illustrative: NOCO has not given us margins yet. The app labels them that way."
+  Q "How accurate is it?"                         A "We reproduce NOCO's own sheet on its example; for other buildings the inputs come from public data and show their confidence."
+  Q "What if the map data is wrong?"              A "Each number shows source and confidence, and the rep can override any input."
+  Q "Does it know the customer's current supplier?"  A "No. That is not public data. The app says 'ask the customer'."
+  Q "Why only insulation?"                        A "It is the one NOCO gave us a calculator for; the pipeline is built to add measures."
+  Q "Privacy?"                                    A "Only public records; we never store owner names or mailing addresses."
+
+FILL-IN LIST (placeholders to complete before export; tell Nguyen-Le-Tuan when done)
+  [ ] project name final   [ ] N buildings in the demo dataset (T7)   [ ] T2 golden test green   [ ] answers A1-A6 and B3 from NOCO (T6)
+  [ ] screenshots from the real app   [ ] 60 s backup video   [ ] PDF and PPTX exported   [ ] opened and checked on a second laptop
+
+SUBMISSION CHECKLIST (deadline 3:30 PM; submissions open about 2:45 PM; be in the room by 3:00 PM)
+  [ ] File names: NOCO_Scout_Pitch.pdf and NOCO_Scout_Pitch.pptx   [ ] under the size limit (ask organizers: O3)
+  [ ] Uploaded through the link the organizers post   [ ] a copy on a USB stick and on the demo laptop
+  [ ] Screenshot of the upload confirmation saved to docs/pitch/

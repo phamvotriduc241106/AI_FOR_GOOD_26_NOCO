@@ -206,7 +206,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 ## 5. LUỒNG VIỆC HIỆN TẠI (tự sinh, đừng sửa tay)
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 12:07 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 12:18 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -487,7 +487,7 @@ cd AI_FOR_GOOD   # thư mục repo bạn đã clone
 git switch main && git pull origin main
 make test && make lint && make demo   # kiểm tra nhanh trước khi làm
 ```
-Việc thủ công: [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md. File được sửa: docs/DATA.md.
+Việc thủ công: [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md. File được sửa: docs/DATA.md, docs/T6_NOCO_questions.txt.
 Nếu việc này có sửa file, làm trên nhánh riêng rồi mở PR:
 ```bash
 git switch -c task/t6

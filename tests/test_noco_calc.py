@@ -243,6 +243,7 @@ def test_warehouse_cooling_uses_separate_realization_not_lf_squared() -> None:
         ("OFFICE BUILDING", "office", 0.75, 12.0, 0.35),
         ("RESTAURANTS", "retail", 0.85, 14.0, 0.30),
         ("OTHER STORAGE & WAREHOUSE FACILITIES", "warehouse", 0.65, 20.0, 0.08),
+        ("AUTO BODY AND TIRE SHOPS", "warehouse", 0.65, 20.0, 0.08),
         ("SEASONAL", "intermittent", 0.5, 12.0, 0.20),
         (None, "office", 0.75, 12.0, 0.35),
     ],
@@ -298,3 +299,22 @@ def test_perimeter_fallback_uses_footprint_and_shape(
 def test_invalid_realization_factors_are_rejected(field: str, factor: float) -> None:
     with pytest.raises(ValueError, match=field):
         estimate_insulation(make_inputs(**{field: factor}))
+
+
+@pytest.mark.parametrize(
+    ("use_class", "profile"),
+    [
+        ("AUTO BODY AND TIRE SHOPS", "warehouse"),  # R1 finding 3 / T17: not retail
+        ("AUTO BODY AND TIRE SHOP", "warehouse"),
+        ("AREA OR NEIGHBORHOOD SHOPPING CENTERS", "retail"),  # "SHOP" still means retail here
+        ("MEDIUM RETAIL", "retail"),
+        ("AUTO DEALERS", "retail"),
+        ("LARGE RETAIL FOOD STORES", "retail"),
+        ("BARS", "retail"),
+        ("TIRE SHOP", "warehouse"),
+        ("RETIREMENT HOME", "office"),  # "TIRE" inside "RETIREMENT" must not match
+    ],
+)
+def test_operating_profile_auto_body_is_light_industrial(use_class: str, profile: str) -> None:
+    facts = SAMPLE_BUILDINGS[0].model_copy(update={"use_class": use_class})
+    assert inputs_from_facts(facts, Assumptions()).operating_profile == profile

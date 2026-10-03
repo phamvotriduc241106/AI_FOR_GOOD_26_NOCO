@@ -252,7 +252,18 @@ def estimate_insulation(i: CalcInputs) -> CalcResult:
 def _operating_profile(use_class: str | None) -> str:
     """Conservative mapping of public building use to NOCO's operating profiles."""
     use = (use_class or "").upper()
-    if any(word in use for word in ("WAREHOUSE", "STORAGE", "INDUSTRIAL", "MANUFACTUR")):
+    # Auto body / tire shops are service bays, i.e. Warehouse / Light Industrial, not retail
+    # (checked before the retail words, which include "SHOP").
+    # "TIRE SHOP", not "TIRE": "RETIREMENT" must not match.
+    light_industrial = (
+        "WAREHOUSE",
+        "STORAGE",
+        "INDUSTRIAL",
+        "MANUFACTUR",
+        "AUTO BODY",
+        "TIRE SHOP",
+    )
+    if any(word in use for word in light_industrial):
         return "warehouse"
     if any(
         word in use for word in ("APARTMENT", "RESIDENTIAL", "HOTEL", "MOTEL", "HOSPITAL", "LODG")

@@ -107,14 +107,91 @@ def test_customer_report_runs_on_every_demo_building():
         assert p.facts.address.replace("&", "&amp;") in html
 
 
-# Placeholders kept so the Prospect Map page (which calls them) keeps working until part 2.
+# --- manager report and CSV (part 2) ---
 
 
-def test_manager_report_and_csv_do_not_break_the_map_page(prospects):
+def with_illustrative_money(prospects):
+    out = []
+    for p in prospects:
+        o = p.opportunity.model_copy(
+            update={
+                "project_revenue": 10_000.0 * p.rank,
+                "estimated_profit": 3_500.0 * p.rank,
+                "margin_pct": 0.35,
+            }
+        )
+        out.append(p.model_copy(update={"opportunity": o}))
+    return out
+
+
+def test_manager_report_has_green_columns_and_every_prospect(prospects):
     html = report.render_manager_report(prospects, Assumptions())
-    assert html.startswith("<!DOCTYPE html>") and prospects[0].facts.address in html
+    assert html.startswith("<!DOCTYPE html>") and "data:image/png;base64," in html
+    for column in report.GREEN_COLUMNS:
+        assert f"<th class='green'>{column}</th>" in html
+    for p in prospects:
+        assert p.facts.address in html
+    assert "© OpenStreetMap contributors" in html
+    total = sum(p.result.annual_cost_savings for p in prospects)
+    assert f"${total:,.0f}" in html
+
+
+def test_manager_report_labels_noco_money_illustrative(prospects):
+    html = visible(report.render_manager_report(with_illustrative_money(prospects), Assumptions()))
+    assert html.count("ILLUSTRATIVE") >= 3
+    assert "$10,000" in html and "$3,500" in html
+    plain = visible(report.render_manager_report(prospects, Assumptions()))
+    assert "needs cost" in plain and "needs margin" in plain
+
+
+def test_manager_report_lists_assumptions_with_source_labels(prospects):
+    html = report.render_manager_report(prospects, Assumptions(hdd=7000.0))
+    assert "hdd" in html and "7000.0" in html and "noco_sheet" in html and "assumed" in html
+
+
+def test_manager_report_escapes_html(prospects):
+    p = prospects[0].model_copy(deep=True)
+    p.facts.address = "<b>x</b>"
+    assert "<b>x</b>" not in report.render_manager_report([p], Assumptions())
+
+
+def test_manager_report_works_from_the_map_page_call(prospects):
+    """Same call as app/pages/2_Prospect_Map.py, on the full demo set and on an empty filter."""
+    a = Assumptions()
+    everything = rank_prospects(geo.load_demo_buildings(), a, top=1000)
+    assert everything[-1].facts.address.replace("&", "&amp;") in report.render_manager_report(
+        everything, a
+    )
+    assert "Prospects in this list" in report.render_manager_report([], a)
+
+
+def test_csv_round_trips(prospects):
     rows = list(csv.DictReader(io.StringIO(report.prospects_to_csv(prospects))))
     assert len(rows) == len(prospects)
+    assert tuple(rows[0]) == report.CSV_COLUMNS
+    first, p = rows[0], prospects[0]
+    assert first["address"] == p.facts.address
+    assert float(first["annual_cost_savings_usd"]) == pytest.approx(
+        p.result.annual_cost_savings, abs=0.01
+    )
+    assert first["simple_payback_years"] == ""  # None => empty, never 0
+    assert first["project_revenue_usd_illustrative"] == ""
+    assert first["current_supplier"] == "Not in public data: ask the customer"
+
+
+def test_csv_illustrative_columns_and_header_has_no_owner():
+    header = ",".join(report.CSV_COLUMNS)
+    assert "owner" not in header and "mail" not in header
+    money = [c for c in report.CSV_COLUMNS if "revenue" in c or "profit" in c or "margin" in c]
+    assert money and all(c.endswith("_illustrative") for c in money)
+
+
+def test_csv_with_money_and_empty_list(prospects):
+    rows = list(
+        csv.DictReader(io.StringIO(report.prospects_to_csv(with_illustrative_money(prospects))))
+    )
+    assert float(rows[0]["project_revenue_usd_illustrative"]) == 10_000.0
+    assert report.prospects_to_csv([]).strip() == ",".join(report.CSV_COLUMNS)
 
 
 def test_csv_neutralises_formulas(prospects):

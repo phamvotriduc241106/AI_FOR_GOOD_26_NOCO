@@ -1,4 +1,4 @@
-.PHONY: setup run demo test lint fmt eval feature docker lanes
+.PHONY: setup run demo test lint fmt eval feature docker lanes web web-test
 
 setup:  ## create venv and install everything
 	python -m venv .venv && . .venv/bin/activate && pip install -e ".[dev]" && cp -n .env.example .env || true
@@ -32,3 +32,9 @@ docker:
 
 lanes:  ## rebuild the workflow block of docs/DAY_OF.md; optional: make lanes SET="T1=merged T2=doing"
 	python scripts/lanes.py $(if $(SET),--set $(SET))
+
+web:    ## NOCO Scout web edition (HTML/CSS/JS): open http://localhost:8600/web/
+	python -m http.server 8600 --bind 127.0.0.1
+
+web-test: ## JS port must match the Python implementation exactly (needs Node.js)
+	python web/tools/export_parity.py /tmp/noco_parity.json && PARITY_JSON=/tmp/noco_parity.json node --test web/tests/parity.test.mjs

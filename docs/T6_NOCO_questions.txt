@@ -63,18 +63,27 @@ HOW ANSWERS CHANGE THE BUILD (tell Nguyen-Le-Tuan immediately)
 - B4 answered -> may change what the map tooltip shows for 'provider'.
 - A6 refused -> remove the screenshot from the slides; keep only our own computed numbers.
 
-ANSWER LOG (copy into docs/DATA.md)
- #  | Question (short)        | Answer, verbatim            | Who / role | Time  | Confidence (heard / read / guessed)
-----|-------------------------|-----------------------------|------------|-------|------------------------------------
- A1 |                         |                             |            |       |
- A2 |                         |                             |            |       |
- A3 |                         |                             |            |       |
- A4 |                         |                             |            |       |
- A5 |                         |                             |            |       |
- A6 |                         |                             |            |       |
- B1 |                         |                             |            |       |
- B2 |                         |                             |            |       |
- B3 |                         |                             |            |       |
- B4 |                         |                             |            |       |
- B5 |                         |                             |            |       |
- B6 |                         |                             |            |       |
+ANSWER LOG (filled from NOCO's sheet v5 and the notes in GROUP B.docx; full analysis in docs/DATA.md)
+Confidence: sheet = read from NOCO's spreadsheet cells/formulas | said = told to NguyenQBao by the NOCO side (role not recorded) | open = no answer yet
+ #  | Question (short)           | Answer                                                                                         | Source | Differs from our assumption?
+----|-----------------------------|------------------------------------------------------------------------------------------------|--------|------------------------------
+ A1 | Degree days (Buffalo)       | HDD 6,750 and CDD 650; heating also multiplied by a "heating realization factor" 0.9           | sheet  | HDD value yes (effective 6,075 = 6,750 x 0.9); CDD no
+ A2 | Cooling load factor         | LF x "cooling realization factor" 0.75 (a separate constant), NOT LF squared                    | sheet  | YES: equal only because the Office profile has LF 0.75
+ A3 | Perimeter (500 ft)          | 2 x (sqrt(A x AR) + sqrt(A / AR)) x shape multiplier; AR = 4 for "Very Long / Narrow"; the sheet   | sheet  | No (explained); real outline replaces the estimate
+    |                             | has an "actual insulated area override", so measured values are accepted                        |        |
+ A4 | Installed cost per sq ft    | not in the sheet; no answer recorded                                                            | open   | still ILLUSTRATIVE
+ A5 | Incentive                   | National Grid Commercial Weatherization: electric $4 (DAC $5) per sq ft for dR >= 21; gas $1.90   | sheet  | YES: not a flat $4; caps $150k electric / $250k gas
+    |                             | (DAC $2.90) for dR 31-40; lower tiers below; depends on fuel, dR and DAC (see DATA.md section 4)  |        |
+ A6 | May we show NOCO's numbers? | not asked / no answer; NOCO handed the sheet to the team                                        | open   | slide 4 stays conditional
+ B1 | Most time-consuming step    | "1-2 experts on specific fields like electricity, heating systems + all other building data to    | said   | story: quotes need experts + building data
+    |                             | give out the best responses" (number of unsuccessful visits: no answer)                          |        |
+ B2 | Manager report columns      | "greens column" (meaning unclear; possibly the money/profit column)                              | said   | unclear: Bao to clarify before T10 manager report
+ B3 | Typical margin              | 30-40% on margin (typical project size: no answer)                                              | said   | new: margin_pct 0.30-0.40
+ B4 | What is "provider"          | "based on the building -> then will find the most suitable providers for the utilities"           | said   | provider = recommended supplier/utility, not the current one
+ B5 | Priority buildings/areas    | prioritized: disadvantaged communities; goal: any commercial building                            | said   | new: DAC layer idea (DATA.md section 7)
+ B6 | Packet at the back          | "in sheet" (the spreadsheet itself)                                                              | said   | done
+ C1 | Next measures               | all of them                                                                                     | said   | future slide
+ C2 | Other incentives            | National Fuel, NYSERDA                                                                          | said   | future work
+ C3 | What makes a demo "wow"     | super easy to use + quick + pretty, for internal use and for customers                           | said   | demo and report quality
+ C4 | Logo / style                | NOCO logo ("Official Natural Gas and Electric Supplier"); saved as docs/pitch/assets/noco_logo.png | said | use in the customer report (T10)
+O1-O4 | Organizer questions       | no answers recorded (IP policy, Q&A inside the 4 minutes, Wi-Fi, upload link/size, detailed rubric) | open | Bao to ask: they decide demo mode and submission

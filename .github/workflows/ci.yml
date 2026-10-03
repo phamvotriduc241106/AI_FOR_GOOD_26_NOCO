@@ -1,0 +1,25 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      LLM_PROVIDER: fake
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: ruff check . && ruff format --check .
+      - run: pytest
+      - name: Evals (fake provider, every case file)
+        run: |
+          for f in evals/cases/*.jsonl; do
+            python -m hackkit.evals "$f" --out "evals/results/$(basename "$f" .jsonl).md"
+          done

@@ -1,5 +1,7 @@
 # Spec: NOCO "Address-to-Quote" (BẢN NHÁP CHỜ DUYỆT)
 
+> **Ghi chú (15:05):** đây là bản nháp kế hoạch buổi sáng, giữ lại làm lịch sử. Một số chỗ đã lỗi thời (ví dụ LF², HDD 6.075, "cần chi phí"). Công thức hiện hành: `src/features/noco_scout/calc.py` và `docs/DATA.md`; mô tả sản phẩm: `README.md`.
+
 > **Trạng thái:** DRAFT để cả đội review trước khi khóa. Challenge **NOCO** đã chốt.
 > **Quy ước nhãn:** *[đã kiểm chứng]* = tôi đã gọi API hoặc tính thật trong buổi sáng nay. *[suy luận]* = hợp lý nhưng
 > NOCO chưa xác nhận. *[giả thuyết]* = ý kiến chưa có bằng chứng, cần hỏi người của NOCO.

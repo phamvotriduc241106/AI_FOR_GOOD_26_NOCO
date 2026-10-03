@@ -205,16 +205,16 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 ## 5. LUỒNG VIỆC HIỆN TẠI (tự sinh, đừng sửa tay)
 
-**Bản tin tình hình (13:45, viết tay, sửa khi cần):**
-- **Đã merge và kiểm tra:** T1 đến T5, T7 (300 toà), T10 (báo cáo khách và sếp, CSV), **T12** (máy tính theo công thức thật của NOCO: Golden vẫn khớp, ưu đãi gas $1,90/sq ft, trần $150.000 điện / $250.000 gas, hệ số 0,9 và 0,75), **T14** (tìm địa chỉ offline: "33 Franklin St" không còn ra "333", "110 Franklin St" tìm được).
-- **Đang làm:** T11 (Codex, COULD; bỏ nếu chưa xong lúc 14:00), R1 (Anh-08, review máy tính), T8 (slide). T9 (QA, Bảo) bắt đầu được ngay.
-- **Đóng băng: 14:30** (đã chốt). Sau đó chỉ sửa lỗi và tập pitch.
-- **Giả định cần nói rõ khi demo:** hệ thống sưởi mặc định là điện trở, nên tiết kiệm của toà dùng gas bị thổi phồng.
+**Bản tin tình hình (14:00, viết tay, sửa khi cần):**
+- **Đã merge và kiểm tra:** T1 đến T5, T7, T10, T11, T12, T14, R1, **T15** (giao diện tối), **T16** (bảng giả định báo cáo sếp lấy từ máy tính, HDD 6.750 [noco_sheet]), **T17** (12 toà AUTO BODY vào nhóm warehouse).
+- **Đang làm:** T9 (QA, Nguyen-Le-Tuan, trên máy demo), T8 (slide, NguyenQBao).
+- **Đóng băng: 14:30.** Sau đó chỉ sửa lỗi T9 tìm ra và tập pitch. Không merge tính năng mới.
+- **Giả định cần nói rõ khi demo:** hệ thống sưởi mặc định là điện trở; DAC chưa rõ nên dùng mức không DAC.
+- **Để sau (slide "tương lai"):** phát hiện R1 số 1, 4, 5 (tham số mặc định, gắn cờ đầu vào sai, propane/dầu và các chương trình khác).
 - **Chưa có:** chi phí lắp đặt (A4), cho phép dùng số của NOCO trong slide (A6), câu trả lời ban tổ chức (O1 đến O4).
-- **Quyết định đang chờ bạn:** lớp cộng đồng thiệt thòi (DAC), chỉ làm nếu T11 và R1 xong sớm (xem `docs/DATA.md`).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 13:49 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 14:02 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -229,10 +229,9 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý — NguyenQBao
+
+**🔄 ĐANG LÀM**
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
-- `T15` [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo — Anh-08 (Claude Code)
-- `T16` [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test — Anh-08 (Claude Code)
-- `T17` [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ — Anh-08 (Claude Code)
 
 **✅ XONG**
 - `T1` [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút — Anh-08 (Claude Code)
@@ -247,6 +246,9 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
 - `T14` [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà — Anh-08 (Claude Code)
 - `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code)
+- `T15` [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo — Anh-08 (Claude Code)
+- `T16` [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test — Anh-08 (Claude Code)
+- `T17` [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ — Anh-08 (Claude Code)
 
 ### Các đợt (thứ tự tối ưu, tính từ phụ thuộc)
 
@@ -291,85 +293,19 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T11 | [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response | phamvotriduc241106 | `task/t11` | T12 (phamvotriduc241106) | merged |
 | T12 | [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) | phamvotriduc241106 | `task/t12` | T2 (phamvotriduc241106) | merged |
 | T14 | [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà | Anh-08 | `task/t14` | T10 (Anh-08) | merged |
-| T9 | [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint | NguyenQBao | `task/t9` | T4 (phamvotriduc241106), T5 (phamvotriduc241106), T7 (Anh-08), T10 (Anh-08), T14 (Anh-08), T12~ (phamvotriduc241106, chỉ để hoàn tất) | todo |
+| T9 | [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint | NguyenQBao | `task/t9` | T4 (phamvotriduc241106), T5 (phamvotriduc241106), T7 (Anh-08), T10 (Anh-08), T14 (Anh-08), T12~ (phamvotriduc241106, chỉ để hoàn tất) | doing |
 | R1 | Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa | Anh-08 | (không cần, chỉ đọc) | T2 (phamvotriduc241106) | merged |
-| T15 | [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo | Anh-08 | `task/t15` | T14 (Anh-08) | todo |
-| T16 | [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test | Anh-08 | `task/t16` | T10 (Anh-08), T12 (phamvotriduc241106) | todo |
-| T17 | [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ | Anh-08 | `task/t17` | T12 (phamvotriduc241106) | todo |
+| T15 | [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo | Anh-08 | `task/t15` | T14 (Anh-08) | merged |
+| T16 | [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test | Anh-08 | `task/t16` | T10 (Anh-08), T12 (phamvotriduc241106) | merged |
+| T17 | [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ | Anh-08 | `task/t17` | T12 (phamvotriduc241106) | merged |
 ### Tin nhắn cho nhóm chat (copy)
 
 ```text
 LÀM NGAY:
 @NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý
-@NguyenQBao -> T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint
-@Anh-08 -> T15: [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo
-@Anh-08 -> T16: [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test
-@Anh-08 -> T17: [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ
 ```
 
 ### Lệnh cho từng người (copy–paste)
-
-#### Anh-08
-
-**T15: [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t15
-claude
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T15: [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo. Chỉ sửa các file: các file được giao trong docs/TASKS.md. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t15
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T16: [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t16
-claude
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T16: [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test. Chỉ sửa các file: các file được giao trong docs/TASKS.md. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t16
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T17: [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t17
-claude
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T17: [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ. Chỉ sửa các file: các file được giao trong docs/TASKS.md. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t17
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
 
 #### NguyenQBao
 
@@ -389,7 +325,7 @@ git add -A && git commit -m "T8: cập nhật" && git push -u origin task/t8
 gh pr create --base main --fill
 ```
 
-**T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint** — _sẵn sàng_
+**T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint** — _đang làm_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone

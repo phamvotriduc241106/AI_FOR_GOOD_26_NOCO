@@ -1,0 +1,9 @@
+{
+  "name": "noco-scout-web",
+  "private": true,
+  "description": "NOCO Scout as a static HTML/CSS/JavaScript app (no build step, no runtime dependencies).",
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/parity.test.mjs"
+  }
+}

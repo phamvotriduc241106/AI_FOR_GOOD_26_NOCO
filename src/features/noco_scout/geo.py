@@ -300,6 +300,12 @@ def _normalize_address(address: str) -> str:
     return " ".join(_ABBREVIATIONS.get(w, w) for w in words)
 
 
+def _street_key(address: str) -> str:
+    """_normalize_address without a trailing street suffix: '110 FRANKLIN ST' -> '110 FRANKLIN'."""
+    words = _normalize_address(address).split()
+    return " ".join(words[:-1] if len(words) > 2 and words[-1] in _STREET_SUFFIXES else words)
+
+
 _ABBREVIATIONS = {
     "STREET": "ST",
     "AVENUE": "AVE",
@@ -346,10 +352,14 @@ def build_facts(address: str, *, offline: bool = False) -> BuildingFacts:
     """
     offline = offline or _is_offline()
     if offline:
-        key = _normalize_address(address)
-        for building in load_demo_buildings():
-            if _normalize_address(building.address) == key:
-                return building.model_copy(deep=True)
+        demo = load_demo_buildings()
+        # Exact street match first, then ignoring the suffix: the assessment roll writes
+        # "110 FRANKLIN" where people type "110 Franklin St".
+        for normalize in (_normalize_address, _street_key):
+            key = normalize(address)
+            for building in demo:
+                if normalize(building.address) == key:
+                    return building.model_copy(deep=True)
 
     token = _offline.set(offline)
     try:

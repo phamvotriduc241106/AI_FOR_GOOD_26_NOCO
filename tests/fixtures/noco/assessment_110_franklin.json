@@ -1,0 +1,44 @@
+[
+ {
+  "prop_class_description": "OFFICE BUILDING",
+  "story_height": "13",
+  "latitude": "42.88489701036015",
+  "longitude": "-78.87733750785553"
+ },
+ {
+  "prop_class_description": "OFFICE BUILDING",
+  "story_height": "12",
+  "latitude": "42.885327181385215",
+  "longitude": "-78.87757835387677"
+ },
+ {
+  "prop_class_description": "DOWNTOWN ROW TYPE (W/COMMON WALL)",
+  "story_height": "13",
+  "latitude": "42.885102732558366",
+  "longitude": "-78.87736460399333"
+ },
+ {
+  "prop_class_description": "CITY/TOWN/VILLAGE PUBLIC PARKS",
+  "story_height": "0",
+  "latitude": "42.88476372054319",
+  "longitude": "-78.87688539129971"
+ },
+ {
+  "prop_class_description": "DOWNTOWN ROW TYPE (W/COMMON WALL)",
+  "story_height": "10",
+  "latitude": "42.885007052486046",
+  "longitude": "-78.87722609238271"
+ },
+ {
+  "prop_class_description": "PARKING LOT",
+  "story_height": "0",
+  "latitude": "42.88502806392726",
+  "longitude": "-78.87759185698387"
+ },
+ {
+  "prop_class_description": "OFFICE BUILDING",
+  "story_height": "13",
+  "latitude": "42.88521504809396",
+  "longitude": "-78.87743603196549"
+ }
+]

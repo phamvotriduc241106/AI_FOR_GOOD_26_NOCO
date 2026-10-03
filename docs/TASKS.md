@@ -101,7 +101,7 @@ Cột dùng cho `make lanes`: **Owner** bắt đầu bằng một vai trò trong
 |----|------|-------|--------------------|------------|--------|
 | T1 | [MUST] Khung hợp đồng: `contract.py`, `fixtures.py` (ví dụ NOCO + 5 tòa nhà giả có đa giác), `__init__.py` đăng ký feature `noco_scout`. Mở PR trong ~15 phút | claude | `src/features/noco_scout/contract.py`, `src/features/noco_scout/fixtures.py`, `src/features/noco_scout/__init__.py` | - | todo |
 | T2 | [MUST] Máy tính: `estimate_insulation`, `inputs_from_facts`; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ) | codex | `src/features/noco_scout/calc.py`, `tests/test_noco_calc.py` | T1~ | todo |
-| T3 | [MUST] Bộ nối dữ liệu GIS: `geocode`, `fetch_footprint`, `fetch_property`, `build_facts`, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi | claude | `src/features/noco_scout/geo.py`, `tests/test_noco_geo.py`, `tests/fixtures/noco/` | T1~ | todo |
+| T3 | [MUST] Bộ nối dữ liệu GIS: `geocode`, `fetch_footprint`, `fetch_property`, `build_facts`, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi | claude | `src/features/noco_scout/geo.py`, `tests/test_noco_geo.py`, `tests/fixtures/noco/`, `.gitignore` (chỉ thêm đúng một dòng `data/public/cache/`, đã duyệt) | T1~ | todo |
 | T4 | [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên `fixtures.py` trước, nối T2/T3/T5/T7 khi chúng merge | codex | `src/features/noco_scout/mapdata.py`, `app/pages/`, `tests/test_noco_mapdata.py` | T1~ | todo |
 | T5 | [SHOULD] Khách tiềm năng: `build_opportunity` (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và `rank_prospects` | codex | `src/features/noco_scout/prospect.py`, `tests/test_noco_prospect.py` | T2 | todo |
 | T6 | [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào `docs/DATA.md` | researcher | `docs/DATA.md` | - | todo |
@@ -117,7 +117,7 @@ Thứ tự: T1 (≤15 phút) → T2, T3, T4, T6, T8 song song → T5, T7, T10, R
 (hạn nộp 15:30). Chưa xong MUST lúc 13:15 thì bỏ SHOULD và COULD (xem `docs/spec.md`).
 
 ## Requests (an agent needs a change in a file it does not own)
-- (none yet)
+- 2026-10-03 T3 (claude, Anh-08) -> `.gitignore`: thêm một dòng `data/public/cache/` (bộ nhớ đệm HTTP là thô, lớn, gắn với máy). **ĐÃ DUYỆT bởi human-A (Nguyen-Le-Tuan)**, ngoại lệ chỉ cho PR của T3, không sửa gì khác trong `.gitignore`. `data/public/demo_buildings.json` (T7) vẫn được commit; demo offline tra file đó trước, rồi mới tới bộ nhớ đệm.
 
 ## Merge log (human appends after each merge)
 - (none yet)

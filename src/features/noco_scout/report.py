@@ -19,6 +19,7 @@ from html import escape
 from pathlib import Path
 
 from .contract import (
+    ASSUMPTION_SOURCES,
     NOT_IN_PUBLIC_DATA,
     OSM_ATTRIBUTION,
     Assumptions,
@@ -104,10 +105,10 @@ def _source(facts: BuildingFacts, field: str) -> str:
     return escape(f"{text} · {src.note}" if src.note and not repeats else text)
 
 
-def _page(title: str, body: str) -> str:
+def _page(title: str, body: str, extra_css: str = "") -> str:
     return (
         '<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8">'
-        f"<title>{escape(title)}</title><style>{_CSS}</style></head><body>"
+        f"<title>{escape(title)}</title><style>{_CSS}{extra_css}</style></head><body>"
         f"<header>{_logo_html()}<div class='muted'>Prepared {date.today():%B %d, %Y}</div>"
         f"</header>{body}</body></html>\n"
     )
@@ -223,29 +224,214 @@ US Census geocoder.</footer>
     return _page(f"Insulation savings estimate: {facts.address}", body)
 
 
+_MANAGER_CSS = """
+@page { size: letter landscape; margin: 0.4in; }
+body { max-width: 10.2in; }
+.wide th, .wide td { font-size: 11px; padding: 3px 4px; }
+.wide td.n { text-align: right; white-space: nowrap; }
+th.green, td.green { background: #e7f6ec; }
+th.ill, td.ill { background: #fff4e5; }
+"""
+
+# NOCO's green output cells (sheet SC, E5:E11), in the sheet's order.
+GREEN_COLUMNS = (
+    "Heating saved",
+    "Cooling kWh",
+    "Total electric kWh",
+    "Site MMBtu",
+    "Energy $ / yr",
+    "Incentive",
+    "10-yr energy value",
+)
+
+
+def _heating_saved(r: CalcResult) -> str:
+    if r.heating_therms:
+        return _num(r.heating_therms, " therms")
+    return _num(r.heating_kwh, " kWh")
+
+
+def _manager_row(p: Prospect) -> str:
+    f, r, o = p.facts, p.result, p.opportunity
+    join = f.sources.get("join")
+    payback = "needs cost" if r.simple_payback_years is None else f"{r.simple_payback_years:.1f} yr"
+    green = (
+        _heating_saved(r),
+        _num(r.cooling_kwh),
+        _num(r.total_kwh),
+        _num(r.site_mmbtu, digits=1),
+        _money(r.annual_cost_savings),
+        _money(r.incentive),
+        _money(r.ten_year_energy_value),
+    )
+    illustrative = (
+        _money(o.project_revenue) if o.project_revenue is not None else "needs cost",
+        _money(o.estimated_profit) if o.estimated_profit is not None else "needs margin",
+    )
+    return (
+        f"<tr><td class='n'>{p.rank}</td><td>{escape(f.address)}</td>"
+        f"<td>{escape(f.neighborhood or '—')}</td><td>{escape(f.use_class or '—')}</td>"
+        f"<td class='n'>{_num(f.floors) if f.floors else '—'}</td>"
+        f"<td class='n'>{f'{join.confidence:g}' if join else '—'}</td>"
+        + "".join(f"<td class='n green'>{v}</td>" for v in green)
+        + f"<td class='n'>{payback}</td>"
+        + "".join(f"<td class='n ill'>{v}</td>" for v in illustrative)
+        + "</tr>"
+    )
+
+
+def _assumption_rows(a: Assumptions) -> str:
+    rows = []
+    for name, value in a.model_dump(exclude={"prices"}).items():
+        shown = "not set" if value is None else value
+        rows.append((name, shown, ASSUMPTION_SOURCES.get(name, "user")))
+    for name, value in a.prices.model_dump().items():
+        rows.append((f"price: {name}", value, ASSUMPTION_SOURCES["prices"]))
+    return "".join(
+        f"<tr><th>{escape(n)}</th><td>{escape(str(v))}</td><td class='src'>{escape(s)}</td></tr>"
+        for n, v, s in rows
+    )
+
+
 def render_manager_report(prospects: list[Prospect], a: Assumptions) -> str:
-    """Printable ranked prospect list for NOCO managers. Full version: T10 part 2."""
-    rows = "".join(
-        f"<tr><td>{p.rank}</td><td>{escape(p.facts.address)}</td>"
-        f"<td>{_money(p.result.annual_cost_savings)}</td></tr>"
-        for p in prospects
+    """Printable ranked prospect list for NOCO managers.
+
+    Columns: identity + join confidence, NOCO's green output cells, payback, then NOCO
+    revenue and profit, which are ILLUSTRATIVE until NOCO provides installed costs.
+    """
+    revenue = [p.opportunity.project_revenue for p in prospects]
+    profit = [p.opportunity.estimated_profit for p in prospects]
+    known_revenue = [v for v in revenue if v is not None]
+    known_profit = [v for v in profit if v is not None]
+    cards = (
+        _card(f"{len(prospects):,}", "Prospects in this list")
+        + _card(_money(sum(p.result.annual_cost_savings for p in prospects)), "Energy $ saved / yr")
+        + _card(_money(sum(p.result.incentive for p in prospects)), "Incentives available")
+        + _card(
+            _money(sum(known_profit)) if known_profit else "needs cost + margin",
+            "NOCO profit (ILLUSTRATIVE)",
+        )
     )
-    body = (
-        "<h1>Prospect list</h1><div class='callout'>Preview: the full manager report "
-        "(NOCO output columns, ILLUSTRATIVE revenue and profit) is coming in the next update."
-        "</div><table><tr><th>Rank</th><th>Address</th><th>Energy cost saved per year</th></tr>"
-        f"{rows}</table><footer>{escape(OSM_ATTRIBUTION)} (ODbL)</footer>"
+    header = (
+        "<tr><th>#</th><th>Address</th><th>Neighborhood</th><th>Building type</th>"
+        "<th>Floors</th><th>Match</th>"
+        + "".join(f"<th class='green'>{c}</th>" for c in GREEN_COLUMNS)
+        + "<th>Payback</th><th class='ill'>Project revenue ILLUSTRATIVE</th>"
+        "<th class='ill'>NOCO profit ILLUSTRATIVE</th></tr>"
     )
-    return _page("NOCO prospect list", body)
+    revenue_note = (
+        f"{len(known_revenue)} of {len(prospects)} prospects have an illustrative revenue"
+        if known_revenue
+        else "No installed cost is set, so revenue and profit show 'needs cost'"
+    )
+    body = f"""
+<h1>NOCO prospect list: wall insulation, Buffalo</h1>
+<div class="muted">Ranked by energy cost saved per year. Green columns are NOCO's calculator
+outputs; orange columns are ILLUSTRATIVE.</div>
+<div class="cards">{cards}</div>
+<h2>Ranked prospects</h2>
+<table class="wide">{header}{"".join(_manager_row(p) for p in prospects)}</table>
+<h2>Assumptions</h2>
+<table>{_assumption_rows(a)}</table>
+<h2>Data limits</h2>
+<ul>
+<li>NOCO revenue and profit are ILLUSTRATIVE: {escape(revenue_note)}. Margin guidance from
+NOCO is 30 to 40%; installed cost per sq ft is not yet provided.</li>
+<li>Footprints and floors come from OpenStreetMap; building type and story height from the
+City of Buffalo assessment roll. "Match" is the confidence of that OSM ↔ roll join.</li>
+<li>The customer's current energy supplier is not public data: ask the customer.</li>
+<li>HDD, CDD and the cooling factor are labelled "assumed" until NOCO confirms them.</li>
+</ul>
+<footer>Building data: {escape(OSM_ATTRIBUTION)} (ODbL); City of Buffalo assessment roll;
+US Census geocoder. Internal NOCO document.</footer>
+"""
+    return _page("NOCO prospect list", body, extra_css=_MANAGER_CSS)
+
+
+CSV_COLUMNS = (
+    "rank",
+    "address",
+    "neighborhood",
+    "use_class",
+    "floors",
+    "footprint_sqft",
+    "perimeter_ft",
+    "join_confidence",
+    "insulated_wall_area_sqft",
+    "heating_kwh",
+    "heating_therms",
+    "cooling_kwh",
+    "total_kwh",
+    "site_mmbtu",
+    "annual_cost_savings_usd",
+    "incentive_usd",
+    "ten_year_energy_value_usd",
+    "project_cost_usd",
+    "net_investment_usd",
+    "simple_payback_years",
+    "project_revenue_usd_illustrative",
+    "estimated_profit_usd_illustrative",
+    "margin_pct_illustrative",
+    "utility",
+    "incentive_program",
+    "current_supplier",
+    "osm_id",
+    "flags",
+)
+
+
+def _fmt(value: object) -> object:
+    if value is None:
+        return ""
+    if isinstance(value, float):
+        return round(value, 2)
+    if isinstance(value, str):
+        return _cell(value)
+    return value
 
 
 def prospects_to_csv(prospects: list[Prospect]) -> str:
-    """Prospect rows as CSV. Full column set: T10 part 2."""
+    """One row per prospect; empty cells for unknown values; money suffixed _usd.
+
+    Revenue, profit and margin columns end in `_illustrative`.
+    """
     out = io.StringIO()
     writer = csv.writer(out, lineterminator="\n")
-    writer.writerow(["rank", "address", "annual_cost_savings_usd"])
+    writer.writerow(CSV_COLUMNS)
     for p in prospects:
-        writer.writerow([p.rank, _cell(p.facts.address), f"{p.result.annual_cost_savings:.2f}"])
+        f, r, o = p.facts, p.result, p.opportunity
+        join = f.sources.get("join")
+        values = (
+            p.rank,
+            f.address,
+            f.neighborhood,
+            f.use_class,
+            f.floors,
+            f.footprint_sqft,
+            f.perimeter_ft,
+            join.confidence if join else None,
+            r.insulated_wall_area_sqft,
+            r.heating_kwh,
+            r.heating_therms,
+            r.cooling_kwh,
+            r.total_kwh,
+            r.site_mmbtu,
+            r.annual_cost_savings,
+            r.incentive,
+            r.ten_year_energy_value,
+            r.project_cost,
+            r.net_investment,
+            r.simple_payback_years,
+            o.project_revenue,
+            o.estimated_profit,
+            o.margin_pct,
+            o.utility,
+            o.incentive_program,
+            o.current_supplier,
+            f.osm_id,
+            "; ".join(r.flags),
+        )
+        writer.writerow([_fmt(v) for v in values])
     return out.getvalue()
 
 

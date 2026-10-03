@@ -32,8 +32,8 @@ Dùng khi: nhân viên NOCO có **một** toà nhà cụ thể và muốn báo g
 | 1 | Ô **Buffalo building address**: xoá chữ cũ, gõ `33 Franklin St` | |
 | 2 | Bấm **Find building** (nút màu xanh) | Bản đồ bay tới toà nhà, khối 3D 11 tầng hiện lên |
 | 3 | Đọc bảng **Facts and confidence** bên phải | Mỗi dòng (loại toà, diện tích đế, chu vi, số tầng, chiều cao tầng) có cột **Source** (nguồn) và **Confidence** (độ chắc chắn) |
-| 4 | Bấm **Estimate insulation upgrade** | 3 ô số: **Annual savings** khoảng **$10,223/năm**, **Incentive** khoảng **$110,167**, **Payback**: "Needs installed cost" |
-| 5 | (Tuỳ chọn) bật **Enter an ILLUSTRATIVE installed cost**, giữ $8 | Payback khoảng **10.8 năm** (con số MINH HOẠ, NOCO chưa cho chi phí thật) |
+| 4 | Bấm **Estimate insulation upgrade** | 3 ô số: **Annual savings** khoảng **$10,223/năm**, **Incentive** khoảng **$110,167**, **Payback** khoảng **10.8 năm** (chữ ĐỎ) và chi phí dự án khoảng **$220,334** (chữ ĐỎ) |
+| 5 | Toggle **Enter an ILLUSTRATIVE installed cost** đã BẬT SẴN ($8/sq ft). Tắt nó đi | Payback trở về "Needs installed cost" (trạng thái trung thực khi chưa có giá NOCO) |
 | 6 | Bấm **Generate customer report** | Tải file `noco-customer-report.html`: báo cáo 1 trang cho chủ toà, có logo NOCO |
 
 Các ô vàng bên dưới kết quả là **giả định**, không phải lỗi:
@@ -56,12 +56,15 @@ Dùng khi: quản lý muốn biết **nên gọi cho toà nào trước** trong 
 | 3 | Xem top 3 | **#1 1 Seneca St** (Seneca One, toà cao nhất Buffalo, 40 tầng) khoảng **$235,406/năm**, ưu đãi **$150,000** (chạm trần của National Grid). #2 532 Main St. #3 107 Delaware Ave |
 | 4 | **Bấm** (click) vào một toà trên bản đồ, hoặc chọn trong **Select a building** | Panel **Building details** bên phải đổi theo toà đó: dữ kiện + nguồn, tiết kiệm, ưu đãi, nhà cung cấp hiện tại ("Not in public data: ask the customer") |
 | 5 | Bộ lọc phía trên: **Building use**, **Minimum annual savings**, **Top buildings** | Lọc theo loại toà, mức tiết kiệm tối thiểu, số toà hiển thị (mặc định 25) |
-| 6 | (Tuỳ chọn) mở **ILLUSTRATIVE NOCO cost and margin inputs**, bật cost $8 và margin 0.20 | Hiện doanh thu và lợi nhuận NOCO, luôn có nhãn ILLUSTRATIVE |
+| 6 | Mục **ILLUSTRATIVE NOCO cost and margin inputs**: cost $8 và margin 35% đã BẬT SẴN | Doanh thu, lợi nhuận, biên, chi phí, hoàn vốn hiện chữ ĐỎ kèm "DEMO value". Ví dụ 1 Seneca St: doanh thu khoảng $5.07 triệu, lợi nhuận khoảng $1.78 triệu (đều là số DEMO) |
 | 7 | **Download manager report (HTML)** và **Download prospect CSV** | Báo cáo cho sếp (xếp hạng, các cột "xanh" của bảng tính NOCO, bảng giả định có nguồn) và file CSV |
 
 Rê chuột (hover) lên toà: khung nhỏ hiện địa chỉ, loại toà, số tầng, tiết kiệm, ưu đãi và nguồn (đã sửa ở T18, không còn bay ra ngoài).
 
 ---
+
+**Quy ước màu:** chữ **ĐỎ** = số DEMO để minh hoạ, không phải giá của NOCO hay dữ liệu công khai. Áp dụng trên web và cả 2 báo cáo HTML.
+Báo cáo HTML có bảng **Assumption | Source**: mỗi giả định ghi rõ nguồn (NOCO calculator (v5), Assumption, DEMO value).
 
 ## 4. Các con số đến từ đâu (để trả lời giám khảo)
 
@@ -71,7 +74,7 @@ Rê chuột (hover) lên toà: khung nhỏ hiện địa chỉ, loại toà, s�
 | Đường viền toà, diện tích đế, chu vi, số tầng | OpenStreetMap (© OpenStreetMap contributors) |
 | Loại toà, chiều cao tầng | Bảng định giá tài sản của City of Buffalo (open data) |
 | Công thức tiết kiệm, ưu đãi, trần ưu đãi | Bảng tính NOCO Commercial Insulation Savings Calculator v5 (NOCO cung cấp) |
-| Chi phí lắp đặt, biên lợi nhuận | **Chưa có từ NOCO** → chỉ là số minh hoạ (ILLUSTRATIVE) |
+| Chi phí lắp đặt, biên lợi nhuận | **Chưa có từ NOCO** → số DEMO tô ĐỎ: $8/sq ft (đội HELIX chọn) và 35% (giữa khoảng 30-40% NOCO nói miệng) |
 | Nhà cung cấp năng lượng hiện tại của khách | **Không có trong dữ liệu công khai** → "ask the customer" |
 
 Quyền riêng tư: app **không bao giờ** lưu hay hiện tên chủ sở hữu hay địa chỉ gửi thư từ bảng thuế.

@@ -22,7 +22,7 @@ from features.noco_scout.contract import (
     Prospect,
 )
 from features.noco_scout.fixtures import SAMPLE_BUILDINGS
-from features.noco_scout.mapdata import prospects_to_deck_rows
+from features.noco_scout.mapdata import TOOLTIP_TEMPLATE, prospects_to_deck_rows
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEMO_DATA = REPO_ROOT / "data/public/demo_buildings.json"
@@ -82,7 +82,17 @@ def make_prospect(facts: BuildingFacts, assumptions: Assumptions, rank: int = 1)
     opportunity = (
         prospect_module.build_opportunity(facts, result, assumptions)
         if prospect_module is not None
-        else Opportunity(incentive_program=INCENTIVE_PROGRAM)
+        else Opportunity(
+            incentive_program=INCENTIVE_PROGRAM,
+            project_revenue=result.project_cost,
+            estimated_profit=(
+                result.project_cost * assumptions.margin_pct
+                if result.project_cost is not None and assumptions.margin_pct is not None
+                else None
+            ),
+            margin_pct=assumptions.margin_pct,
+            notes=["ILLUSTRATIVE: project cost and margin are user-entered assumptions."],
+        )
     )
     return Prospect(
         facts=facts,
@@ -165,7 +175,7 @@ def render_map(
         map_provider="maplibre" if offline_mode() else "carto",
         map_style=BLANK_MAP_STYLE if offline_mode() else "light",
         tooltip={
-            "html": "{tooltip_html}",
+            "html": TOOLTIP_TEMPLATE,
             "style": {"backgroundColor": "#0c2436", "color": "#fff", "fontSize": "12px"},
         },
     )
@@ -235,12 +245,12 @@ def show_estimate(prospect: Prospect) -> None:
     first.metric("Annual savings · NOCO model + GIS", f"${result.annual_cost_savings:,.0f}")
     second.metric("Incentive · NOCO sheet", f"${result.incentive:,.0f}")
     third.metric(
-        "Payback · stated cost",
+        "Payback · ILLUSTRATIVE cost",
         f"{result.simple_payback_years:.1f} years"
         if result.simple_payback_years is not None
         else "Needs installed cost",
     )
-    st.caption("Reference calculation matches NOCO's sample; inferred HDD/CDD remain unconfirmed.")
+    st.caption("Reference model reproduces NOCO's example; inferred HDD/CDD remain unconfirmed.")
     for flag in result.flags:
         st.warning(flag)
     with st.expander("Calculation sources and assumptions"):

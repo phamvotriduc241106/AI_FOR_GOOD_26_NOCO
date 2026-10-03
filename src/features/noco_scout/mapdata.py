@@ -8,6 +8,9 @@ import math
 from .contract import OSM_ATTRIBUTION, BuildingFacts, Prospect
 
 FT_TO_M = 0.3048
+TOOLTIP_TEMPLATE = "<strong>{tooltip_0}</strong>" + "".join(
+    f"<br/>{{tooltip_{index}}}" for index in range(1, 12)
+)
 
 
 def _source(facts: BuildingFacts, field: str) -> str:
@@ -39,8 +42,8 @@ def _source_summary(facts: BuildingFacts) -> str:
     return " · ".join(parts)
 
 
-def prospect_tooltip_html(p: Prospect) -> str:
-    """Render the fixed tooltip order with escaped public data and explicit sources."""
+def _tooltip_lines(p: Prospect) -> list[str]:
+    """Escape dynamic text before it enters the fixed HTML tooltip template."""
     f = p.facts
     r = p.result
     opportunity = p.opportunity
@@ -55,15 +58,15 @@ def prospect_tooltip_html(p: Prospect) -> str:
     )
     revenue = _money(opportunity.project_revenue, "needs NOCO cost")
     profit = _money(opportunity.estimated_profit, "needs NOCO margin")
-    rows = [
-        f"<strong>{html.escape(f.address)}</strong>",
+    return [
+        html.escape(f.address),
         f"Use: {html.escape(f.use_class or 'unknown')} [{_source(f, 'use_class')}]",
         f"Floors: {floors} [{_source(f, 'floors')}]",
         f"Footprint: {footprint} [{_source(f, 'footprint_sqft')}]",
         f"Savings/year: {_money(r.annual_cost_savings, 'unavailable')} "
         "[deterministic NOCO calculation]",
         f"Incentive: {_money(r.incentive, 'unavailable')} [noco_sheet calculation]",
-        f"Payback: {payback} [calculated from stated cost]",
+        f"Payback: {payback} [ILLUSTRATIVE user cost]",
         f"NOCO opportunity (ILLUSTRATIVE): revenue {revenue}; profit {profit}",
         f"Utility: {html.escape(opportunity.utility)} [noco_sheet]",
         f"Incentive program: {html.escape(opportunity.incentive_program or 'not confirmed')} "
@@ -71,7 +74,12 @@ def prospect_tooltip_html(p: Prospect) -> str:
         f"Current supplier: {html.escape(opportunity.current_supplier)}",
         f"Sources: {html.escape(_source_summary(f))}",
     ]
-    return "<br/>".join(rows)
+
+
+def prospect_tooltip_html(p: Prospect) -> str:
+    """Render the fixed tooltip order with escaped public data and explicit sources."""
+    lines = _tooltip_lines(p)
+    return f"<strong>{lines[0]}</strong><br/>" + "<br/>".join(lines[1:])
 
 
 def _polygon(facts: BuildingFacts) -> list[list[float]] | None:
@@ -119,19 +127,20 @@ def prospects_to_deck_rows(prospects: list[Prospect]) -> list[dict]:
             if facts.floor_height_ft is not None and facts.floor_height_ft > 0
             else 12.0
         )
-        rows.append(
-            {
-                "polygon": polygon,
-                "elevation": floors * floor_height * FT_TO_M,
-                "color": [
-                    round(48 + 207 * strength),
-                    round(146 - 26 * strength),
-                    round(208 - 154 * strength),
-                    210,
-                ],
-                "tooltip_html": prospect_tooltip_html(prospect),
-                "address": facts.address,
-                "prospect_index": index,
-            }
-        )
+        tooltip_lines = _tooltip_lines(prospect)
+        row = {
+            "polygon": polygon,
+            "elevation": floors * floor_height * FT_TO_M,
+            "color": [
+                round(48 + 207 * strength),
+                round(146 - 26 * strength),
+                round(208 - 154 * strength),
+                210,
+            ],
+            "tooltip_html": prospect_tooltip_html(prospect),
+            "address": facts.address,
+            "prospect_index": index,
+        }
+        row.update({f"tooltip_{line_index}": line for line_index, line in enumerate(tooltip_lines)})
+        rows.append(row)
     return rows

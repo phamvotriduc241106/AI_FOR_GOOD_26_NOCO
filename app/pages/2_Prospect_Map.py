@@ -122,7 +122,7 @@ if show_potential and filtered:
             "Use · assessor/OSM": prospect.facts.use_class or "unknown",
             "Annual savings · NOCO + GIS": f"${prospect.result.annual_cost_savings:,.0f}",
             "Incentive · NOCO sheet": f"${prospect.result.incentive:,.0f}",
-            "Payback · stated cost": (
+            "Payback · ILLUSTRATIVE cost": (
                 f"{prospect.result.simple_payback_years:.1f} years"
                 if prospect.result.simple_payback_years is not None
                 else "needs cost"

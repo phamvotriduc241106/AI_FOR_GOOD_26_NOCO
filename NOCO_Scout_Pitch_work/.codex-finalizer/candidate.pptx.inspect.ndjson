@@ -1,0 +1,107 @@
+{"kind":"deck","id":"pr/47x81r","name":"Deck"}
+{"kind":"layout","layoutId":"c936d889-fa1c-4021-85b0-4d0522d4de11","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"f243f689-5cff-4cf0-837c-ba43660dea8e","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/v2kygl","slide":1,"title":"NOCO Scout","textShapes":5}
+{"kind":"shape","id":"sh/cjud0fe1","slide":1,"bbox":[0,0,1280,720]}
+{"kind":"shape","id":"sh/dk3u90v6","slide":1,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/2dcvalwj","slide":1,"text":"NOCO Scout","textPreview":"NOCO Scout","textChars":10,"textLines":1,"bbox":[76,105,770,100]}
+{"kind":"textbox","id":"sh/3elc3qd4","slide":1,"text":"From an address to a customer-ready quote in seconds.","textPreview":"From an address to a customer-ready quote in seconds.","textChars":53,"textLines":1,"bbox":[80,218,690,140]}
+{"kind":"textbox","id":"sh/4fudwvep","slide":1,"text":"AI for Good Hackathon\nNOCO challenge","textPreview":"AI for Good Hackathon | NOCO challenge","textChars":36,"textLines":2,"bbox":[82,520,450,70]}
+{"kind":"textbox","id":"sh/pg3u50va","slide":1,"text":"Nguyen-Le-Tuan   Anh-08   phamvotriduc241106   NguyenQBao","textPreview":"Nguyen-Le-Tuan   Anh-08   phamvotriduc241106   NguyenQBao","textChars":57,"textLines":1,"bbox":[82,620,930,32]}
+{"kind":"textbox","id":"sh/m9wv6pw3","slide":1,"text":"(c) OpenStreetMap contributors","textPreview":"(c) OpenStreetMap contributors","textChars":30,"textLines":1,"bbox":[930,678,300,18]}
+{"kind":"image","id":"im/i9ozi18f","slide":1,"name":"","alt":"NOCO Scout offline prospect map with ranked Buffalo buildings and source-labelled details","bbox":[0,0,1280,720]}
+{"kind":"notes","id":"nt/v2kygl","slide":1,"text":"Presenter: Nguyen-Le-Tuan. Timing: 0:00-0:15.\nSay: A NOCO rep today has to visit a building, collect data, and go back to the office before quoting. We do it from an address.\nVisual source: screenshot captured from the real offline NOCO Scout app. Map data: (c) OpenStreetMap contributors."}
+{"kind":"slide","id":"sl/ku6y31","slide":2,"title":"02","textShapes":10}
+{"kind":"textbox","id":"sh/pw7et83q","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[62,34,66,34]}
+{"kind":"textbox","id":"sh/29gvit4f","slide":2,"text":"The quoting workflow today","textPreview":"The quoting workflow today","textChars":26,"textLines":1,"bbox":[62,70,940,78]}
+{"kind":"shape","id":"sh/nupwryl0","slide":2,"bbox":[62,150,94,5]}
+{"kind":"textbox","id":"sh/07edg3m9","slide":2,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[96,245,92,64]}
+{"kind":"textbox","id":"sh/18nep83u","slide":2,"text":"SITE VISIT","textPreview":"SITE VISIT","textChars":10,"textLines":1,"bbox":[96,318,270,92]}
+{"kind":"textbox","id":"sh/e5wvet43","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[491,245,92,64]}
+{"kind":"textbox","id":"sh/f65wnylo","slide":2,"text":"RESEARCH","textPreview":"RESEARCH","textChars":8,"textLines":1,"bbox":[491,318,270,92]}
+{"kind":"textbox","id":"sh/s3edcjmx","slide":2,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[886,245,92,64]}
+{"kind":"textbox","id":"sh/d4nulo3i","slide":2,"text":"QUOTE","textPreview":"QUOTE","textChars":5,"textLines":1,"bbox":[886,318,270,92]}
+{"kind":"shape","id":"sh/d0rihobi","slide":2,"bbox":[394,344,64,38]}
+{"kind":"shape","id":"sh/szi18jux","slide":2,"bbox":[789,344,64,38]}
+{"kind":"textbox","id":"sh/ry90fetc","slide":2,"text":"All of it takes time","textPreview":"All of it takes time","textChars":20,"textLines":1,"bbox":[100,492,1080,86]}
+{"kind":"textbox","id":"sh/qx0j6tcr","slide":2,"text":"Source: AI for Good briefing [03:49]-[04:13]","textPreview":"Source: AI for Good briefing [03:49]-[04:13]","textChars":44,"textLines":1,"bbox":[62,676,940,24]}
+{"kind":"notes","id":"nt/ku6y31","slide":2,"text":"Presenter: Nguyen-Le-Tuan. Timing: 0:15-0:40.\nSay: Your own team told us it takes time. A rep cannot visit every building in the city, so most are never quoted.\nSource: AI for Good briefing [03:49]-[04:13]. No unsupported claim about the number of days appears on the slide."}
+{"kind":"slide","id":"sl/tayhbt","slide":3,"title":"03","textShapes":14}
+{"kind":"textbox","id":"sh/adgzuhkb","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[62,34,66,34]}
+{"kind":"textbox","id":"sh/xg7i5w32","slide":3,"text":"Address to quote","textPreview":"Address to quote","textChars":16,"textLines":1,"bbox":[62,70,940,78]}
+{"kind":"shape","id":"sh/wfyhwr2h","slide":3,"bbox":[62,150,94,5]}
+{"kind":"shape","id":"sh/ji90r6l8","slide":3,"bbox":[86,270,30,30]}
+{"kind":"textbox","id":"sh/ih0zy1kn","slide":3,"text":"ADDRESS","textPreview":"ADDRESS","textChars":7,"textLines":1,"bbox":[31,324,140,42]}
+{"kind":"textbox","id":"sh/5kritw3y","slide":3,"text":"1","textPreview":"1","textChars":1,"textLines":1,"bbox":[278,270,30,30]}
+{"kind":"textbox","id":"sh/kjih0b2t","slide":3,"text":"CENSUS","textPreview":"CENSUS","textChars":6,"textLines":1,"bbox":[223,324,140,42]}
+{"kind":"textbox","id":"sh/7m90v6l4","slide":3,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[470,270,30,30]}
+{"kind":"textbox","id":"sh/6l0z21kj","slide":3,"text":"OSM","textPreview":"OSM","textChars":3,"textLines":1,"bbox":[415,324,140,42]}
+{"kind":"textbox","id":"sh/kju5sjat","slide":3,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[662,270,30,30]}
+{"kind":"textbox","id":"sh/lk36lory","slide":3,"text":"BUFFALO","textPreview":"BUFFALO","textChars":7,"textLines":1,"bbox":[607,324,140,42]}
+{"kind":"textbox","id":"sh/yxcnq9sn","slide":3,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[854,270,30,30]}
+{"kind":"textbox","id":"sh/jyloje98","slide":3,"text":"CALCULATOR","textPreview":"CALCULATOR","textChars":10,"textLines":1,"bbox":[799,324,140,42]}
+{"kind":"shape","id":"sh/8ne5wjqp","slide":3,"bbox":[1072,270,30,30]}
+{"kind":"textbox","id":"sh/ton6pora","slide":3,"text":"QUOTE","textPreview":"QUOTE","textChars":5,"textLines":1,"bbox":[1017,324,140,42]}
+{"kind":"shape","id":"sh/6lwnu9sj","slide":3,"bbox":[116,285,162,0]}
+{"kind":"shape","id":"sh/7m5one94","slide":3,"bbox":[308,285,162,0]}
+{"kind":"shape","id":"sh/grep03ql","slide":3,"bbox":[500,285,162,0]}
+{"kind":"shape","id":"sh/hsn6t8r6","slide":3,"bbox":[692,285,162,0]}
+{"kind":"shape","id":"sh/p836doja","slide":3,"bbox":[884,285,188,0]}
+{"kind":"textbox","id":"sh/o7a5kji5","slide":3,"text":"Public data fills inputs. Every number shows its source.","textPreview":"Public data fills inputs. Every number shows its source.","textChars":56,"textLines":1,"bbox":[142,448,996,96]}
+{"kind":"textbox","id":"sh/361oby1k","slide":3,"text":"(c) OpenStreetMap contributors","textPreview":"(c) OpenStreetMap contributors","textChars":30,"textLines":1,"bbox":[62,676,940,24]}
+{"kind":"notes","id":"nt/tayhbt","slide":3,"text":"Presenter: Nguyen-Le-Tuan. Timing: 0:40-1:05.\nSay: Public map and property data give us perimeter, floors, and building type. Then we run the deterministic calculator based on NOCO's workbook.\nSources: US Census Geocoder, OpenStreetMap, City of Buffalo Final Assessment Roll, and the supplied NOCO reference workbook.\nMap attribution: (c) OpenStreetMap contributors."}
+{"kind":"slide","id":"sl/6miy62","slide":4,"title":"Live demo","textShapes":2}
+{"kind":"shape","id":"sh/n2l47uxw","slide":4,"bbox":[152,346,976,5]}
+{"kind":"textbox","id":"sh/83u50zyh","slide":4,"text":"Live demo","textPreview":"Live demo","textChars":9,"textLines":1,"bbox":[150,252,980,100]}
+{"kind":"textbox","id":"sh/943m94f2","slide":4,"text":"110 seconds","textPreview":"110 seconds","textChars":11,"textLines":1,"bbox":[150,382,980,42]}
+{"kind":"notes","id":"nt/6miy62","slide":4,"text":"Demo driver: NguyenQBao. Presenter keeps talking. Timing: 1:05-2:55.\nD1, about 40 seconds: Type the prepared Buffalo address. Show the 3D footprint and the Facts and confidence table. Click Estimate insulation upgrade. Point out that payback says needs installed cost when cost is unknown.\nD2, about 50 seconds: Open Prospect Map. Click Show potential customers. Hover two or three buildings. Click one building for details. Say: Hover anywhere and you see where each number comes from.\nD3, about 20 seconds: Open the customer report, then show the manager report and CSV controls. Keep the customer page visible for five seconds.\nBackup: If the app fails, switch to the prepared 60-second recording and say: Here is the recorded run."}
+{"kind":"slide","id":"sl/lcx08t","slide":5,"title":"04","textShapes":8}
+{"kind":"textbox","id":"sh/54fu5sre","slide":5,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[62,34,66,34]}
+{"kind":"textbox","id":"sh/i14vaxsn","slide":5,"text":"Reference test","textPreview":"Reference test","textChars":14,"textLines":1,"bbox":[62,70,940,78]}
+{"kind":"shape","id":"sh/32dc3298","slide":5,"bbox":[62,150,94,5]}
+{"kind":"textbox","id":"sh/gfmd8nah","slide":5,"text":"0.1%","textPreview":"0.1%","textChars":4,"textLines":1,"bbox":[72,210,470,165]}
+{"kind":"textbox","id":"sh/h0vu1sr2","slide":5,"text":"test tolerance","textPreview":"test tolerance","textChars":14,"textLines":1,"bbox":[78,365,430,50]}
+{"kind":"textbox","id":"sh/ud4v6dsr","slide":5,"text":"Deterministic math","textPreview":"Deterministic math","textChars":18,"textLines":1,"bbox":[624,226,520,56]}
+{"kind":"shape","id":"sh/vedcfi9c","slide":5,"bbox":[624,300,480,2]}
+{"kind":"textbox","id":"sh/8bmd4nal","slide":5,"text":"Source and confidence stay visible","textPreview":"Source and confidence stay visible","textChars":34,"textLines":1,"bbox":[624,325,520,56]}
+{"kind":"textbox","id":"sh/tcvud8r6","slide":5,"text":"Unknown cost stays unknown","textPreview":"Unknown cost stays unknown","textChars":26,"textLines":1,"bbox":[624,420,520,56]}
+{"kind":"textbox","id":"sh/94z6l03q","slide":5,"text":"Workbook values omitted because reuse permission remains unconfirmed.","textPreview":"Workbook values omitted because reuse permission remains unconfirmed.","textChars":69,"textLines":1,"bbox":[72,610,1120,38]}
+{"kind":"notes","id":"nt/lcx08t","slide":5,"text":"Presenter: Nguyen-Le-Tuan. Timing: 2:55-3:15.\nSay: We tested the deterministic model against a reference case. The golden test passes within zero point one percent. Inputs, sources, and confidence remain visible, and unknown project cost stays unknown.\nEvidence: tests/test_noco_calc.py passed before export. The supplied workbook's permission statement remains unanswered, so this slide intentionally omits its values and screenshot."}
+{"kind":"slide","id":"sl/l2x8cq","slide":6,"title":"05","textShapes":9}
+{"kind":"textbox","id":"sh/gr2xova1","slide":6,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[62,34,66,34]}
+{"kind":"textbox","id":"sh/fqtwvqtg","slide":6,"text":"One tool, three decisions","textPreview":"One tool, three decisions","textChars":25,"textLines":1,"bbox":[62,70,940,78]}
+{"kind":"shape","id":"sh/upkfm5sv","slide":6,"bbox":[62,150,94,5]}
+{"kind":"shape","id":"sh/4v2xsfax","slide":6,"bbox":[650,120,630,520]}
+{"kind":"textbox","id":"sh/3utwzatc","slide":6,"text":"300","textPreview":"300","textChars":3,"textLines":1,"bbox":[72,192,520,160]}
+{"kind":"textbox","id":"sh/2tkfq5s7","slide":6,"text":"Buffalo buildings mapped","textPreview":"Buffalo buildings mapped","textChars":24,"textLines":1,"bbox":[78,348,500,55]}
+{"kind":"textbox","id":"sh/dkvy5kbu","slide":6,"text":"REP\nquote","textPreview":"REP | quote","textChars":9,"textLines":2,"bbox":[82,470,145,90]}
+{"kind":"textbox","id":"sh/czmxwfa9","slide":6,"text":"MANAGER\nranked prospects","textPreview":"MANAGER | ranked prospects","textChars":24,"textLines":2,"bbox":[250,470,180,90]}
+{"kind":"textbox","id":"sh/q5wn6xgb","slide":6,"text":"CUSTOMER\none page","textPreview":"CUSTOMER | one page","textChars":17,"textLines":2,"bbox":[460,470,150,90]}
+{"kind":"textbox","id":"sh/r654z2xw","slide":6,"text":"NOCO opportunity figures remain ILLUSTRATIVE.","textPreview":"NOCO opportunity figures remain ILLUSTRATIVE.","textChars":45,"textLines":1,"bbox":[78,632,520,28]}
+{"kind":"textbox","id":"sh/c7e587eh","slide":6,"text":"(c) OpenStreetMap contributors","textPreview":"(c) OpenStreetMap contributors","textChars":30,"textLines":1,"bbox":[900,678,320,18]}
+{"kind":"image","id":"im/8vep0nip","slide":6,"name":"","alt":"NOCO Scout prospect map showing ranked Buffalo buildings","bbox":[680,120,600,520]}
+{"kind":"notes","id":"nt/l2x8cq","slide":6,"text":"Presenter: Nguyen-Le-Tuan. Timing: 3:15-3:30.\nSay: The same tool serves the rep, the manager, and the building owner. Our offline demo dataset contains 300 Buffalo buildings ready to rank.\nEvidence: data/public/demo_buildings.json contains 300 public-data records. NOCO opportunity figures remain illustrative until NOCO provides cost and margin definitions.\nMap attribution: (c) OpenStreetMap contributors."}
+{"kind":"slide","id":"sl/d41dyk","slide":7,"title":"06","textShapes":7}
+{"kind":"textbox","id":"sh/dwbudsfm","slide":7,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[62,34,66,34]}
+{"kind":"textbox","id":"sh/qt0bixwb","slide":7,"text":"The same pipeline extends","textPreview":"The same pipeline extends","textChars":25,"textLines":1,"bbox":[62,70,940,78]}
+{"kind":"shape","id":"sh/bu9cbixw","slide":7,"bbox":[62,150,94,5]}
+{"kind":"shape","id":"sh/l0buhcfy","slide":7,"bbox":[68,198,520,350]}
+{"kind":"textbox","id":"sh/yxkbmxw7","slide":7,"text":"GIS inputs","textPreview":"GIS inputs","textChars":10,"textLines":1,"bbox":[660,205,500,52]}
+{"kind":"textbox","id":"sh/zytcf2xs","slide":7,"text":"Provenance on hover","textPreview":"Provenance on hover","textChars":19,"textLines":1,"bbox":[660,292,500,52]}
+{"kind":"textbox","id":"sh/g3ytc3y9","slide":7,"text":"Citywide prospecting","textPreview":"Citywide prospecting","textChars":20,"textLines":1,"bbox":[660,376,500,52]}
+{"kind":"shape","id":"sh/h4ru58fe","slide":7,"bbox":[660,456,470,2]}
+{"kind":"textbox","id":"sh/9szeh4zq","slide":7,"text":"Next: windows   HVAC   solar   CRM   more cities","textPreview":"Next: windows   HVAC   solar   CRM   more cities","textChars":48,"textLines":1,"bbox":[660,488,500,88]}
+{"kind":"textbox","id":"sh/8rqx8zy5","slide":7,"text":"(c) OpenStreetMap contributors","textPreview":"(c) OpenStreetMap contributors","textChars":30,"textLines":1,"bbox":[68,678,310,18]}
+{"kind":"image","id":"im/xgne1or6","slide":7,"name":"","alt":"NOCO Scout address screen with a sourced building footprint and confidence table","bbox":[68,198,520,350]}
+{"kind":"notes","id":"nt/d41dyk","slide":7,"text":"Presenter: Nguyen-Le-Tuan. Timing: 3:30-3:50.\nSay: Insulation is the first measure. The same pipeline extends to windows, HVAC, solar, more incentives, and every city NOCO serves. A future CRM connection can put ranked prospects into the sales workflow.\nFuture items are roadmap concepts, not features in the current demo. Disadvantaged-community targeting requires a verified public classification source before implementation.\nMap attribution: (c) OpenStreetMap contributors."}
+{"kind":"slide","id":"sl/jvsfyk","slide":8,"title":"Pilot","textShapes":6}
+{"kind":"shape","id":"sh/d0futsrq","slide":8,"bbox":[0,0,12,720]}
+{"kind":"textbox","id":"sh/qdovid8f","slide":8,"text":"Pilot","textPreview":"Pilot","textChars":5,"textLines":1,"bbox":[80,80,360,68]}
+{"kind":"textbox","id":"sh/bexcri90","slide":8,"text":"50","textPreview":"50","textChars":2,"textLines":1,"bbox":[76,150,430,210]}
+{"kind":"textbox","id":"sh/036donqh","slide":8,"text":"Buffalo buildings","textPreview":"Buffalo buildings","textChars":17,"textLines":1,"bbox":[82,352,550,70]}
+{"kind":"textbox","id":"sh/l4fexsr2","slide":8,"text":"One week with the NOCO sales team","textPreview":"One week with the NOCO sales team","textChars":33,"textLines":1,"bbox":[82,448,580,62]}
+{"kind":"shape","id":"sh/y1ovmx8b","slide":8,"bbox":[770,154,420,250]}
+{"kind":"textbox","id":"sh/g7mdc3qd","slide":8,"text":"Thank you","textPreview":"Thank you","textChars":9,"textLines":1,"bbox":[780,428,410,70]}
+{"kind":"textbox","id":"sh/18vul8ri","slide":8,"text":"Nguyen-Le-Tuan   Anh-08\nphamvotriduc241106   NguyenQBao","textPreview":"Nguyen-Le-Tuan   Anh-08 | phamvotriduc241106   NguyenQBao","textChars":55,"textLines":2,"bbox":[760,535,450,64]}
+{"kind":"image","id":"im/y5knehwn","slide":8,"name":"","alt":"NOCO logo","bbox":[790,178,380,200]}
+{"kind":"notes","id":"nt/jvsfyk","slide":8,"text":"Presenter: Nguyen-Le-Tuan. Timing: 3:50-4:00.\nSay: Give us 50 buildings and a week, and we will show your reps what a quote from an address looks like. Thank you.\nThe 50-building pilot is the team's proposed next step, not an existing commitment from NOCO."}

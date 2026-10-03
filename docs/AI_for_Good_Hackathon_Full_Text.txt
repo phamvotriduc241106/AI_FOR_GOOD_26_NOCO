@@ -1,0 +1,170 @@
+AI FOR GOOD HACKATHON DESIGN CHALLENGE STATEMENTS
+
+Ghi chú bản chép: Nội dung tiếng Anh được chép từ 6 ảnh đã cung cấp, giữ nguyên nội dung và chuẩn hóa xuống dòng. Ảnh image(20261003-125202).png và image(20261003-125207).png chụp cùng một trang; nội dung trùng được ghi một lần ở phần PAGE 3. Chữ trong đầu trang và các logo cuối trang được ghi riêng bên dưới để tránh lặp lại trên từng trang. Không chép chữ mờ xuyên từ mặt sau hoặc chữ của tờ giấy khác lọt vào mép ảnh.
+
+HEADER / LOGO TEXT
+AI FOR GOOD
+University at Buffalo
+Startup and Innovation Collaboratory
+Student Life
+
+FOOTER / PARTNER LOGO TEXT (repeated on the pages)
+University at Buffalo — School of Management
+University at Buffalo — School of Engineering and Applied Sciences
+University at Buffalo — Institute for Artificial Intelligence and Data Science
+ACV
+Against All Oddz Animal Alliance
+NOCO
+
+======================================================================
+PAGE 1 — image(20261003-125152).png
+======================================================================
+
+AI for Good Hackathon Design Challenge Statements
+
+ACV
+
+Challenge Statement: Reimagining the Future of Automotive Commerce with AI
+
+Mission and Vision: ACV Auctions and Copart bring together complementary strengths in digital automotive marketplaces, vehicle intelligence, inspections, logistics, physical infrastructure, and global buyer networks.
+
+Together, these capabilities create an opportunity to transform how vehicles are valued, bought, sold, transported, and managed throughout their lifecycle
+
+Our vision is to harness the power of artificial intelligence to unlock new possibilities across the automotive ecosystem—creating exceptional value for our customers, transforming how our businesses operate, and discovering opportunities that could multiply the impact of our combined capabilities.
+
+Our Challenge: How might we leverage AI to unlock 3–5× greater value from the combined capabilities of ACV Auctions and Copart, reimagining how vehicles are bought, sold, valued, and managed while creating entirely new opportunities for growth, innovation, and customer value?
+
+Think beyond how these businesses operate today. What could the future of automotive commerce look like if AI enabled us to connect our capabilities in ways that were previously unimaginable?
+
+Parameters
+
+• We invite participants to develop creative AI-powered solutions that explore opportunities within and beyond our existing business models.
+
+• Solutions may focus on transforming customer experiences, unlocking new revenue opportunities, improving operational efficiency, creating new products or services, or addressing challenges across the broader automotive ecosystem.
+
+======================================================================
+PAGE 2 — image(20261003-125158).png
+======================================================================
+
+• Teams are encouraged to think boldly, challenge conventional approaches, and consider how their ideas could create meaningful and scalable impact.
+
+• There is no prescribed technology, product, or business function that participants must focus on but demonstrate a clear connection to the value they aim to create.
+
+Key Takeaways
+
+• Think big: Imagine opportunities that could fundamentally change how automotive marketplaces operate or create entirely new business models.
+
+• Explore the power of the combined ecosystem: Consider how ACV's and Copart's complementary capabilities, technologies, infrastructure, data, and customer networks could unlock new possibilities.
+
+• Create meaningful value: Consider how your idea could generate new growth, improve customer outcomes, increase efficiency, or transform the vehicle ownership and transaction experience.
+
+• Leverage AI creatively: Explore how AI could enable capabilities, experiences, or business opportunities that would otherwise be difficult or impossible to achieve.
+
+• Think beyond today's boundaries: Your solution does not need to fit within an existing ACV or Copart product. We welcome unconventional ideas, new markets, and entirely new ways of doing business.
+
+Against All Oddz
+
+CHALLENGE: Intelligent Animal Rescue & Organizational Knowledge System
+
+Against All Oddz Animal Alliance manages an enormous amount of information while responding to animals in crisis. Every day, AAO receives dozens of requests from people trying to surrender animals, shelters and rescues seeking placement assistance, families dealing with serious behavioral problems, people facing financial or housing crises, and individuals trying to avoid behavioral euthanasia.
+
+======================================================================
+PAGE 3 — image(20261003-125202).png
+Also photographed in image(20261003-125207).png (duplicate page).
+======================================================================
+
+These requests arrive through email, social media, phone calls, text messages, and referrals and they often contain incomplete or fragmented information. At the same time, information about animals already connected to AAO may be spread across a number of platforms, including Shelterluv, veterinary records, emails, text messages, spreadsheets, training notes, calendars, and paper files. Administrative records such as surrender requests, foster agreements, volunteer information, contracts, and other organizational documents may also exist across multiple systems.
+
+For a small nonprofit with limited staff, these two problems are deeply connected. Before AAO can determine how to help an animal, staff may need to collect missing information, review previous communications, locate veterinary or behavioral records, determine whether the animal has interacted with AAO before, evaluate safety concerns, and understand the organization's current capacity and resources.
+
+The Challenge:
+
+Design a secure AI-powered rescue intake and organizational knowledge system that helps AAO turn fragmented information into organized, actionable knowledge.
+The system should help AAO manage an animal's journey from the moment someone first contacts the organization through intake, evaluation, foster or sanctuary placement, veterinary and behavioral care, adoption, or other resolution.
+
+The system could:
+
+Collect and standardize surrender and assistance requests arriving through multiple channels and automatically identify missing information or generate appropriate follow-up questions.
+
+Distinguish routine requests from urgent situations and flag medical, behavioral, bite-history, legal, or safety concerns requiring human review.
+
+Help staff determine whether a situation may be appropriate for adoption, foster care, behavior modification, specialized rescue, sanctuary, or another intervention.
+
+Compare an animal's needs with AAO's current capacity, staffing, foster availability, financial resources, and physical accommodations.
+
+Maintain the complete history of communications, decisions and actions associated with an animal or case.
+
+======================================================================
+PAGE 4 — image(20261003-125212).png
+======================================================================
+
+Connect information from approved organizational sources such as Shelterluv, veterinary records, training notes, emails, spreadsheets, calendars, surrender records and other internal documents.
+
+Allow authorized staff to ask everyday questions such as: Who is this dog's veterinarian? What medications is she currently taking? What did the trainer recommend? Does this dog have a bite history? What happened the last time this person contacted us? Which sanctuary dogs can safely interact?
+Identify conflicting, incomplete or outdated information and show staff where an answer came from.
+
+When AAO cannot accept an animal, help staff identify constructive alternatives such as qualified trainers, veterinary behaviorists, breed-specific rescues, pet-retention programs, financial assistance or other placement pathways.
+
+Draft compassionate, individualized responses for staff review.
+
+Identify broader trends across cases, such as increases in housing-related surrenders, behavioral cases, veterinary-cost crises or requests involving particular communities.
+
+The ultimate goal is to create an intelligent operational backbone for AAO. This would reduce administrative burden, preserve institutional knowledge, allow staff to respond more quickly, and give a small organization with limited resources the ability to help more animals without sacrificing the individualized care that defines its mission.
+
+NOCO
+
+Challenge Question
+
+How can NOCO use AI, building data, and available incentive programs to quickly estimate energy savings, project economics, and customer ROI for commercial buildings?
+
+• Build an AI-powered tool that estimates energy and cost savings for commercial buildings.
+
+• User inputs could include:
+  ○ Building address
+  ○ Square footage
+  ○ Building type (office, warehouse, school, retail, etc.)
+  ○ Year built
+  ○ Existing heating/cooling systems
+  ○ Utility usage or utility bill information (if available)
+
+======================================================================
+PAGE 5 — image(20261003-125216).png
+======================================================================
+
+• Tool should evaluate potential opportunities such as:
+  ○ Insulation and weatherization
+  ○ Windows
+  ○ HVAC upgrades
+  ○ Natural Gas
+  ○ Electric
+  ○ Solar
+  ○ EV charging
+  ○ Lighting upgrades
+  ○ Energy monitoring and management
+  ○ Generators
+  ○ Battery Storage
+  ○ Other NOCO energy solutions
+
+• For each recommendation, calculate:
+  ○ Estimated annual energy savings
+  ○ Estimated annual cost savings
+  ○ Estimated project cost
+  ○ Available utility and government incentives
+  ○ Customer payback period
+  ○ Net customer investment after incentives
+
+• Rank opportunities from highest to lowest value.
+
+• Generate a simple customer-facing report showing:
+  ○ Recommended project(s)
+  ○ Estimated savings
+  ○ Available incentives
+  ○ ROI and payback
+  ○ Recommended next steps
+
+• Bonus points for teams that incorporate:
+  ○ Public property data
+  ○ Utility bill analysis
+  ○ GIS mapping
+  ○ AI-driven recommendations
+  ○ Automated incentive identification

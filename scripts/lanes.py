@@ -31,7 +31,9 @@ ROLE_NOTES = {
     "human-c": "pitch, Devpost",
     "claude": "agent",
     "codex": "agent",
+    "codex-2": "agent",
     "partner-qa": "hỏi đối tác",
+    "researcher": "tìm dữ liệu công khai",
     "backup-integrator": "merge dự phòng",
 }
 STATE_VI = {

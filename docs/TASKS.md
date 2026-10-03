@@ -11,16 +11,21 @@ Two agents may run in parallel ONLY on tasks whose "Files" do not overlap.
 |------|--------|------|
 | claude | Anh-08 | Claude Code |
 | codex | NguyenQBao | Codex |
+| codex-2 | phamvotriduc241106 | Codex |
 | human-A | Nguyen-Le-Tuan (tôi) | |
 | human-B | NguyenQBao | |
-| human-C | Anh-08 | |
-| partner-qa | NguyenQBao | |
+| human-C | phamvotriduc241106 | |
+| partner-qa | phamvotriduc241106 | |
+| researcher | phamvotriduc241106 | |
 | backup-integrator | Anh-08 | |
 
-Roles: **claude / codex** = the agent that person runs. **human-A** = product owner, partner
-questions, integrator (reviews PRs, merges, runs `make test && make lint`). **human-B** = QA and demo
-driver. **human-C** = pitch and Devpost. **partner-qa** = asks the partner reps (while human-A reviews
-BRIEF and decides). **backup-integrator** = merges green PRs when human-A is busy, never their own PR.
+Roles: **claude / codex** = the agent that person runs. **human-A** = product owner, decisions,
+integrator (reviews PRs, merges, runs `make test && make lint`). **human-B** = QA and demo driver.
+**human-C** = pitch and Devpost. **partner-qa** = asks the organizers/partner reps (while human-A reviews
+BRIEF and decides). **researcher** = finds public data/APIs allowed for the demo. **backup-integrator** =
+merges green PRs when human-A is busy, never their own PR. **codex-2** = the second Codex agent
+(phamvotriduc241106): cross-review, data/evals or UI. At most TWO agents write code at the same time, on
+different files.
 Change the Person column freely.
 
 ## Contract (agree and merge this BEFORE parallel work)
@@ -44,9 +49,10 @@ pushed for review). `T1~` = soft dependency (can start now, can only finish afte
 | T1 | Registered feature skeleton: schema, instructions, sample text and response, stub `rules()` (this becomes the Contract; open the PR within ~10 min) | claude | `src/features/<key>/` | - | todo |
 | T2 | `rules()` + unit tests for the checks listed in `docs/spec.md` | claude | `src/features/<key>/__init__.py`, `tests/test_<key>.py` | T1 | todo |
 | T3 | Synthetic data + 3 labeled eval cases, then `make eval` | codex | `evals/cases/<key>.jsonl`, `data/synthetic/` | T1~ | todo |
-| R1 | Review T2's branch, report findings only, no edits | codex | | T2 | todo |
+| R1 | Review T2's branch, report findings only, no edits | codex-2 | | T2 | todo |
 | T4 | Verify the demo flow: flags, summary, export, `make test`, `make lint`, `make demo`; rehearse 3 times | human-B | `app/` (only if a defect is found; ask first) | T2, T3 | todo |
 | T5 | Pitch outline, demo script and Devpost text from `docs/PITCH.md`; disclose the template and AI tools | human-C | `docs/PITCH.md`, `README.md` | T1 | todo |
+| T6 | Find public data/APIs allowed for the demo (license, link, sample) and list them in `docs/DATA.md` | researcher | `docs/DATA.md` | - | todo |
 
 ## Requests (an agent needs a change in a file it does not own)
 - (none yet)

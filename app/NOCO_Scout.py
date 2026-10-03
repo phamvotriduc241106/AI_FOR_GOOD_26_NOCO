@@ -7,6 +7,8 @@ home page and orders the navigation, so users know where to start.
 
 from __future__ import annotations
 
+import base64
+from html import escape
 from pathlib import Path
 
 import streamlit as st
@@ -32,15 +34,33 @@ prospect_page = st.Page(
 
 _HOME_CSS = f"""
 <style>
-.block-container {{ padding-top: 3.4rem !important; }}  /* clear Streamlit's top header bar */
-.noco-tagline {{ font-size: 1.35rem; color: #E4EDEF; margin: 0.1rem 0 0.2rem; }}
-.noco-sub {{ color: #9FB3BA; font-size: 0.95rem; }}
-.noco-step {{ background: {PANEL_BG}; border-radius: 10px; padding: 0.8rem 1rem;
-  border-top: 3px solid {ACCENT}; height: 100%; }}
-.noco-step b {{ color: {ACCENT}; font-size: 1.4rem; display: block; }}
+.block-container {{ padding-top: 3.6rem !important; max-width: 1180px !important; }}
+div[data-testid="stVerticalBlock"] {{ gap: 1.1rem; }}
+.noco-hero {{ display: flex; align-items: center; gap: 1.6rem; margin: 0 0 0.4rem; }}
+.noco-hero img {{ width: 128px; height: auto; border-radius: 10px; flex: none; }}
+.noco-title {{ font-size: 2.6rem; font-weight: 700; line-height: 1.1; color: #F2F7F8;
+  margin: 0 0 0.45rem; }}
+.noco-tagline {{ font-size: 1.3rem; line-height: 1.35; color: #E4EDEF; margin: 0 0 0.35rem; }}
+.noco-sub {{ color: #9FB3BA; font-size: 0.95rem; line-height: 1.4; }}
+.noco-card-title {{ font-size: 1.25rem; font-weight: 700; color: {ACCENT};
+  margin: 0.2rem 0 0.6rem; }}
+.noco-card-text {{ color: #C9D6DA; line-height: 1.55; margin: 0 0 0.9rem; min-height: 4.7em; }}
+.noco-section {{ font-size: 1.25rem; font-weight: 700; color: {ACCENT};
+  margin: 1.2rem 0 0.2rem; }}
+.noco-steps {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }}
+.noco-step {{ background: {PANEL_BG}; border-radius: 12px; padding: 1.1rem 1.2rem 1.2rem;
+  border-top: 3px solid {ACCENT}; }}
+.noco-step .num {{ color: {ACCENT}; font-size: 1.6rem; font-weight: 700; line-height: 1;
+  display: block; margin-bottom: 0.6rem; }}
+.noco-step .head {{ color: #F2F7F8; font-weight: 700; display: block; margin-bottom: 0.4rem; }}
+.noco-step .body {{ color: #C9D6DA; line-height: 1.55; }}
+.noco-foot {{ color: #7F949B; font-size: 0.85rem; margin-top: 1.4rem; padding-top: 0.9rem;
+  border-top: 1px solid #1F3640; }}
 div[data-testid="stPageLink"] a {{ background: {ACCENT}; border-radius: 8px;
-  padding: 0.35rem 0.9rem; }}
+  padding: 0.45rem 1rem; }}
 div[data-testid="stPageLink"] a p {{ color: #0B1418 !important; font-weight: 600; }}
+@media (max-width: 900px) {{ .noco-steps {{ grid-template-columns: 1fr; }}
+  .noco-hero {{ flex-direction: column; align-items: flex-start; }} }}
 </style>
 """
 
@@ -60,51 +80,68 @@ _STEPS = (
 )
 
 
+def _logo_tag() -> str:
+    if not LOGO.is_file():
+        return ""
+    data = base64.b64encode(LOGO.read_bytes()).decode("ascii")
+    return f"<img src='data:image/png;base64,{data}' alt='NOCO logo'>"
+
+
+def _card(title: str, text: str, page: st.Page, label: str, icon: str) -> None:
+    with st.container(border=True):
+        st.markdown(
+            f"<div class='noco-card-title'>{escape(title)}</div>"
+            f"<div class='noco-card-text'>{escape(text)}</div>",
+            unsafe_allow_html=True,
+        )
+        st.page_link(page, label=label, icon=icon)
+
+
 def home() -> None:
     """Landing page: what NOCO Scout does and where to click."""
     apply_style()
     st.markdown(_HOME_CSS, unsafe_allow_html=True)
-
-    logo_col, title_col = st.columns([1, 6], vertical_alignment="center")
-    if LOGO.is_file():
-        logo_col.image(str(LOGO), width=120)
-    with title_col:
-        st.title("NOCO Scout")
-        st.markdown(
-            "<div class='noco-tagline'>From an address to a customer-ready quote in seconds."
-            "</div><div class='noco-sub'>Buffalo, NY · commercial wall insulation · public "
-            "building data + NOCO's own savings calculator</div>",
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        f"<div class='noco-hero'>{_logo_tag()}<div>"
+        "<div class='noco-title'>NOCO Scout</div>"
+        "<div class='noco-tagline'>From an address to a customer-ready quote in seconds.</div>"
+        "<div class='noco-sub'>Buffalo, NY · commercial wall insulation · public building data"
+        " + NOCO's own savings calculator</div></div></div>",
+        unsafe_allow_html=True,
+    )
     if offline_mode():
         st.info("Offline mode: saved Buffalo buildings only; the map has no basemap.")
 
-    quote_card, map_card = st.columns(2, gap="medium")
-    with quote_card, st.container(border=True):
-        st.subheader("Address to Quote")
-        st.write(
+    quote_card, map_card = st.columns(2, gap="large")
+    with quote_card:
+        _card(
+            "Address to Quote",
             "One building: type an address, see its 3D footprint and sourced facts, then "
-            "estimate savings, incentive and payback and download a one-page customer report."
+            "estimate savings, incentive and payback and download a one-page customer report.",
+            address_page,
+            "Open Address to Quote",
+            ":material/search:",
         )
-        st.page_link(address_page, label="Open Address to Quote", icon=":material/search:")
-    with map_card, st.container(border=True):
-        st.subheader("Prospect Map")
-        st.write(
+    with map_card:
+        _card(
+            "Prospect Map",
             "The whole district: rank hundreds of Buffalo buildings by savings on a 3D map, "
-            "hover for sources, click for details, export the manager report and CSV."
-        )
-        st.page_link(prospect_page, label="Open Prospect Map", icon=":material/map:")
-
-    st.subheader("How it works")
-    for column, (number, title, text) in zip(st.columns(3, gap="medium"), _STEPS, strict=True):
-        column.markdown(
-            f"<div class='noco-step'><b>{number}</b><strong>{title}</strong><br>{text}</div>",
-            unsafe_allow_html=True,
+            "hover for sources, click for details, export the manager report and CSV.",
+            prospect_page,
+            "Open Prospect Map",
+            ":material/map:",
         )
 
-    st.caption(
-        f"{OSM_ATTRIBUTION} · City of Buffalo assessment roll · US Census geocoder · "
-        "Estimates, not quotes: a NOCO site visit confirms them."
+    steps = "".join(
+        f"<div class='noco-step'><span class='num'>{number}</span>"
+        f"<span class='head'>{escape(title)}</span><span class='body'>{escape(text)}</span></div>"
+        for number, title, text in _STEPS
+    )
+    st.markdown(
+        f"<div class='noco-section'>How it works</div><div class='noco-steps'>{steps}</div>"
+        f"<div class='noco-foot'>{escape(OSM_ATTRIBUTION)} · City of Buffalo assessment roll · "
+        "US Census geocoder · Estimates, not quotes: a NOCO site visit confirms them.</div>",
+        unsafe_allow_html=True,
     )
 
 

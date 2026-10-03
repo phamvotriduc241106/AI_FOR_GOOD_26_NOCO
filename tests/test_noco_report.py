@@ -245,3 +245,63 @@ def test_csv_neutralises_formulas(prospects):
 
 def test_opportunity_default_is_customer_safe():
     assert Opportunity().illustrative is True
+
+
+@pytest.mark.parametrize("cost,margin", [(8.0, 0.35), (12.5, 0.22), (0.0, 0.0)])
+def test_demo_reports_label_actual_values_and_preserve_customer_privacy(cost, margin):
+    assumptions = Assumptions(cost_per_sqft=cost, margin_pct=margin)
+    p = rank_prospects(SAMPLE_BUILDINGS, assumptions)[0]
+    customer_html = customer(p)
+    manager_html = report.render_manager_report([p], assumptions)
+    for document in (customer_html, manager_html):
+        assert 'class="demo"' in document
+        assert "color: #EF4444" in document
+        assert "print-color-adjust: exact" in document
+        assert "Red values are DEMO values for illustration" in document
+        assert f"installed cost ${cost:g}/sq ft" in document
+        assert "They are not NOCO quotes" in document
+    content = visible(customer_html).lower()
+    assert "illustrative estimate" in content
+    assert "needs an installation quote" not in content
+    for forbidden in ("revenue", "profit", "margin", "30-40%"):
+        assert forbidden not in content
+    assert f"margin {margin:.0%}" in manager_html
+    assert f'<b class="demo">${p.result.project_cost:,.0f}</b>' in customer_html
+    assert f"<td class='n ill demo'>${p.opportunity.project_revenue:,.0f}</td>" in manager_html
+    assert f"<td class='n ill demo'>${p.opportunity.estimated_profit:,.0f}</td>" in manager_html
+    assert f"<td class='n demo'>{p.result.simple_payback_years:.1f} yr</td>" in manager_html
+    assert "<td class='demo'>Installed cost=" in manager_html
+    assert "<td class='demo'>NOCO margin=" in manager_html
+    assert f"<b>${p.result.annual_cost_savings:,.0f}</b>" in customer_html
+    assert f"<b>${p.result.incentive:,.0f}</b>" in customer_html
+
+
+def test_unknown_cost_remains_unknown_without_demo_legend(prospects):
+    assert Assumptions().cost_per_sqft is None
+    assert Assumptions().margin_pct is None
+    for document in (
+        customer(prospects[0]),
+        report.render_manager_report(prospects, Assumptions()),
+    ):
+        assert "Red values are DEMO" not in visible(document)
+        assert 'class="demo"' not in visible(document)
+    assert "Needs an installation quote" in customer(prospects[0])
+
+
+def test_customer_known_cost_with_zero_savings_does_not_claim_cost_is_unknown():
+    p = rank_prospects(SAMPLE_BUILDINGS, Assumptions(cost_per_sqft=8.0))[0]
+    p.result.simple_payback_years = None
+    p.result.annual_cost_savings = 0.0
+    document = customer(p)
+    assert "Unavailable" in document
+    assert "Needs an installation quote" not in document
+    assert "Illustrative estimate" in document
+
+
+def test_manager_missing_margin_does_not_color_an_invented_profit():
+    assumptions = Assumptions(cost_per_sqft=8.0)
+    p = rank_prospects(SAMPLE_BUILDINGS, assumptions)[0]
+    document = report.render_manager_report([p], assumptions)
+    assert "<td class='n ill'>needs margin</td>" in document
+    assert "margin 35%" not in document
+    assert "<td class='demo'>NOCO margin=not set" not in document

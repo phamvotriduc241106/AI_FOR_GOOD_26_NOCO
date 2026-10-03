@@ -255,3 +255,37 @@ def test_offline_pages_run_lookup_estimate_and_ranking(monkeypatch: pytest.Monke
     assert tooltip["style"]["transform"] == "none"
     assert "300px" in tooltip["style"]["maxWidth"]
     assert tooltip["style"]["whiteSpace"] == "normal"
+
+
+def test_demo_defaults_and_opt_out_on_both_pages(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("NOCO_OFFLINE", "1")
+    app = AppTest.from_file("../app/streamlit_app.py", default_timeout=30).run()
+    app.switch_page("pages/1_Address_to_Quote.py").run()
+    assert app.toggle[0].value is True
+    assert app.number_input(key="noco_demo_cost_address").value == 8.0
+    next(b for b in app.button if b.label == "Estimate insulation upgrade").click().run()
+    assert not app.exception
+    payback = next(metric for metric in app.metric if "Payback" in metric.label)
+    assert payback.value != "Needs installed cost"
+    assert any("Red = DEMO" in item.value for item in app.markdown)
+    app.toggle[0].set_value(False).run()
+    assert next(metric for metric in app.metric if "Payback" in metric.label).value == (
+        "Needs installed cost"
+    )
+
+    app.switch_page("pages/2_Prospect_Map.py").run()
+    assert all(toggle.value for toggle in app.toggle)
+    assert app.number_input(key="noco_demo_cost_prospect").value == 8.0
+    assert next(slider for slider in app.slider if "margin" in slider.label).value == 0.35
+    next(b for b in app.button if b.label == "Show potential customers").click().run()
+    assert not app.exception
+    assert any(":red[NOCO profit (ILLUSTRATIVE / DEMO): $" in x.value for x in app.markdown)
+    for toggle in app.toggle:
+        toggle.set_value(False)
+    app.run()
+    assert not app.exception
+    assert next(metric for metric in app.metric if "Payback" in metric.label).value == (
+        "Needs installed cost"
+    )
+    assert any("needs NOCO cost" in x.value for x in app.markdown)
+    assert any("needs NOCO margin" in x.value for x in app.markdown)

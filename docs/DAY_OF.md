@@ -208,19 +208,19 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 **Bản tin tình hình (14:00, viết tay, sửa khi cần):**
 - **Đã merge và kiểm tra:** T1 đến T5, T7, T10, T11, T12, T14, R1, **T15** (giao diện tối), **T16** (bảng giả định báo cáo sếp lấy từ máy tính, HDD 6.750 [noco_sheet]), **T17** (12 toà AUTO BODY vào nhóm warehouse).
 - **Đang làm:** T9 (QA, Nguyen-Le-Tuan, trên máy demo), T8 (slide, NguyenQBao).
-- **Đóng băng: 14:30.** Sau đó chỉ sửa lỗi T9 tìm ra và tập pitch. Không merge tính năng mới.
+- **Đóng băng: 15:00** (human-A dời từ 14:30 để hoàn thiện UI). Merge cuối nên trước 14:50 để còn QA, chụp ảnh slide và có mặt trong phòng lúc 15:00. Đang làm: T18 (Codex: tooltip, giá trị DEMO tô đỏ), T19 (Anh-08: trang chủ NOCO Scout).
 - **Giả định cần nói rõ khi demo:** hệ thống sưởi mặc định là điện trở; DAC chưa rõ nên dùng mức không DAC.
 - **Để sau (slide "tương lai"):** phát hiện R1 số 1, 4, 5 (tham số mặc định, gắn cờ đầu vào sai, propane/dầu và các chương trình khác).
 - **Chưa có:** chi phí lắp đặt (A4), cho phép dùng số của NOCO trong slide (A6), câu trả lời ban tổ chức (O1 đến O4).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 14:22 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 14:24 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
 | Người | Công cụ | Vai trò: việc |
 |---|---|---|
-| Anh-08 | Claude Code | claude (agent): T1, T3, T7, T10, T14, R1, T15, T16, T17 |
+| Anh-08 | Claude Code | claude (agent): T1, T3, T7, T10, T14, R1, T15, T16, T17, T19 |
 | phamvotriduc241106 | Codex | codex (agent): T2, T4, T5, T11, T12, T18 |
 | Nguyen-Le-Tuan (tôi) | — | human-a (điều phối, review và merge PR): — |
 | NguyenQBao | — | human-b (QA, chạy demo): T9; human-c (pitch, Devpost): T8; partner-qa (hỏi đối tác): —; researcher (tìm dữ liệu công khai): T6; backup-integrator (merge dự phòng): — |
@@ -230,6 +230,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý — NguyenQBao
 - `T18` [MUST, sửa lỗi demo + dữ liệu minh hoạ] Hai PR. PR1 (hạn 14:40): (1) tooltip Prospect Map bay ra khỏi màn hình: rút còn tối đa 6 dòng ngắn, rộng tối đa khoảng 300 px, tự kiểm tra trong trình duyệt ở mép trên/giữa/dưới; (2) bỏ câu lỗi thời "inferred HDD/CDD remain unconfirmed". PR2 (hạn 14:55, quá hạn thì KHÔNG merge): giá trị DEMO thay cho chỗ trống "needs cost/margin": DEMO_COST_PER_SQFT=8.0 (đội HELIX chọn, không phải giá NOCO), DEMO_MARGIN_PCT=0.35 (giữa khoảng 30-40% NOCO nói miệng), định nghĩa MỘT chỗ ở tầng app, toggle bật sẵn, tắt được; KHÔNG đổi giá trị mặc định trong contract.py. Mọi giá trị DEMO (chi phí lắp đặt, chi phí dự án/doanh thu, hoàn vốn, biên, lợi nhuận) tô ĐỎ (#EF4444) có chú thích ở giao diện web và trong 2 báo cáo HTML; báo cáo khách vẫn KHÔNG có doanh thu/lợi nhuận/biên NOCO — phamvotriduc241106 (Codex)
+- `T19` [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50 — Anh-08 (Claude Code)
 
 **🔄 ĐANG LÀM**
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
@@ -278,8 +279,9 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
 - `T15` [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo — Anh-08 (Claude Code)
 
-**Đợt 5**
+**Đợt 5** (chạy song song)
 - `T18` [MUST, sửa lỗi demo + dữ liệu minh hoạ] Hai PR. PR1 (hạn 14:40): (1) tooltip Prospect Map bay ra khỏi màn hình: rút còn tối đa 6 dòng ngắn, rộng tối đa khoảng 300 px, tự kiểm tra trong trình duyệt ở mép trên/giữa/dưới; (2) bỏ câu lỗi thời "inferred HDD/CDD remain unconfirmed". PR2 (hạn 14:55, quá hạn thì KHÔNG merge): giá trị DEMO thay cho chỗ trống "needs cost/margin": DEMO_COST_PER_SQFT=8.0 (đội HELIX chọn, không phải giá NOCO), DEMO_MARGIN_PCT=0.35 (giữa khoảng 30-40% NOCO nói miệng), định nghĩa MỘT chỗ ở tầng app, toggle bật sẵn, tắt được; KHÔNG đổi giá trị mặc định trong contract.py. Mọi giá trị DEMO (chi phí lắp đặt, chi phí dự án/doanh thu, hoàn vốn, biên, lợi nhuận) tô ĐỎ (#EF4444) có chú thích ở giao diện web và trong 2 báo cáo HTML; báo cáo khách vẫn KHÔNG có doanh thu/lợi nhuận/biên NOCO — phamvotriduc241106 (Codex)
+- `T19` [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50 — Anh-08 (Claude Code)
 
 ### Bảng chi tiết
 
@@ -303,15 +305,39 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T16 | [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test | Anh-08 | `task/t16` | T10 (Anh-08), T12 (phamvotriduc241106) | merged |
 | T17 | [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ | Anh-08 | `task/t17` | T12 (phamvotriduc241106) | merged |
 | T18 | [MUST, sửa lỗi demo + dữ liệu minh hoạ] Hai PR. PR1 (hạn 14:40): (1) tooltip Prospect Map bay ra khỏi màn hình: rút còn tối đa 6 dòng ngắn, rộng tối đa khoảng 300 px, tự kiểm tra trong trình duyệt ở mép trên/giữa/dưới; (2) bỏ câu lỗi thời "inferred HDD/CDD remain unconfirmed". PR2 (hạn 14:55, quá hạn thì KHÔNG merge): giá trị DEMO thay cho chỗ trống "needs cost/margin": DEMO_COST_PER_SQFT=8.0 (đội HELIX chọn, không phải giá NOCO), DEMO_MARGIN_PCT=0.35 (giữa khoảng 30-40% NOCO nói miệng), định nghĩa MỘT chỗ ở tầng app, toggle bật sẵn, tắt được; KHÔNG đổi giá trị mặc định trong contract.py. Mọi giá trị DEMO (chi phí lắp đặt, chi phí dự án/doanh thu, hoàn vốn, biên, lợi nhuận) tô ĐỎ (#EF4444) có chú thích ở giao diện web và trong 2 báo cáo HTML; báo cáo khách vẫn KHÔNG có doanh thu/lợi nhuận/biên NOCO | phamvotriduc241106 | `task/t18` | T15 (Anh-08) | todo |
+| T19 | [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50 | Anh-08 | `task/t19` | T15 (Anh-08) | todo |
 ### Tin nhắn cho nhóm chat (copy)
 
 ```text
 LÀM NGAY:
 @NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý
 @phamvotriduc241106 -> T18: [MUST, sửa lỗi demo + dữ liệu minh hoạ] Hai PR. PR1 (hạn 14:40): (1) tooltip Prospect Map bay ra khỏi màn hình: rút còn tối đa 6 dòng ngắn, rộng tối đa khoảng 300 px, tự kiểm tra trong trình duyệt ở mép trên/giữa/dưới; (2) bỏ câu lỗi thời "inferred HDD/CDD remain unconfirmed". PR2 (hạn 14:55, quá hạn thì KHÔNG merge): giá trị DEMO thay cho chỗ trống "needs cost/margin": DEMO_COST_PER_SQFT=8.0 (đội HELIX chọn, không phải giá NOCO), DEMO_MARGIN_PCT=0.35 (giữa khoảng 30-40% NOCO nói miệng), định nghĩa MỘT chỗ ở tầng app, toggle bật sẵn, tắt được; KHÔNG đổi giá trị mặc định trong contract.py. Mọi giá trị DEMO (chi phí lắp đặt, chi phí dự án/doanh thu, hoàn vốn, biên, lợi nhuận) tô ĐỎ (#EF4444) có chú thích ở giao diện web và trong 2 báo cáo HTML; báo cáo khách vẫn KHÔNG có doanh thu/lợi nhuận/biên NOCO
+@Anh-08 -> T19: [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50
 ```
 
 ### Lệnh cho từng người (copy–paste)
+
+#### Anh-08
+
+**T19: [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50** — _sẵn sàng_
+
+```bash
+cd AI_FOR_GOOD   # thư mục repo bạn đã clone
+git switch main && git pull origin main
+git switch -c task/t19
+claude
+```
+Lời nhắc cho agent:
+```text
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T19: [SHOULD, UI] Trang chủ NOCO Scout thay cho khung chung "hackkit" (người dùng mở app không hiểu dùng thế nào): file mới app/NOCO_Scout.py làm điểm vào, dùng st.navigation liệt kê theo thứ tự: Home (tên sản phẩm, 1 câu giới thiệu, 2 thẻ lớn dẫn tới Address to Quote và Prospect Map bằng st.page_link, 3 bước sử dụng, dòng © OpenStreetMap contributors), Address to Quote, Prospect Map, và khung cũ đổi tên "AI site notes" (T11) ở cuối. make run và make demo chạy file mới. KHÔNG sửa các trang của T18 (Codex đang sửa). Test hiện có vẫn qua; thêm AppTest cho trang Home. Hạn 14:50. Chỉ sửa các file: các file được giao trong docs/TASKS.md. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+```
+Khi agent báo xong:
+```bash
+make test && make lint
+git push -u origin task/t19
+gh pr create --base main --fill
+```
+Rồi nhắn cho tôi số PR.
 
 #### phamvotriduc241106
 
@@ -391,7 +417,7 @@ Người merge dự phòng khi tôi bận: NguyenQBao (chỉ merge PR xanh, khô
 - merge `T10` → báo Anh-08 (T14), NguyenQBao (T9), Anh-08 (T16): chạy `git fetch origin && git merge origin/main`
 - merge `T12` → báo phamvotriduc241106 (T11), NguyenQBao (T9), Anh-08 (T16), Anh-08 (T17): chạy `git fetch origin && git merge origin/main`
 - merge `T14` → báo NguyenQBao (T9), Anh-08 (T15): chạy `git fetch origin && git merge origin/main`
-- merge `T15` → báo phamvotriduc241106 (T18): chạy `git fetch origin && git merge origin/main`
+- merge `T15` → báo phamvotriduc241106 (T18), Anh-08 (T19): chạy `git fetch origin && git merge origin/main`
 
 <!-- LANES:END -->
 

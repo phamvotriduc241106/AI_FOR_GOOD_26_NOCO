@@ -294,9 +294,18 @@ def fetch_property(lat: float, lon: float) -> dict | None:
 # --- assembling the facts ---
 
 
+_PLACE_WORDS = {"BUFFALO", "NY", "NEW", "YORK", "USA", "US"}
+
+
 def _normalize_address(address: str) -> str:
-    """'110 Franklin Street, Buffalo NY' -> '110 FRANKLIN ST' (street part only)."""
+    """Street part only: '110 Franklin Street, Buffalo NY' and '110 franklin st buffalo ny 14202'
+    both become '110 FRANKLIN ST'. The house number stays the first word, unchanged."""
     words = re.sub(r"[^A-Z0-9 ]", " ", address.upper().split(",")[0]).split()
+    # Without commas the city, state and ZIP trail the street: drop them, keeping number + street.
+    while len(words) > 2 and (
+        words[-1] in _PLACE_WORDS or re.fullmatch(r"\d{5}(\d{4})?", words[-1])
+    ):
+        words.pop()
     return " ".join(_ABBREVIATIONS.get(w, w) for w in words)
 
 
@@ -304,6 +313,24 @@ def _street_key(address: str) -> str:
     """_normalize_address without a trailing street suffix: '110 FRANKLIN ST' -> '110 FRANKLIN'."""
     words = _normalize_address(address).split()
     return " ".join(words[:-1] if len(words) > 2 and words[-1] in _STREET_SUFFIXES else words)
+
+
+def match_address(address: str, buildings: list[BuildingFacts]) -> BuildingFacts | None:
+    """The building whose street address equals `address` after normalisation, or None.
+
+    Whole-key equality, never substrings, so the house number must match exactly ("33 Franklin
+    St" never finds "333 FRANKLIN ST"). Exact street first; then ignoring the street suffix,
+    because the assessment roll writes "110 FRANKLIN" where people type "110 Franklin St".
+    A suffix-less match that fits several buildings is ambiguous and returns None.
+    """
+    for normalize in (_normalize_address, _street_key):
+        key = normalize(address)
+        if not key:
+            return None
+        found = [b for b in buildings if normalize(b.address) == key]
+        if len(found) == 1 or (found and normalize is _normalize_address):
+            return found[0].model_copy(deep=True)
+    return None
 
 
 _ABBREVIATIONS = {
@@ -351,15 +378,8 @@ def build_facts(address: str, *, offline: bool = False) -> BuildingFacts:
     A missing footprint or assessment record does NOT raise: those fields stay None with a note.
     """
     offline = offline or _is_offline()
-    if offline:
-        demo = load_demo_buildings()
-        # Exact street match first, then ignoring the suffix: the assessment roll writes
-        # "110 FRANKLIN" where people type "110 Franklin St".
-        for normalize in (_normalize_address, _street_key):
-            key = normalize(address)
-            for building in demo:
-                if normalize(building.address) == key:
-                    return building.model_copy(deep=True)
+    if offline and (demo := match_address(address, load_demo_buildings())) is not None:
+        return demo
 
     token = _offline.set(offline)
     try:

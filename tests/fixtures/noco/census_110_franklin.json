@@ -1,0 +1,67 @@
+{
+ "result": {
+  "input": {
+   "address": {
+    "address": "110 Franklin St, Buffalo, NY"
+   },
+   "benchmark": {
+    "isDefault": true,
+    "benchmarkDescription": "Public Address Ranges - Current Benchmark",
+    "id": "4",
+    "benchmarkName": "Public_AR_Current"
+   }
+  },
+  "addressMatches": [
+   {
+    "tigerLine": {
+     "side": "L",
+     "tigerLineId": "48290628"
+    },
+    "coordinates": {
+     "x": -78.877038778324,
+     "y": 42.884996254613
+    },
+    "addressComponents": {
+     "zip": "14202",
+     "streetName": "FRANKLIN",
+     "preType": "",
+     "city": "BUFFALO",
+     "preDirection": "",
+     "suffixDirection": "",
+     "fromAddress": "100",
+     "state": "NY",
+     "suffixType": "ST",
+     "toAddress": "112",
+     "suffixQualifier": "",
+     "preQualifier": ""
+    },
+    "matchedAddress": "110 FRANKLIN ST, BUFFALO, NY, 14202"
+   },
+   {
+    "tigerLine": {
+     "side": "L",
+     "tigerLineId": "48302503"
+    },
+    "coordinates": {
+     "x": -78.829502183073,
+     "y": 42.822708297054
+    },
+    "addressComponents": {
+     "zip": "14218",
+     "streetName": "FRANKLIN",
+     "preType": "",
+     "city": "BUFFALO",
+     "preDirection": "",
+     "suffixDirection": "",
+     "fromAddress": "104",
+     "state": "NY",
+     "suffixType": "ST",
+     "toAddress": "120",
+     "suffixQualifier": "",
+     "preQualifier": ""
+    },
+    "matchedAddress": "110 FRANKLIN ST, BUFFALO, NY, 14218"
+   }
+  ]
+ }
+}

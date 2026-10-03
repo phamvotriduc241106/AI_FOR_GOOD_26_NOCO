@@ -1,0 +1,206 @@
+{
+ "version": 0.6,
+ "generator": "Overpass API 0.7.62.11 87bfad18",
+ "osm3s": {
+  "timestamp_osm_base": "2026-10-03T16:07:21Z",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+ },
+ "elements": [
+  {
+   "type": "way",
+   "id": 259799780,
+   "bounds": {
+    "minlat": 42.8848095,
+    "minlon": -78.8775602,
+    "maxlat": 42.8850485,
+    "maxlon": -78.8771182
+   },
+   "geometry": [
+    {
+     "lat": 42.8848809,
+     "lon": -78.8775602
+    },
+    {
+     "lat": 42.8848095,
+     "lon": -78.8771581
+    },
+    {
+     "lat": 42.8849284,
+     "lon": -78.8771182
+    },
+    {
+     "lat": 42.8849622,
+     "lon": -78.8773114
+    },
+    {
+     "lat": 42.8849805,
+     "lon": -78.8774091
+    },
+    {
+     "lat": 42.8850287,
+     "lon": -78.8773931
+    },
+    {
+     "lat": 42.8850485,
+     "lon": -78.8775048
+    },
+    {
+     "lat": 42.8848809,
+     "lon": -78.8775602
+    }
+   ],
+   "tags": {
+    "building": "office",
+    "building:levels": "3",
+    "roof:levels": "0"
+   }
+  },
+  {
+   "type": "way",
+   "id": 331010793,
+   "bounds": {
+    "minlat": 42.8849748,
+    "minlon": -78.8773919,
+    "maxlat": 42.8851258,
+    "maxlon": -78.8771011
+   },
+   "geometry": [
+    {
+     "lat": 42.8850249,
+     "lon": -78.8771011
+    },
+    {
+     "lat": 42.8851258,
+     "lon": -78.8771955
+    },
+    {
+     "lat": 42.8850307,
+     "lon": -78.8773793
+    },
+    {
+     "lat": 42.8849881,
+     "lon": -78.8773919
+    },
+    {
+     "lat": 42.8849748,
+     "lon": -78.8773066
+    },
+    {
+     "lat": 42.8849954,
+     "lon": -78.8773006
+    },
+    {
+     "lat": 42.8850353,
+     "lon": -78.8772373
+    },
+    {
+     "lat": 42.8850102,
+     "lon": -78.8771063
+    },
+    {
+     "lat": 42.8850249,
+     "lon": -78.8771011
+    }
+   ],
+   "tags": {
+    "building": "office",
+    "building:levels": "3",
+    "roof:levels": "0"
+   }
+  },
+  {
+   "type": "way",
+   "id": 331375334,
+   "bounds": {
+    "minlat": 42.8850307,
+    "minlon": -78.8774718,
+    "maxlat": 42.8852216,
+    "maxlon": -78.8771955
+   },
+   "geometry": [
+    {
+     "lat": 42.8851258,
+     "lon": -78.8771955
+    },
+    {
+     "lat": 42.8852216,
+     "lon": -78.8772867
+    },
+    {
+     "lat": 42.8851321,
+     "lon": -78.8774628
+    },
+    {
+     "lat": 42.8851267,
+     "lon": -78.8774718
+    },
+    {
+     "lat": 42.8850307,
+     "lon": -78.8773793
+    },
+    {
+     "lat": 42.8851258,
+     "lon": -78.8771955
+    }
+   ],
+   "tags": {
+    "addr:city": "Buffalo",
+    "addr:housenumber": "60",
+    "addr:postcode": "14202",
+    "addr:state": "NY",
+    "addr:street": "Niagara Street",
+    "building": "office",
+    "building:levels": "2",
+    "nysgissam:nysaddresspointid": "ERIE105442",
+    "roof:levels": "0"
+   }
+  },
+  {
+   "type": "way",
+   "id": 1069429675,
+   "bounds": {
+    "minlat": 42.8849284,
+    "minlon": -78.8773114,
+    "maxlat": 42.8850353,
+    "maxlon": -78.8770917
+   },
+   "geometry": [
+    {
+     "lat": 42.8850102,
+     "lon": -78.8771063
+    },
+    {
+     "lat": 42.8850098,
+     "lon": -78.8770917
+    },
+    {
+     "lat": 42.8849284,
+     "lon": -78.8771182
+    },
+    {
+     "lat": 42.8849622,
+     "lon": -78.8773114
+    },
+    {
+     "lat": 42.8849748,
+     "lon": -78.8773066
+    },
+    {
+     "lat": 42.8849954,
+     "lon": -78.8773006
+    },
+    {
+     "lat": 42.8850353,
+     "lon": -78.8772373
+    },
+    {
+     "lat": 42.8850102,
+     "lon": -78.8771063
+    }
+   ],
+   "tags": {
+    "building": "yes"
+   }
+  }
+ ]
+}

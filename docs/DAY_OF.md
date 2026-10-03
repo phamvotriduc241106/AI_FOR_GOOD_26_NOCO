@@ -208,14 +208,14 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 **Bản tin tình hình (13:18, viết tay, sửa khi cần):**
 - **Đã merge:** T1 đến T5, T7 (300 toà ở 11 khu phố). Kiểm tra MUST: test và lint qua (102+ test), dữ liệu sạch (không `owner`/`mail`), gõ "110 Franklin St" offline ra đúng toà, hai trang chạy không lỗi.
   **Còn thiếu một việc MUST: T10 (báo cáo cho khách)**, nút "Generate customer report" đang bị vô hiệu cho tới khi T10 merge.
-- **T6 xong** (`docs/DATA.md`, `docs/T6_NOCO_questions.txt`). Phát hiện lớn: bảng tính thật của NOCO cho thấy (1) ưu đãi phụ thuộc nhiên liệu, ΔR, DAC và có trần (mô hình hiện tại dùng $4 cố định), (2) làm mát là LF × 0,75 chứ không phải LF²,
+- **T6 xong**: bản của Bảo (trích dẫn từng ô, nhánh `agent/t6-data`) đã gộp với phần bổ sung (`docs/DATA.md`, `docs/T6_NOCO_questions.txt`). Phát hiện lớn: bảng tính thật của NOCO cho thấy (1) ưu đãi phụ thuộc nhiên liệu, ΔR, DAC và có trần (mô hình hiện tại dùng $4 cố định), (2) làm mát là LF × 0,75 chứ không phải LF²,
   (3) HDD thật là 6.750 nhân 0,9. Việc sửa là **T12** (codex). Chưa có: chi phí lắp đặt (A4), cho phép dùng số của NOCO trong slide (A6), câu trả lời của ban tổ chức (O1 đến O4).
-- **Thứ tự cho hai coder:** Anh-08: **T10 trước**, rồi R1. phamvotriduc241106: **T12**; T11 chỉ làm nếu còn giờ. NguyenQBao: làm rõ "greens column" (B2), hỏi O1 đến O4, hoàn thiện slide với ảnh thật.
+- **Thứ tự cho hai coder:** Anh-08: **T10 trước**, rồi R1. phamvotriduc241106: **T12**; T11 chỉ làm nếu còn giờ. NguyenQBao: xác nhận diễn giải "greens column" = các ô đầu ra màu xanh của bảng tính (`SC!D5:F11`, đã đưa vào T10), hỏi O1 đến O4, hoàn thiện slide với ảnh thật.
 - **Quyết định đang chờ bạn:** (1) duyệt ngoại lệ `contract.py` cho T12 (đã ghi ở mục Requests của TASKS.md); (2) có làm lớp "cộng đồng thiệt thòi" (DAC) không (dữ liệu đã kiểm chứng, xem `docs/DATA.md` mục 7; chỉ làm nếu T10 và T12 xong sớm);
   (3) có dời mốc đóng băng từ 14:00 sang 14:30 không (nộp bài mở khoảng 14:45, hạn cuối 15:30).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 13:18 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 13:23 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -230,12 +230,12 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý — NguyenQBao
-- `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" chưa rõ nghĩa, dùng cột tiền/lợi nhuận ILLUSTRATIVE; dùng số trong docs/DATA.md — Anh-08 (Claude Code)
-- `T11` [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
-- `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md mục 2 đến 4): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
+- `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md — Anh-08 (Claude Code)
+- `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
 - `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code)
 
 **⏳ ĐANG CHỜ**
+- `T11` [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex) — chờ T12 (phamvotriduc241106 (Codex))
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao — chờ T10 (Anh-08 (Claude Code))
 
 **✅ XONG**
@@ -260,12 +260,12 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 **Đợt 2** (chạy song song)
 - `T5` [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects — phamvotriduc241106 (Codex)
 - `T7` [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được — Anh-08 (Claude Code)
-- `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" chưa rõ nghĩa, dùng cột tiền/lợi nhuận ILLUSTRATIVE; dùng số trong docs/DATA.md — Anh-08 (Claude Code)
-- `T11` [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
-- `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md mục 2 đến 4): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
+- `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md — Anh-08 (Claude Code)
+- `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
 - `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code)
 
-**Đợt 3**
+**Đợt 3** (chạy song song)
+- `T11` [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
 
 ### Bảng chi tiết
@@ -280,9 +280,9 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T6 | [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md | NguyenQBao | `task/t6` | — | merged |
 | T7 | [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được | Anh-08 | `task/t7` | T3 (Anh-08) | merged |
 | T8 | [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý | NguyenQBao | `task/t8` | — | todo |
-| T10 | [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" chưa rõ nghĩa, dùng cột tiền/lợi nhuận ILLUSTRATIVE; dùng số trong docs/DATA.md | Anh-08 | `task/t10` | T2 (phamvotriduc241106) | todo |
-| T11 | [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response | phamvotriduc241106 | `task/t11` | T2 (phamvotriduc241106) | todo |
-| T12 | [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md mục 2 đến 4): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) | phamvotriduc241106 | `task/t12` | T2 (phamvotriduc241106) | todo |
+| T10 | [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md | Anh-08 | `task/t10` | T2 (phamvotriduc241106) | todo |
+| T11 | [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response | phamvotriduc241106 | `task/t11` | T12 (phamvotriduc241106) | todo |
+| T12 | [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) | phamvotriduc241106 | `task/t12` | T2 (phamvotriduc241106) | todo |
 | T9 | [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint | NguyenQBao | `task/t9` | T4 (phamvotriduc241106), T5 (phamvotriduc241106), T7 (Anh-08), T10 (Anh-08), T12~ (phamvotriduc241106, chỉ để hoàn tất) | todo |
 | R1 | Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa | Anh-08 | (không cần, chỉ đọc) | T2 (phamvotriduc241106) | todo |
 ### Tin nhắn cho nhóm chat (copy)
@@ -290,11 +290,11 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 ```text
 LÀM NGAY:
 @NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý
-@Anh-08 -> T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" chưa rõ nghĩa, dùng cột tiền/lợi nhuận ILLUSTRATIVE; dùng số trong docs/DATA.md
-@phamvotriduc241106 -> T11: [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response
-@phamvotriduc241106 -> T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md mục 2 đến 4): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần)
+@Anh-08 -> T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md
+@phamvotriduc241106 -> T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần)
 @Anh-08 -> R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa
 CHUẨN BỊ, CHỜ TÔI BÁO:
+@phamvotriduc241106 -> T11: [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response
 @NguyenQBao -> T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint
 ```
 
@@ -302,7 +302,7 @@ CHUẨN BỊ, CHỜ TÔI BÁO:
 
 #### Anh-08
 
-**T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" chưa rõ nghĩa, dùng cột tiền/lợi nhuận ILLUSTRATIVE; dùng số trong docs/DATA.md** — _sẵn sàng_
+**T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md** — _sẵn sàng_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -312,7 +312,7 @@ claude
 ```
 Lời nhắc cho agent:
 ```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" chưa rõ nghĩa, dùng cột tiền/lợi nhuận ILLUSTRATIVE; dùng số trong docs/DATA.md. Chỉ sửa các file: src/features/noco_scout/report.py, tests/test_noco_report.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md. Chỉ sửa các file: src/features/noco_scout/report.py, tests/test_noco_report.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
 ```
 Khi agent báo xong:
 ```bash
@@ -336,7 +336,9 @@ Review nhánh origin/task/t2 so với main (git diff origin/main...origin/task/t
 
 #### phamvotriduc241106
 
-**T11: [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response** — _sẵn sàng_
+**T11: [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response** — _đang chờ_
+
+⏳ CHƯA chạy các lệnh dưới. Chờ T12 xong, tôi sẽ báo.
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -346,7 +348,7 @@ codex
 ```
 Lời nhắc cho agent:
 ```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T11: [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response. Chỉ sửa các file: src/features/noco_scout/__init__.py, evals/cases/noco_scout.jsonl, data/synthetic/site_notes/, tests/test_noco_extract.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T11: [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response. Chỉ sửa các file: src/features/noco_scout/__init__.py, evals/cases/noco_scout.jsonl, data/synthetic/site_notes/, tests/test_noco_extract.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
 ```
 Khi agent báo xong:
 ```bash
@@ -356,7 +358,7 @@ gh pr create --base main --fill
 ```
 Rồi nhắn cho tôi số PR.
 
-**T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md mục 2 đến 4): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần)** — _sẵn sàng_
+**T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần)** — _sẵn sàng_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -366,7 +368,7 @@ codex
 ```
 Lời nhắc cho agent:
 ```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md mục 2 đến 4): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần). Chỉ sửa các file: src/features/noco_scout/calc.py, src/features/noco_scout/contract.py, Assumptions, CalcInputs, tests/test_noco_calc.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần). Chỉ sửa các file: src/features/noco_scout/calc.py, src/features/noco_scout/contract.py, Assumptions, CalcInputs, tests/test_noco_calc.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
 ```
 Khi agent báo xong:
 ```bash
@@ -426,13 +428,13 @@ Người merge dự phòng khi tôi bận: NguyenQBao (chỉ merge PR xanh, khô
 
 **Sau khi merge một task, báo ngay cho người đang chờ:**
 - merge `T1` → báo phamvotriduc241106 (T2), Anh-08 (T3), phamvotriduc241106 (T4): chạy `git fetch origin && git merge origin/main`
-- merge `T2` → báo phamvotriduc241106 (T5), Anh-08 (T10), phamvotriduc241106 (T11), phamvotriduc241106 (T12), Anh-08 (R1): chạy `git fetch origin && git merge origin/main`
+- merge `T2` → báo phamvotriduc241106 (T5), Anh-08 (T10), phamvotriduc241106 (T12), Anh-08 (R1): chạy `git fetch origin && git merge origin/main`
 - merge `T3` → báo Anh-08 (T7): chạy `git fetch origin && git merge origin/main`
 - merge `T4` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
 - merge `T5` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
 - merge `T7` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
 - merge `T10` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
-- merge `T12` → báo NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
+- merge `T12` → báo phamvotriduc241106 (T11), NguyenQBao (T9): chạy `git fetch origin && git merge origin/main`
 
 <!-- LANES:END -->
 

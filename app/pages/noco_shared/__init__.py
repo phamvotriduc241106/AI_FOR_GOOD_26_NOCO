@@ -31,6 +31,10 @@ LAYER_ID = "noco-buildings"
 ACCENT = "#2DD4BF"
 PAGE_BG = "#0B1418"
 PANEL_BG = "#14232A"
+DEMO_COST_PER_SQFT = 8.0  # Demo chosen by team HELIX, NOT a NOCO price.
+DEMO_MARGIN_PCT = 0.35  # Midpoint of the 30–40% NOCO mentioned verbally.
+DEMO_COLOR = "#EF4444"
+DEMO_NOTE = "Red = DEMO value for illustration, not from NOCO or public data."
 BLANK_MAP_STYLE = "data:application/json," + quote(
     json.dumps(
         {
@@ -57,6 +61,8 @@ div[data-testid="stDataFrame"], div[data-testid="stExpander"],
 div[data-testid="stAlert"] {{ border-radius: 10px; }}
 iframe, div[data-testid="stDeckGlJsonChart"] {{ border-radius: 12px; }}
 div[data-testid="stDeckGlJsonChart"] {{ position: relative; z-index: 10; }}
+.st-key-noco_demo_cost_address input, .st-key-noco_demo_cost_prospect input {{
+  color: {DEMO_COLOR} !important; }}
 </style>
 """
 
@@ -307,11 +313,19 @@ def show_estimate(prospect: Prospect) -> None:
     first.metric("Annual savings · NOCO model + GIS", f"${result.annual_cost_savings:,.0f}")
     second.metric("Incentive · NOCO sheet", f"${result.incentive:,.0f}")
     third.metric(
-        "Payback · ILLUSTRATIVE cost",
+        ":red[Payback · ILLUSTRATIVE cost]"
+        if result.project_cost is not None
+        else "Payback · ILLUSTRATIVE cost",
         f"{result.simple_payback_years:.1f} years"
         if result.simple_payback_years is not None
         else "Needs installed cost",
     )
+    if result.project_cost is not None:
+        third.markdown(":red[DEMO value]")
+        st.markdown(
+            f":red[Project cost: ${result.project_cost:,.0f} · "
+            "DEMO / ILLUSTRATIVE installed cost × NOCO wall area]"
+        )
     st.caption(
         "Reference model reproduces NOCO's example using sheet-confirmed HDD/CDD; "
         "site conditions and incentive eligibility still require verification."

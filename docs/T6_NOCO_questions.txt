@@ -63,18 +63,30 @@ HOW ANSWERS CHANGE THE BUILD (tell Nguyen-Le-Tuan immediately)
 - B4 answered -> may change what the map tooltip shows for 'provider'.
 - A6 refused -> remove the screenshot from the slides; keep only our own computed numbers.
 
-ANSWER LOG (copy into docs/DATA.md)
- #  | Question (short)        | Answer, verbatim            | Who / role | Time  | Confidence (heard / read / guessed)
-----|-------------------------|-----------------------------|------------|-------|------------------------------------
- A1 |                         |                             |            |       |
- A2 |                         |                             |            |       |
- A3 |                         |                             |            |       |
- A4 |                         |                             |            |       |
- A5 |                         |                             |            |       |
- A6 |                         |                             |            |       |
- B1 |                         |                             |            |       |
- B2 |                         |                             |            |       |
- B3 |                         |                             |            |       |
- B4 |                         |                             |            |       |
- B5 |                         |                             |            |       |
- B6 |                         |                             |            |       |
+ANSWER LOG (normalized in docs/DATA.md; extracted 2026-10-03)
+SC = workbook "Sales Calculator"; AS = workbook "Assumptions".
+DOCX P# = paragraph position in word/document.xml, counting empty paragraphs.
+A rows are workbook evidence, NOT verbatim interview responses. B/C quoted notes preserve wording.
+No respondent name/role or interview time is recorded. Extraction date is not the interview date.
+
+ #  | Question (short) | Answer / exact source evidence | Who / role | Time | Confidence
+----|------------------|--------------------------------|------------|------|-----------
+ A1 | HDD/CDD | AS!B2=6750; AS!C2=650; SC!E20/E21 select Buffalo values. Earlier 6075 = 6750 x AS!W8 (0.9). | Workbook; author not recorded | Not recorded | Read values/formulas
+ A2 | Cooling load | SC!I3: =E19*I13*E21*24*E22*Assumptions!$W$9; AS!W9=0.75. Heating SC!I2 multiplies by AS!W8=0.9. LF squared only matches the daytime example. | Workbook; author not recorded | Not recorded | Read formulas
+ A3 | Perimeter | SC!I18=B8/B11; I19=2*(sqrt(footprint*aspect_ratio)+sqrt(footprint/aspect_ratio)); I21=I19*I20. AS!AK5=4, AL5=1 -> 500 ft for 10,000 sq ft, 1 floor. GIS acceptance not supplied. | Workbook; author not recorded | Not recorded | Read formula; GIS approval unanswered
+ A4 | Installed cost | Not supplied. SC!B19:B23 are energy prices, not insulation installation costs. Keep cost/payback unknown. | No answer in workbook | Not recorded | Unanswered
+ A5 | Incentive | SC!I14/I17 select $4/sq ft for this electric non-DAC example; SC!E10 caps electric at $150000 and natural gas at $250000; SC!I16/I17 use fuel/Delta R/DAC tiers. Full eligibility not supplied. | Workbook; author not recorded | Not recorded | Read formulas; eligibility incomplete
+ A6 | Permission | No permission statement supplied for screenshots, slide numbers or AI use. User requested extraction/PR; sponsor permission remains unrecorded. | No answer in workbook | Not recorded | Unanswered
+ B1 | Quote bottleneck | "1-2 experts on specifics field like electricity, heating systems + all others building data to give out the best respopnses." Slowest step and failed-visit count not answered. [DOCX P4] | Not recorded | Not recorded | Read notes; partial answer
+ B2 | Manager columns | "greens column" [DOCX P6]. Exact field list unrecorded; mapping to SC!D5:F11 is an interpretation pending clarification. | Not recorded | Not recorded | Read notes; ambiguous
+ B3 | Margin / project size | "30-40% on margin." [DOCX P8]. Project size and gross/net basis unrecorded. Keep opportunity amounts ILLUSTRATIVE pending cost/basis confirmation. | Not recorded | Not recorded | Read notes; partial answer
+ B4 | Provider | "based on the building -> then will find the most suitable providers for the utilities." [DOCX P12]. Suitability recommendation; does not identify current supplier. | Not recorded | Not recorded | Read notes; criteria missing
+ B5 | Target prospects | "prioritized: disadvangetage commu." / "goal: for any comercial" [DOCX P15/P16]. Neighborhoods and classification criteria unrecorded. | Not recorded | Not recorded | Read notes; partial answer
+ B6 | Packet contents | "in sheet" [DOCX P18]. Refers to the supplied workbook; no installed-cost table or license established. | Not recorded | Not recorded | Read notes
+ C1 | Next measures | "all of them." [DOCX P21]. Refers to windows, HVAC, lighting, solar and batteries in P20; no sequence supplied. | Not recorded | Not recorded | Read notes
+ C2 | Other incentives | "national fuel, NYSErDA" [DOCX P23]. Normalize to National Fuel and NYSERDA; no program rates/eligibility supplied. | Not recorded | Not recorded | Read notes
+ C3 | Wow demo | "super easy to use + quick + pretty for internal + customers." [DOCX P25]. No numeric speed target. | Not recorded | Not recorded | Read notes
+ C4 | Branding / contact | "NOCO logo" [DOCX P26]; embedded word/media/image1.png contains the logo. No style guide, contact or reuse license supplied. | Not recorded | Not recorded | Read notes + inspected image
+
+STATUS: T6 documentation ready for review. Follow-up questions and implementation owners are in docs/DATA.md.
+O1-O4 remain unanswered; neither supplied attachment answers the organizer questions.

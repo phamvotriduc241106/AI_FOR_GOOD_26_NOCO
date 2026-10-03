@@ -5,6 +5,8 @@ from __future__ import annotations
 import httpx
 import streamlit as st
 from pages.noco_shared import (
+    DEMO_COST_PER_SQFT,
+    DEMO_NOTE,
     apply_style,
     customer_report_button,
     find_building,
@@ -55,14 +57,20 @@ if facts is None:
     st.error("No building is available to estimate.")
     st.stop()
 
-use_cost = st.toggle("Enter an ILLUSTRATIVE installed cost", value=False)
+use_cost = st.toggle("Enter an ILLUSTRATIVE installed cost", value=True)
 cost_per_sqft = (
-    st.number_input("Installed cost per insulated wall sq ft (USD)", min_value=0.0, value=8.0)
+    st.number_input(
+        ":red[Installed cost per insulated wall sq ft (USD) · DEMO]",
+        min_value=0.0,
+        value=DEMO_COST_PER_SQFT,
+        key="noco_demo_cost_address",
+    )
     if use_cost
     else None
 )
 assumptions = Assumptions(cost_per_sqft=cost_per_sqft)
 prospect = make_prospect(facts, assumptions)
+st.markdown(f":red[{DEMO_NOTE}]")
 
 map_col, facts_col = st.columns([3, 2], gap="medium")
 with map_col:

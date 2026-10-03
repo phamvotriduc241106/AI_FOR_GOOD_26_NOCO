@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+import pandas as pd
 import streamlit as st
 from pages.noco_shared import (
+    DEMO_COLOR,
+    DEMO_COST_PER_SQFT,
+    DEMO_MARGIN_PCT,
+    DEMO_NOTE,
     _optional_module,
     apply_style,
     customer_report_button,
@@ -42,14 +47,25 @@ with count_col:
     top_count = st.slider("Top buildings", 1, len(buildings), min(25, len(buildings)))
 
 with st.expander("ILLUSTRATIVE NOCO cost and margin inputs"):
-    use_cost = st.toggle("Enter an illustrative installed cost", value=False)
+    use_cost = st.toggle("Enter an illustrative installed cost", value=True)
     cost_per_sqft = (
-        st.number_input("Installed cost per insulated wall sq ft (USD)", min_value=0.0, value=8.0)
+        st.number_input(
+            ":red[Installed cost per insulated wall sq ft (USD) · DEMO]",
+            min_value=0.0,
+            value=DEMO_COST_PER_SQFT,
+            key="noco_demo_cost_prospect",
+        )
         if use_cost
         else None
     )
-    use_margin = st.toggle("Enter an illustrative NOCO margin", value=False)
-    margin_pct = st.slider("NOCO margin fraction", 0.0, 0.5, 0.2, 0.01) if use_margin else None
+    use_margin = st.toggle("Enter an illustrative NOCO margin", value=True)
+    margin_pct = (
+        st.slider(":red[NOCO margin fraction · DEMO]", 0.0, 0.5, DEMO_MARGIN_PCT, 0.01)
+        if use_margin
+        else None
+    )
+    if margin_pct is not None:
+        st.markdown(f":red[NOCO margin: {margin_pct:.0%} · DEMO / ILLUSTRATIVE]")
 
 assumptions = Assumptions(cost_per_sqft=cost_per_sqft, margin_pct=margin_pct)
 ranked = rank_buildings(buildings, assumptions)
@@ -63,6 +79,7 @@ filtered = [
 if st.button("Show potential customers", type="primary"):
     st.session_state["noco_show_potential"] = True
 show_potential = st.session_state.get("noco_show_potential", False)
+st.markdown(f":red[{DEMO_NOTE}]")
 
 map_col, detail_col = st.columns([2, 1], gap="medium")
 with map_col:
@@ -110,8 +127,18 @@ with detail_col:
             if opportunity.estimated_profit is not None
             else "needs NOCO margin"
         )
-        st.write(f"NOCO revenue (ILLUSTRATIVE): {revenue}")
-        st.write(f"NOCO profit (ILLUSTRATIVE): {profit}")
+        st.markdown(
+            f":red[NOCO revenue (ILLUSTRATIVE / DEMO): {revenue}]"
+            if opportunity.project_revenue is not None
+            else f"NOCO revenue (ILLUSTRATIVE): {revenue}"
+        )
+        st.markdown(
+            f":red[NOCO profit (ILLUSTRATIVE / DEMO): {profit}]"
+            if opportunity.estimated_profit is not None
+            else f"NOCO profit (ILLUSTRATIVE): {profit}"
+        )
+        if opportunity.margin_pct is not None:
+            st.markdown(f":red[NOCO margin (ILLUSTRATIVE / DEMO): {opportunity.margin_pct:.0%}]")
         customer_report_button(prospect)
 
 if show_potential and filtered:
@@ -131,7 +158,12 @@ if show_potential and filtered:
             ),
         }
 
-    st.dataframe([_row(prospect) for prospect in filtered], hide_index=True, width="stretch")
+    table = pd.DataFrame([_row(prospect) for prospect in filtered])
+    styled = table.style.map(
+        lambda value: f"color: {DEMO_COLOR}" if value != "needs cost" else "",
+        subset=["Payback · ILLUSTRATIVE cost"],
+    )
+    st.dataframe(styled, hide_index=True, width="stretch")
     report = _optional_module("features.noco_scout.report")
     left, right = st.columns(2)
     with left:

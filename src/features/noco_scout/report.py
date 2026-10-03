@@ -61,6 +61,8 @@ h2 { font-size: 14px; text-transform: uppercase; letter-spacing: .04em; color: #
 .card { border: 1px solid #cfe3d8; border-radius: 6px; padding: 8px 10px; background: #f3faf6; }
 .card b { display: block; font-size: 18px; color: #14532d; }
 .card span { font-size: 11px; color: #44535c; }
+.demo, .card b.demo { color: #EF4444; font-weight: 600;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 table { width: 100%; border-collapse: collapse; }
 th, td { text-align: left; padding: 4px 6px; border-bottom: 1px solid #e3e8eb;
   vertical-align: top; }
@@ -92,8 +94,31 @@ def _num(value: float | None, unit: str = "", digits: int = 0) -> str:
     return "—" if value is None else f"{value:,.{digits}f}{unit}"
 
 
-def _card(value: str, label: str) -> str:
-    return f"<div class='card'><b>{escape(value)}</b><span>{escape(label)}</span></div>"
+def _card(value: str, label: str, *, demo: bool = False) -> str:
+    style = ' class="demo"' if demo else ""
+    return f"<div class='card'><b{style}>{escape(value)}</b><span>{escape(label)}</span></div>"
+
+
+def _demo_legend(cost: float | None, margin: float | None = None, *, enabled: bool = False) -> str:
+    """Describe the actual scenario values; customer callers never pass a margin."""
+    if cost is None and margin is None and not enabled:
+        return ""
+    details = []
+    if cost is not None:
+        details.append(
+            f"installed cost ${cost:g}/sq ft is a demo scenario, not a NOCO price; "
+            "the app default was chosen by team HELIX"
+        )
+    if margin is not None:
+        details.append(
+            f"margin {margin:.0%} is illustrative; the app default is the midpoint "
+            "of the 30-40% NOCO mentioned verbally"
+        )
+    context = f" ({'; '.join(details)})" if details else ""
+    return (
+        '<p class="demo">Red values are DEMO values for illustration'
+        f"{escape(context)}. They are not NOCO quotes.</p>"
+    )
 
 
 def _source(facts: BuildingFacts, field: str) -> str:
@@ -162,11 +187,22 @@ def render_customer_report(
     supplier = opportunity.current_supplier if opportunity else NOT_IN_PUBLIC_DATA
     heating = HEATING.get(inputs.heating_fuel, inputs.heating_fuel)
 
-    if result.simple_payback_years is not None:
+    if result.project_cost is not None:
         payback = (
             "<div class='cards'>"
-            + _card(_money(result.net_investment), "Net investment after incentive")
-            + _card(f"{result.simple_payback_years:,.1f} years", "Simple payback")
+            + _card(_money(result.project_cost), "Project cost · Illustrative estimate", demo=True)
+            + _card(
+                _money(result.net_investment),
+                "Net investment after incentive · Illustrative estimate",
+                demo=True,
+            )
+            + _card(
+                f"{result.simple_payback_years:,.1f} years"
+                if result.simple_payback_years is not None
+                else "Unavailable",
+                "Simple payback · Illustrative estimate",
+                demo=result.simple_payback_years is not None,
+            )
             + "</div>"
         )
     else:
@@ -190,6 +226,7 @@ def render_customer_report(
     body = f"""
 <h1>Wall insulation upgrade: savings estimate</h1>
 <div class="muted">{escape(facts.address)}</div>
+{_demo_legend(inputs.cost_per_sqft, enabled=result.project_cost is not None)}
 <div class="cards">{headline}</div>
 {payback}
 
@@ -275,8 +312,13 @@ def _manager_row(p: Prospect) -> str:
         f"<td class='n'>{_num(f.floors) if f.floors else '—'}</td>"
         f"<td class='n'>{f'{join.confidence:g}' if join else '—'}</td>"
         + "".join(f"<td class='n green'>{v}</td>" for v in green)
-        + f"<td class='n'>{payback}</td>"
-        + "".join(f"<td class='n ill'>{v}</td>" for v in illustrative)
+        + f"<td class='n{' demo' if r.simple_payback_years is not None else ''}'>{payback}</td>"
+        + "".join(
+            f"<td class='n ill{' demo' if value is not None else ''}'>{text}</td>"
+            for text, value in zip(
+                illustrative, (o.project_revenue, o.estimated_profit), strict=True
+            )
+        )
         + "</tr>"
     )
 
@@ -311,8 +353,13 @@ def _assumption_rows(prospects: list[Prospect], a: Assumptions) -> str:
         ),
     ]
     return "".join(
-        f"<tr><td>{escape(line)}</td><td class='src'>{escape(scope)}</td></tr>"
+        f"<tr><td class='{'demo' if demo else ''}'>{escape(line)}</td>"
+        f"<td class='src'>{escape(scope)}</td></tr>"
         for line, scope in rows
+        for demo in [
+            (line.startswith("Installed cost=") and a.cost_per_sqft is not None)
+            or (line.startswith("NOCO margin=") and a.margin_pct is not None)
+        ]
     )
 
 
@@ -333,6 +380,7 @@ def render_manager_report(prospects: list[Prospect], a: Assumptions) -> str:
         + _card(
             _money(sum(known_profit)) if known_profit else "needs cost + margin",
             "NOCO profit (ILLUSTRATIVE)",
+            demo=bool(known_profit),
         )
     )
     header = (
@@ -349,6 +397,7 @@ def render_manager_report(prospects: list[Prospect], a: Assumptions) -> str:
     )
     body = f"""
 <h1>NOCO prospect list: wall insulation, Buffalo</h1>
+{_demo_legend(a.cost_per_sqft, a.margin_pct, enabled=bool(known_revenue or known_profit))}
 <div class="muted">Ranked by energy cost saved per year. Green columns are NOCO's calculator
 outputs; orange columns are ILLUSTRATIVE.</div>
 <div class="cards">{cards}</div>

@@ -214,14 +214,14 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - **Chưa có:** chi phí lắp đặt (A4), cho phép dùng số của NOCO trong slide (A6), câu trả lời ban tổ chức (O1 đến O4).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 14:02 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 14:18 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
 | Người | Công cụ | Vai trò: việc |
 |---|---|---|
 | Anh-08 | Claude Code | claude (agent): T1, T3, T7, T10, T14, R1, T15, T16, T17 |
-| phamvotriduc241106 | Codex | codex (agent): T2, T4, T5, T11, T12 |
+| phamvotriduc241106 | Codex | codex (agent): T2, T4, T5, T11, T12, T18 |
 | Nguyen-Le-Tuan (tôi) | — | human-a (điều phối, review và merge PR): — |
 | NguyenQBao | — | human-b (QA, chạy demo): T9; human-c (pitch, Devpost): T8; partner-qa (hỏi đối tác): —; researcher (tìm dữ liệu công khai): T6; backup-integrator (merge dự phòng): — |
 
@@ -229,6 +229,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý — NguyenQBao
+- `T18` [MUST, sửa lỗi demo] (1) Tooltip trang Prospect Map bay ra khỏi màn hình khi rê chuột (12 dòng dài, không giới hạn rộng): rút gọn tooltip còn tối đa 6 dòng ngắn (địa chỉ, loại toà, số tầng, tiết kiệm/năm, ưu đãi, một dòng nguồn có © OpenStreetMap contributors), giới hạn chiều rộng khoảng 300 px và cho xuống dòng; chi tiết đầy đủ đã có ở panel Building details. Phải TỰ KIỂM TRA trong trình duyệt: rê chuột lên toà ở mép trên, giữa và mép dưới bản đồ, tooltip luôn nằm trong khung. (2) Sửa chú thích lỗi thời trong show_estimate: bỏ câu "inferred HDD/CDD remain unconfirmed" (HDD/CDD đã lấy từ bảng tính NOCO v5). Không đổi logic, tên nút, hợp đồng — phamvotriduc241106 (Codex)
 
 **🔄 ĐANG LÀM**
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
@@ -277,6 +278,9 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
 - `T15` [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo — Anh-08 (Claude Code)
 
+**Đợt 5**
+- `T18` [MUST, sửa lỗi demo] (1) Tooltip trang Prospect Map bay ra khỏi màn hình khi rê chuột (12 dòng dài, không giới hạn rộng): rút gọn tooltip còn tối đa 6 dòng ngắn (địa chỉ, loại toà, số tầng, tiết kiệm/năm, ưu đãi, một dòng nguồn có © OpenStreetMap contributors), giới hạn chiều rộng khoảng 300 px và cho xuống dòng; chi tiết đầy đủ đã có ở panel Building details. Phải TỰ KIỂM TRA trong trình duyệt: rê chuột lên toà ở mép trên, giữa và mép dưới bản đồ, tooltip luôn nằm trong khung. (2) Sửa chú thích lỗi thời trong show_estimate: bỏ câu "inferred HDD/CDD remain unconfirmed" (HDD/CDD đã lấy từ bảng tính NOCO v5). Không đổi logic, tên nút, hợp đồng — phamvotriduc241106 (Codex)
+
 ### Bảng chi tiết
 
 | ID | Việc | Người | Nhánh | Chờ | Trạng thái |
@@ -298,14 +302,38 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T15 | [SHOULD] Làm đẹp giao diện, CHỈ giao diện (không đổi logic, tên nút, hợp đồng, không thêm dependency): (1) giao diện tối, một màu nhấn, đồng bộ nền bản đồ pydeck tối (.streamlit/config.toml); (2) CSS nhỏ qua st.markdown(unsafe_allow_html=True): giảm lề trang, bỏ khoảng trắng thừa, bo góc thẻ, cỡ chữ; (3) bản đồ chiếm toàn chiều ngang, cao khoảng 600-700 px, panel chi tiết cạnh bản đồ; (4) tooltip và bảng "What we found" cùng nền tối. Giữ dòng © OpenStreetMap contributors. Test AppTest hiện có VẪN phải qua. Hạn 14:15 để còn QA; quá hạn mà chưa xong thì bỏ, không để vỡ demo | Anh-08 | `task/t15` | T14 (Anh-08) | merged |
 | T16 | [MUST] Sửa bảng giả định và câu "Data limits" trong báo cáo sếp (phát hiện R1 số 2): lấy bảng giả định từ result.assumptions (KHÔNG sửa contract.py), HDD 6.750 [noco_sheet] x hệ số 0,9, bỏ câu nói HDD/CDD chưa được NOCO xác nhận (bảng tính đã xác nhận). Thêm test | Anh-08 | `task/t16` | T10 (Anh-08), T12 (phamvotriduc241106) | merged |
 | T17 | [SHOULD] Sửa gán hồ sơ vận hành (phát hiện R1 số 3): "AUTO BODY AND TIRE SHOP" vào nhóm Warehouse / Light Industrial, không phải retail (chứa chữ "SHOP"). Thêm test. Chỉ sửa chỗ gán hồ sơ | Anh-08 | `task/t17` | T12 (phamvotriduc241106) | merged |
+| T18 | [MUST, sửa lỗi demo] (1) Tooltip trang Prospect Map bay ra khỏi màn hình khi rê chuột (12 dòng dài, không giới hạn rộng): rút gọn tooltip còn tối đa 6 dòng ngắn (địa chỉ, loại toà, số tầng, tiết kiệm/năm, ưu đãi, một dòng nguồn có © OpenStreetMap contributors), giới hạn chiều rộng khoảng 300 px và cho xuống dòng; chi tiết đầy đủ đã có ở panel Building details. Phải TỰ KIỂM TRA trong trình duyệt: rê chuột lên toà ở mép trên, giữa và mép dưới bản đồ, tooltip luôn nằm trong khung. (2) Sửa chú thích lỗi thời trong show_estimate: bỏ câu "inferred HDD/CDD remain unconfirmed" (HDD/CDD đã lấy từ bảng tính NOCO v5). Không đổi logic, tên nút, hợp đồng | phamvotriduc241106 | `task/t18` | T15 (Anh-08) | todo |
 ### Tin nhắn cho nhóm chat (copy)
 
 ```text
 LÀM NGAY:
 @NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý
+@phamvotriduc241106 -> T18: [MUST, sửa lỗi demo] (1) Tooltip trang Prospect Map bay ra khỏi màn hình khi rê chuột (12 dòng dài, không giới hạn rộng): rút gọn tooltip còn tối đa 6 dòng ngắn (địa chỉ, loại toà, số tầng, tiết kiệm/năm, ưu đãi, một dòng nguồn có © OpenStreetMap contributors), giới hạn chiều rộng khoảng 300 px và cho xuống dòng; chi tiết đầy đủ đã có ở panel Building details. Phải TỰ KIỂM TRA trong trình duyệt: rê chuột lên toà ở mép trên, giữa và mép dưới bản đồ, tooltip luôn nằm trong khung. (2) Sửa chú thích lỗi thời trong show_estimate: bỏ câu "inferred HDD/CDD remain unconfirmed" (HDD/CDD đã lấy từ bảng tính NOCO v5). Không đổi logic, tên nút, hợp đồng
 ```
 
 ### Lệnh cho từng người (copy–paste)
+
+#### phamvotriduc241106
+
+**T18: [MUST, sửa lỗi demo] (1) Tooltip trang Prospect Map bay ra khỏi màn hình khi rê chuột (12 dòng dài, không giới hạn rộng): rút gọn tooltip còn tối đa 6 dòng ngắn (địa chỉ, loại toà, số tầng, tiết kiệm/năm, ưu đãi, một dòng nguồn có © OpenStreetMap contributors), giới hạn chiều rộng khoảng 300 px và cho xuống dòng; chi tiết đầy đủ đã có ở panel Building details. Phải TỰ KIỂM TRA trong trình duyệt: rê chuột lên toà ở mép trên, giữa và mép dưới bản đồ, tooltip luôn nằm trong khung. (2) Sửa chú thích lỗi thời trong show_estimate: bỏ câu "inferred HDD/CDD remain unconfirmed" (HDD/CDD đã lấy từ bảng tính NOCO v5). Không đổi logic, tên nút, hợp đồng** — _sẵn sàng_
+
+```bash
+cd AI_FOR_GOOD   # thư mục repo bạn đã clone
+git switch main && git pull origin main
+git switch -c task/t18
+codex
+```
+Lời nhắc cho agent:
+```text
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T18: [MUST, sửa lỗi demo] (1) Tooltip trang Prospect Map bay ra khỏi màn hình khi rê chuột (12 dòng dài, không giới hạn rộng): rút gọn tooltip còn tối đa 6 dòng ngắn (địa chỉ, loại toà, số tầng, tiết kiệm/năm, ưu đãi, một dòng nguồn có © OpenStreetMap contributors), giới hạn chiều rộng khoảng 300 px và cho xuống dòng; chi tiết đầy đủ đã có ở panel Building details. Phải TỰ KIỂM TRA trong trình duyệt: rê chuột lên toà ở mép trên, giữa và mép dưới bản đồ, tooltip luôn nằm trong khung. (2) Sửa chú thích lỗi thời trong show_estimate: bỏ câu "inferred HDD/CDD remain unconfirmed" (HDD/CDD đã lấy từ bảng tính NOCO v5). Không đổi logic, tên nút, hợp đồng. Chỉ sửa các file: các file được giao trong docs/TASKS.md. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+```
+Khi agent báo xong:
+```bash
+make test && make lint
+git push -u origin task/t18
+gh pr create --base main --fill
+```
+Rồi nhắn cho tôi số PR.
 
 #### NguyenQBao
 
@@ -363,6 +391,7 @@ Người merge dự phòng khi tôi bận: NguyenQBao (chỉ merge PR xanh, khô
 - merge `T10` → báo Anh-08 (T14), NguyenQBao (T9), Anh-08 (T16): chạy `git fetch origin && git merge origin/main`
 - merge `T12` → báo phamvotriduc241106 (T11), NguyenQBao (T9), Anh-08 (T16), Anh-08 (T17): chạy `git fetch origin && git merge origin/main`
 - merge `T14` → báo NguyenQBao (T9), Anh-08 (T15): chạy `git fetch origin && git merge origin/main`
+- merge `T15` → báo phamvotriduc241106 (T18): chạy `git fetch origin && git merge origin/main`
 
 <!-- LANES:END -->
 

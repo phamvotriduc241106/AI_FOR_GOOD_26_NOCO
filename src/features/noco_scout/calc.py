@@ -4,13 +4,22 @@ from __future__ import annotations
 
 import math
 
-from .contract import Assumptions, BuildingFacts, CalcInputs, CalcResult
+from pydantic import PrivateAttr
+
+from .contract import ASSUMPTION_SOURCES, Assumptions, BuildingFacts, CalcInputs, CalcResult
 
 BTU_PER_KWH = 3412.0
 BTU_PER_THERM = 100_000.0
 BTU_PER_MMBTU = 1_000_000.0
 DEFAULT_PERIMETER_FT = 400.0
 DEFAULT_FLOORS = 1
+
+
+class _SourcedCalcInputs(CalcInputs):
+    """Carry fallback provenance without adding fields to the frozen input contract."""
+
+    _noco_source_flags: tuple[str, ...] = PrivateAttr(default=())
+    _noco_source_assumptions: tuple[str, ...] = PrivateAttr(default=())
 
 
 def _require_finite(name: str, value: float) -> None:
@@ -106,12 +115,21 @@ def estimate_insulation(i: CalcInputs) -> CalcResult:
     if net_investment is not None and annual_cost_savings > 0:
         simple_payback = net_investment / annual_cost_savings
 
+    defaults = Assumptions()
+
+    def label(field: str, value: float) -> str:
+        return ASSUMPTION_SOURCES[field] if value == getattr(defaults, field) else "user"
+
     assumptions = [
-        f"HDD={i.hdd:g} and CDD={i.cdd:g} [noco_sheet]",
-        f"Operating load factor={i.operating_load_factor:g} [noco_sheet]",
+        f"HDD={i.hdd:g} [{label('hdd', i.hdd)}]",
+        f"CDD={i.cdd:g} [{label('cdd', i.cdd)}]",
+        f"Operating load factor={i.operating_load_factor:g} "
+        f"[{label('operating_load_factor', i.operating_load_factor)}]",
         "Cooling load applies the operating load factor squared [assumed]",
-        f"Window and door fraction={i.window_door_pct:g} [noco_sheet]",
-        f"Incentive=${i.incentive_per_sqft:g}/sq ft [noco_sheet]",
+        f"Window and door fraction={i.window_door_pct:g} "
+        f"[{label('window_door_pct', i.window_door_pct)}]",
+        f"Incentive=${i.incentive_per_sqft:g}/sq ft "
+        f"[{label('incentive_per_sqft', i.incentive_per_sqft)}]",
         *getattr(i, "_noco_source_assumptions", ()),
     ]
 
@@ -136,15 +154,6 @@ def estimate_insulation(i: CalcInputs) -> CalcResult:
     )
 
 
-def _attach_source_context(
-    inputs: CalcInputs, *, flags: list[str], assumptions: list[str]
-) -> CalcInputs:
-    """Carry provenance to the result without changing the frozen CalcInputs schema."""
-    object.__setattr__(inputs, "_noco_source_flags", tuple(flags))
-    object.__setattr__(inputs, "_noco_source_assumptions", tuple(assumptions))
-    return inputs
-
-
 def inputs_from_facts(f: BuildingFacts, a: Assumptions) -> CalcInputs:
     """Build calculator inputs, using explicit assumptions for unavailable GIS facts."""
     flags: list[str] = []
@@ -155,20 +164,36 @@ def inputs_from_facts(f: BuildingFacts, a: Assumptions) -> CalcInputs:
         perimeter = DEFAULT_PERIMETER_FT
         flags.append("Perimeter is unavailable; using an assumed 400 ft perimeter.")
         source_assumptions.append("Perimeter=400 ft [assumed]")
+    elif (source := f.sources.get("perimeter_ft")) and source.source == "assumed":
+        flags.append("Perimeter is assumed in building facts.")
+        source_assumptions.append(f"Perimeter={perimeter:g} ft [assumed]")
 
     floors = f.floors
     if floors is None or floors < 1:
         floors = DEFAULT_FLOORS
         flags.append("Floor count is unavailable; using 1 assumed floor.")
         source_assumptions.append("Floors=1 [assumed]")
+    elif (source := f.sources.get("floors")) and source.source == "assumed":
+        flags.append("Floor count is assumed in building facts.")
+        source_assumptions.append(f"Floors={floors} [assumed]")
 
     floor_height = f.floor_height_ft
     if floor_height is None or floor_height <= 0:
         floor_height = a.floor_height_ft
         flags.append("Floor height is unavailable; using the configured assumption.")
+        default_source = (
+            ASSUMPTION_SOURCES["floor_height_ft"]
+            if floor_height == Assumptions().floor_height_ft
+            else "user"
+        )
+        source_assumptions.append(
+            f"Floor height={floor_height:g} ft [assumed; {default_source} default]"
+        )
+    elif (source := f.sources.get("floor_height_ft")) and source.source == "assumed":
+        flags.append("Floor height is assumed in building facts.")
         source_assumptions.append(f"Floor height={floor_height:g} ft [assumed]")
 
-    inputs = CalcInputs(
+    inputs = _SourcedCalcInputs(
         perimeter_ft=perimeter,
         floors=floors,
         floor_height_ft=floor_height,
@@ -186,4 +211,6 @@ def inputs_from_facts(f: BuildingFacts, a: Assumptions) -> CalcInputs:
         incentive_per_sqft=a.incentive_per_sqft,
         cost_per_sqft=a.cost_per_sqft,
     )
-    return _attach_source_context(inputs, flags=flags, assumptions=source_assumptions)
+    inputs._noco_source_flags = tuple(flags)
+    inputs._noco_source_assumptions = tuple(source_assumptions)
+    return inputs

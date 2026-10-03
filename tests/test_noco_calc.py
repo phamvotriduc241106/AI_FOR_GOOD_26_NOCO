@@ -4,47 +4,30 @@ import pytest
 
 from features.noco_scout.calc import estimate_insulation, inputs_from_facts
 from features.noco_scout.contract import Assumptions, BuildingFacts, CalcInputs, Prices
+from features.noco_scout.fixtures import (
+    NOCO_EXAMPLE_EXPECTED,
+    NOCO_EXAMPLE_INPUTS,
+    SAMPLE_BUILDINGS,
+)
 
 
 def make_inputs(**overrides: object) -> CalcInputs:
-    values: dict[str, object] = {
-        "perimeter_ft": 500.0,
-        "floors": 1,
-        "floor_height_ft": 12.0,
-        "exposed_wall_pct": 1.0,
-        "window_door_pct": 0.35,
-        "existing_r": 11.0,
-        "proposed_r": 49.0,
-        "hdd": 6075.0,
-        "cdd": 650.0,
-        "operating_load_factor": 0.75,
-        "heating_fuel": "electric",
-        "heating_efficiency": 1.0,
-        "cooling_cop": 3.0,
-        "prices": Prices(electricity_per_kwh=0.16),
-        "incentive_per_sqft": 4.0,
-        "cost_per_sqft": None,
-    }
+    values: dict[str, object] = NOCO_EXAMPLE_INPUTS.model_dump()
     values.update(overrides)
     return CalcInputs(**values)
 
 
 def test_noco_golden_example_matches_within_point_one_percent() -> None:
-    result = estimate_insulation(make_inputs())
+    result = estimate_insulation(NOCO_EXAMPLE_INPUTS)
 
-    expected = {
-        "insulated_wall_area_sqft": 3900.0,
-        "heating_load_btu": 30_066_178.0,
-        "cooling_load_btu": 2_412_718.0,
-        "heating_kwh": 8811.9,
-        "cooling_kwh": 235.7,
-        "total_kwh": 9047.6,
-        "annual_cost_savings": 1447.6,
-        "incentive": 15_600.0,
-        "ten_year_energy_value": 14_476.0,
-    }
-    for field, expected_value in expected.items():
-        assert getattr(result, field) == pytest.approx(expected_value, rel=0.001)
+    for field, expected_value in NOCO_EXAMPLE_EXPECTED.items():
+        actual = getattr(result, field)
+        if expected_value is None:
+            assert actual is None, field
+        else:
+            assert actual == pytest.approx(expected_value, rel=0.001), field
+    assert "HDD=6075 [assumed]" in result.assumptions
+    assert "CDD=650 [assumed]" in result.assumptions
 
 
 def test_unknown_project_cost_never_invents_payback() -> None:
@@ -54,6 +37,14 @@ def test_unknown_project_cost_never_invents_payback() -> None:
     assert result.net_investment is None
     assert result.simple_payback_years is None
     assert any("cost is unknown" in flag.lower() for flag in result.flags)
+
+
+def test_known_project_cost_calculates_net_investment_and_payback() -> None:
+    result = estimate_insulation(make_inputs(cost_per_sqft=8.0))
+
+    assert result.project_cost == pytest.approx(31_200.0)
+    assert result.net_investment == pytest.approx(15_600.0)
+    assert result.simple_payback_years == pytest.approx(15_600.0 / result.annual_cost_savings)
 
 
 def test_zero_savings_has_no_payback() -> None:
@@ -88,6 +79,12 @@ def test_natural_gas_uses_therms_and_gas_price() -> None:
     assert result.annual_cost_savings == pytest.approx(
         expected_therms * 1.20 + result.cooling_kwh * 0.16
     )
+
+
+def test_overridden_degree_days_are_labeled_user_input() -> None:
+    result = estimate_insulation(make_inputs(hdd=5000.0))
+
+    assert "HDD=5000 [user]" in result.assumptions
 
 
 def test_inputs_from_facts_preserves_gis_values() -> None:
@@ -133,3 +130,12 @@ def test_inputs_from_facts_flags_assumed_geometry() -> None:
     assert any("floor count is unavailable" in flag.lower() for flag in result.flags)
     assert any("floor height is unavailable" in flag.lower() for flag in result.flags)
     assert any("[assumed]" in item for item in result.assumptions)
+
+
+def test_assumed_source_on_present_floor_count_is_flagged() -> None:
+    inputs = inputs_from_facts(SAMPLE_BUILDINGS[3], Assumptions())
+    result = estimate_insulation(inputs)
+
+    assert any("floor count is assumed" in flag.lower() for flag in result.flags)
+    assert "Floors=1 [assumed]" in result.assumptions
+    assert set(inputs.model_dump()) == set(CalcInputs.model_fields)

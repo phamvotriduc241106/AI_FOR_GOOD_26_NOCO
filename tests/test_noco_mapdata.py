@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import httpx
@@ -36,19 +37,16 @@ def test_tooltip_order_and_provenance() -> None:
     labels = (
         "Use:",
         "Floors:",
-        "Footprint:",
         "Savings/year:",
         "Incentive:",
-        "Payback:",
-        "NOCO opportunity",
-        "Utility:",
-        "Incentive program:",
-        "Sources:",
     )
     positions = [tooltip.index(label) for label in labels]
     assert positions == sorted(positions)
-    assert "needs installed cost" in tooltip
-    assert "ILLUSTRATIVE" in tooltip
+    assert tooltip.count("<br/>") == 5
+    assert "[NOCO calc]" in tooltip
+    assert "[osm]" in tooltip
+    assert "Payback:" not in tooltip
+    assert "NOCO opportunity" not in tooltip
     assert "SYNTHETIC SAMPLE" in tooltip
     assert "© OpenStreetMap contributors" in tooltip
 
@@ -80,6 +78,9 @@ def test_deck_rows_use_geojson_lon_lat_and_floor_height() -> None:
     assert rows[0]["tooltip_0"] == prospect.facts.address
     assert "<strong>{tooltip_0}</strong>" in TOOLTIP_TEMPLATE
     assert "{tooltip_html}" not in TOOLTIP_TEMPLATE
+    assert "{tooltip_5}" in TOOLTIP_TEMPLATE
+    assert "tooltip_6" not in rows[0]
+    assert TOOLTIP_TEMPLATE.format(**rows[0]) == rows[0]["tooltip_html"]
 
 
 def test_deck_rows_skip_missing_geometry_without_losing_selection_index() -> None:
@@ -238,6 +239,7 @@ def test_offline_pages_run_lookup_estimate_and_ranking(monkeypatch: pytest.Monke
     ).click().run()
     assert not app.exception
     assert any(metric.label.startswith("Annual savings") for metric in app.metric)
+    assert not any("remain unconfirmed" in caption.value for caption in app.caption)
 
     app.switch_page("pages/2_Prospect_Map.py").run()
     assert not app.exception
@@ -247,3 +249,9 @@ def test_offline_pages_run_lookup_estimate_and_ranking(monkeypatch: pytest.Monke
     show_button.click().run()
     assert not app.exception
     assert any("Ranked prospects" in heading.value for heading in app.subheader)
+    tooltip = json.loads(app.get("deck_gl_json_chart")[0].proto.tooltip)
+    assert tooltip["html"].count("<br/>") == 5
+    assert tooltip["style"]["position"] == "fixed"
+    assert tooltip["style"]["transform"] == "none"
+    assert "300px" in tooltip["style"]["maxWidth"]
+    assert tooltip["style"]["whiteSpace"] == "normal"

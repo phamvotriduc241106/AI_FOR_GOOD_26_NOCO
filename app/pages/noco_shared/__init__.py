@@ -56,6 +56,7 @@ div[data-testid="stMetricLabel"] p {{ font-size: 0.78rem; white-space: normal; }
 div[data-testid="stDataFrame"], div[data-testid="stExpander"],
 div[data-testid="stAlert"] {{ border-radius: 10px; }}
 iframe, div[data-testid="stDeckGlJsonChart"] {{ border-radius: 12px; }}
+div[data-testid="stDeckGlJsonChart"] {{ position: relative; z-index: 10; }}
 </style>
 """
 
@@ -220,6 +221,20 @@ def render_map(
                 "backgroundColor": PANEL_BG,
                 "color": "#E4EDEF",
                 "fontSize": "12px",
+                "maxWidth": "min(300px, calc(100vw - 32px))",
+                "whiteSpace": "normal",
+                "lineHeight": "1.35",
+                "overflowWrap": "anywhere",
+                "boxSizing": "border-box",
+                # Deck's canvas-relative hover offset can become negative after page scroll.
+                # Pin the hover card inside the viewport instead of inheriting that offset.
+                "position": "fixed",
+                "top": "80px",
+                "right": "16px",
+                "left": "auto",
+                "transform": "none",
+                "maxHeight": "calc(100vh - 96px)",
+                "overflowY": "auto",
                 "border": f"1px solid {ACCENT}",
                 "borderRadius": "8px",
                 "padding": "8px 10px",
@@ -297,7 +312,10 @@ def show_estimate(prospect: Prospect) -> None:
         if result.simple_payback_years is not None
         else "Needs installed cost",
     )
-    st.caption("Reference model reproduces NOCO's example; inferred HDD/CDD remain unconfirmed.")
+    st.caption(
+        "Reference model reproduces NOCO's example using sheet-confirmed HDD/CDD; "
+        "site conditions and incentive eligibility still require verification."
+    )
     for flag in result.flags:
         st.warning(flag)
     with st.expander("Calculation sources and assumptions"):

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from streamlit.testing.v1 import AppTest
 
 from features.noco_scout.calc import estimate_insulation, inputs_from_facts
 from features.noco_scout.contract import Assumptions, Opportunity, Prospect
@@ -80,3 +81,27 @@ def test_deck_rows_skip_missing_geometry_without_losing_selection_index() -> Non
 
     assert len(rows) == 1
     assert rows[0]["prospect_index"] == 1
+
+
+def test_offline_pages_run_lookup_estimate_and_ranking(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("NOCO_OFFLINE", "1")
+
+    app = AppTest.from_file("../app/streamlit_app.py", default_timeout=30).run()
+    app.switch_page("pages/1_Address_to_Quote.py").run()
+    assert not app.exception
+    next(button for button in app.button if button.label == "Find building").click().run()
+    assert not app.exception
+    next(
+        button for button in app.button if button.label == "Estimate insulation upgrade"
+    ).click().run()
+    assert not app.exception
+    assert any(metric.label.startswith("Annual savings") for metric in app.metric)
+
+    app.switch_page("pages/2_Prospect_Map.py").run()
+    assert not app.exception
+    show_button = next(
+        button for button in app.button if button.label == "Show potential customers"
+    )
+    show_button.click().run()
+    assert not app.exception
+    assert any("Ranked prospects" in heading.value for heading in app.subheader)

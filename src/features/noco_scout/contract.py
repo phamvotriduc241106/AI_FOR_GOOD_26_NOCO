@@ -100,6 +100,33 @@ class Assumptions(_Model):
     incentive_per_sqft: float = 4.0
     cost_per_sqft: float | None = None
     margin_pct: float | None = None
+    heating_realization_factor: float | None = Field(
+        default=0.9, description="NOCO v5 heating realization; None uses effective HDD directly."
+    )
+    cooling_realization_factor: float | None = Field(
+        default=0.75,
+        description="NOCO v5 cooling realization, separate from operating load factor.",
+    )
+    is_dac: bool | None = Field(
+        default=None, description="Confirmed DAC designation; unknown gets no DAC incentive bonus."
+    )
+    use_incentive_schedule: bool = Field(
+        default=True,
+        description="Apply NOCO fuel/Delta-R/DAC tiers and caps; False uses a user rate.",
+    )
+    operating_profile: (
+        Literal["auto", "office", "residential", "retail", "warehouse", "intermittent", "custom"]
+        | None
+    ) = Field(
+        default="auto",
+        description="NOCO profile; auto maps public use class, None keeps legacy inputs.",
+    )
+    perimeter_aspect_ratio: float | None = Field(
+        default=1.5, description="Assumed length/width ratio when GIS perimeter is missing."
+    )
+    perimeter_shape_factor: float | None = Field(
+        default=1.0, description="NOCO shape multiplier for perimeter fallback; rectangle is 1."
+    )
 
 
 # HDD 6,075 and CDD 650 are back-solved from NOCO's example, not printed legibly on the sheet,
@@ -142,6 +169,23 @@ class CalcInputs(_Model):
     prices: Prices
     incentive_per_sqft: float
     cost_per_sqft: float | None = None
+    heating_realization_factor: float | None = Field(
+        default=None, description="None preserves legacy effective-HDD inputs; raw HDD uses 0.9."
+    )
+    cooling_realization_factor: float | None = Field(
+        default=0.75, description="Separate NOCO cooling realization, multiplied by operating LF."
+    )
+    is_dac: bool | None = Field(
+        default=None, description="Confirmed DAC designation; unknown receives the non-DAC rate."
+    )
+    use_incentive_schedule: bool = Field(
+        default=True,
+        description="Apply NOCO fuel/Delta-R/DAC tiers and caps; False uses a user rate.",
+    )
+    operating_profile: str | None = Field(
+        default=None,
+        description="Resolved NOCO profile for source attribution; numeric inputs win.",
+    )
 
 
 class CalcResult(_Model):

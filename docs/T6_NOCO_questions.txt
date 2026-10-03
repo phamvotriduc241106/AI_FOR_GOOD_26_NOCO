@@ -1,0 +1,80 @@
+T6: QUESTIONS FOR THE NOCO REPRESENTATIVE   (owner: NguyenQBao, role partner-qa / researcher)
+================================================================================================
+Ghi chu cho Bao (tieng Viet): hoi bang TIENG ANH, ngan, tung cau mot. Ghi lai NGUYEN VAN cau tra loi vao bang o cuoi file
+roi chep vao docs/DATA.md. Nguoi cua NOCO co the roi di som: hoi nhom A truoc (khoang 3 phut), roi moi toi nhom B.
+Nhac nguoi tra loi: "we will show this in a 4-minute pitch, so a rough range is fine".
+Lay goi tai lieu NOCO o cuoi phong (ban ghi, [46:54]: "if you are working on a NOCO project, ... in the back has a packet for you").
+
+WHAT WE ALREADY KNOW (do not waste their time on these)
+- Their sheet (photo) is the "NOCO Commercial Insulation Savings Sales Calculator": Buffalo example, 10,000 sq ft, R-11 to R-49,
+  electric resistance heating COP 1.00, rooftop cooling COP 3.00, electricity $0.16/kWh, incentive "National Grid - Commercial Weatherization".
+- Staff today visit the site, collect information, return to the office and research before quoting (organizers, [03:49]-[04:13]).
+- We reproduce the example with our own code; two constants are INFERRED (see group A).
+
+GROUP A: MUST ASK (blocks the MUST features; about 3 minutes)
+A1. Heating/cooling degree days.
+    "In your Buffalo example the heating degree days look like 6,075 and the cooling degree days 650. Are those the values your
+     calculator uses for Buffalo?"
+    -> affects: Assumptions.hdd / cdd, golden test (T2).
+A2. Cooling load.
+    "Our reverse-engineering matches your example only if the cooling load applies the operating load factor twice (0.75 x 0.75).
+     Is that how the sheet works?"
+    -> affects: calc.py cooling formula (T2).
+A3. Perimeter.
+    "The sheet shows an 'Estimated Perimeter' of 500 ft for a one-floor, very long and narrow, 10,000 sq ft building. How is that
+     estimated? Would you accept the real building outline from public map data instead?"
+    -> affects: how T3/T2 derive perimeter from the OpenStreetMap polygon.
+A4. Installed cost.
+    "What installed cost per square foot should we use for wall insulation? A low-to-high range is fine."
+    -> affects: Assumptions.cost_per_sqft, payback and net investment (otherwise the app shows 'needs cost').
+A5. Incentive.
+    "Is the National Grid Commercial Weatherization incentive $4.00 per square foot of insulated wall area? Is there a cap or an
+     eligibility rule?"
+    -> affects: Assumptions.incentive_per_sqft, report text.
+A6. Permission.
+    "May we show your calculator screenshot or its numbers in our slides and demo as a test case? May we use AI tools on it?"
+    -> affects: slide 4 (T8) and the repo rule on partner data.
+
+GROUP B: SHOULD ASK (about 3 minutes)
+B1. "Which step of a quote takes the most time today? How many site visits do not end in a sale?"          -> pitch story (T8)
+B2. "What would your sales manager want to see in an internal prospect report? Which columns?"            -> manager report (T10)
+B3. "What margin does NOCO typically earn on an insulation project, and what is a typical project size? A range is fine."
+                                                                                                          -> Assumptions.margin_pct (profit stays ILLUSTRATIVE until answered)
+B4. "When you say 'provider', do you mean the utility, the building's current fuel supplier, or the incentive program?
+     Which would help your sales team most?"                                                              -> Opportunity fields (T5)
+B5. "Which building types and which Buffalo neighborhoods should we prioritize as prospects?"               -> T7 area and filters
+B6. "Does the packet at the back of the room contain data, price tables or formulas we may use?"            -> docs/DATA.md
+
+GROUP C: IF THERE IS TIME
+C1. "Besides insulation, which measure should come next: windows, HVAC, lighting, solar, batteries?"          -> pitch 'future' slide
+C2. "Which incentives besides National Grid matter in Buffalo (state or federal)?"                          -> spec, future work
+C3. "What would make you say 'wow' in a demo?"                                                              -> demo order
+C4. "Do you have a logo or style we should follow in the customer report? A contact for follow-up questions?"
+
+FOR THE ORGANIZERS (if the NOCO representative is not available)
+O1. "What is the IP/ownership policy for ideas and code?" (the briefing mentioned companies reusing ideas, [00:05], audio unclear)
+O2. "Does the 4 minutes include questions? May we run a live demo, and is Wi-Fi guaranteed on stage?"
+O3. "Where and when exactly do we upload the PDF or PowerPoint? Is there a file-size limit?" (briefing: submissions open about 2:45, final 3:30)
+O4. "Can we see the detailed rubric in UB Box now?" (the slide shows only 5 categories scored out of 3)
+
+HOW ANSWERS CHANGE THE BUILD (tell Nguyen-Le-Tuan immediately)
+- A1/A2 differ from our guess -> T2 updates constants and the golden test; slide 4 must not claim a match until re-tested.
+- A4 or B3 answered -> remove the ILLUSTRATIVE label only for the value that was confirmed, and say who confirmed it.
+- B4 answered -> may change what the map tooltip shows for 'provider'.
+- A6 refused -> remove the screenshot from the slides; keep only our own computed numbers.
+
+ANSWER LOG (copy into docs/DATA.md)
+ #  | Question (short)        | Answer, verbatim            | Who / role | Time  | Confidence (heard / read / guessed)
+----|-------------------------|-----------------------------|------------|-------|------------------------------------
+ A1 |                         |                             |            |       |
+ A2 |                         |                             |            |       |
+ A3 |                         |                             |            |       |
+ A4 |                         |                             |            |       |
+ A5 |                         |                             |            |       |
+ A6 |                         |                             |            |       |
+ B1 |                         |                             |            |       |
+ B2 |                         |                             |            |       |
+ B3 |                         |                             |            |       |
+ B4 |                         |                             |            |       |
+ B5 |                         |                             |            |       |
+ B6 |                         |                             |            |       |

@@ -205,16 +205,16 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 ## 5. LUỒNG VIỆC HIỆN TẠI (tự sinh, đừng sửa tay)
 
-**Bản tin tình hình (13:32, viết tay, sửa khi cần):**
-- **Đã merge:** T1 đến T5, T7 (300 toà ở 11 khu phố), **T10** (báo cáo cho khách MUST, báo cáo sếp và CSV SHOULD). Đã kiểm tra T10: có logo NOCO, nguồn OSM, "Needs an installation quote" khi chưa có chi phí, **không** có doanh thu/lợi nhuận NOCO trong báo cáo khách,
-  tiêu đề cột báo cáo sếp khớp các ô xanh của bảng tính, CSV 300 dòng chặn chèn công thức, trang Prospect Map có đủ 3 nút tải xuống.
-- **LỖI MUST mới (T14):** trang Address to Quote tìm địa chỉ offline sai: "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST". Anh-08 sửa ngay (T14). Cho tới khi sửa xong: **khi demo chỉ gõ đúng dạng "110 FRANKLIN"**.
-- **Đang làm:** T12 (codex, sửa máy tính theo công thức thật của NOCO: ưu đãi theo nhiên liệu/ΔR/DAC/trần, hệ số 0,9 và 0,75). T8 (slide). R1 (review máy tính) sau T14.
-- **Chưa có:** chi phí lắp đặt, cho phép dùng số của NOCO trong slide (A6), câu trả lời ban tổ chức (O1 đến O4).
-- **Quyết định đang chờ bạn:** (1) dời đóng băng từ 14:00 sang 14:30 (tôi nghiêng về dời vì T12 và T14 chưa xong); (2) lớp cộng đồng thiệt thòi (DAC): chỉ làm nếu T12 và T14 xong sớm (xem `docs/DATA.md`).
+**Bản tin tình hình (13:45, viết tay, sửa khi cần):**
+- **Đã merge và kiểm tra:** T1 đến T5, T7 (300 toà), T10 (báo cáo khách và sếp, CSV), **T12** (máy tính theo công thức thật của NOCO: Golden vẫn khớp, ưu đãi gas $1,90/sq ft, trần $150.000 điện / $250.000 gas, hệ số 0,9 và 0,75), **T14** (tìm địa chỉ offline: "33 Franklin St" không còn ra "333", "110 Franklin St" tìm được).
+- **Đang làm:** T11 (Codex, COULD; bỏ nếu chưa xong lúc 14:00), R1 (Anh-08, review máy tính), T8 (slide). T9 (QA, Bảo) bắt đầu được ngay.
+- **Đóng băng: 14:30** (đã chốt). Sau đó chỉ sửa lỗi và tập pitch.
+- **Giả định cần nói rõ khi demo:** hệ thống sưởi mặc định là điện trở, nên tiết kiệm của toà dùng gas bị thổi phồng.
+- **Chưa có:** chi phí lắp đặt (A4), cho phép dùng số của NOCO trong slide (A6), câu trả lời ban tổ chức (O1 đến O4).
+- **Quyết định đang chờ bạn:** lớp cộng đồng thiệt thòi (DAC), chỉ làm nếu T11 và R1 xong sớm (xem `docs/DATA.md`).
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 13:32 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 13:42 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -229,13 +229,11 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý — NguyenQBao
-- `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
-- `T14` [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà — Anh-08 (Claude Code)
-- `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code)
+- `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao
 
-**⏳ ĐANG CHỜ**
-- `T11` [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex) — chờ T12 (phamvotriduc241106 (Codex))
-- `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao — chờ T14 (Anh-08 (Claude Code))
+**🔄 ĐANG LÀM**
+- `T11` [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
+- `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code)
 
 **✅ XONG**
 - `T1` [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút — Anh-08 (Claude Code)
@@ -246,6 +244,8 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 - `T6` [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md — NguyenQBao
 - `T7` [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được — Anh-08 (Claude Code)
 - `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md — Anh-08 (Claude Code)
+- `T12` [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) — phamvotriduc241106 (Codex)
+- `T14` [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà — Anh-08 (Claude Code)
 
 ### Các đợt (thứ tự tối ưu, tính từ phụ thuộc)
 
@@ -284,21 +284,16 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 | T7 | [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được | Anh-08 | `task/t7` | T3 (Anh-08) | merged |
 | T8 | [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý | NguyenQBao | `task/t8` | — | todo |
 | T10 | [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện). Nhúng logo NOCO docs/pitch/assets/noco_logo.png (NOCO yêu cầu, C4) dạng base64; báo cáo sếp: cột "greens" = các ô đầu ra màu xanh của bảng tính NOCO (SC!D5:F11: tiết kiệm điện sưởi, làm mát, tổng điện, MMBtu, tiền/năm, ưu đãi, giá trị 10 năm) + địa chỉ, khu, loại, tầng, độ chắc chắn của phép nối; doanh thu/lợi nhuận NOCO chỉ là cột thêm ILLUSTRATIVE; báo cáo cho KHÁCH tuyệt đối không có doanh thu/lợi nhuận/biên của NOCO; không viết cứng "$4/sq ft" hay "R-11 lên R-49", lấy từ inputs/result vì T12 sẽ đổi cách tính; dùng số trong docs/DATA.md | Anh-08 | `task/t10` | T2 (phamvotriduc241106) | merged |
-| T11 | [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response | phamvotriduc241106 | `task/t11` | T12 (phamvotriduc241106) | todo |
-| T12 | [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) | phamvotriduc241106 | `task/t12` | T2 (phamvotriduc241106) | todo |
-| T14 | [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà | Anh-08 | `task/t14` | T10 (Anh-08) | todo |
+| T11 | [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response | phamvotriduc241106 | `task/t11` | T12 (phamvotriduc241106) | doing |
+| T12 | [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần) | phamvotriduc241106 | `task/t12` | T2 (phamvotriduc241106) | merged |
+| T14 | [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà | Anh-08 | `task/t14` | T10 (Anh-08) | merged |
 | T9 | [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint | NguyenQBao | `task/t9` | T4 (phamvotriduc241106), T5 (phamvotriduc241106), T7 (Anh-08), T10 (Anh-08), T14 (Anh-08), T12~ (phamvotriduc241106, chỉ để hoàn tất) | todo |
-| R1 | Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa | Anh-08 | (không cần, chỉ đọc) | T2 (phamvotriduc241106) | todo |
+| R1 | Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa | Anh-08 | (không cần, chỉ đọc) | T2 (phamvotriduc241106) | doing |
 ### Tin nhắn cho nhóm chat (copy)
 
 ```text
 LÀM NGAY:
 @NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng; cập nhật theo docs/DATA.md (biên 30 đến 40% là lời nói, ưu tiên cộng đồng thiệt thòi, "đẹp, nhanh, dễ dùng"); slide 4 chỉ khi A6 được đồng ý
-@phamvotriduc241106 -> T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần)
-@Anh-08 -> T14: [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà
-@Anh-08 -> R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa
-CHUẨN BỊ, CHỜ TÔI BÁO:
-@phamvotriduc241106 -> T11: [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response
 @NguyenQBao -> T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint
 ```
 
@@ -306,27 +301,7 @@ CHUẨN BỊ, CHỜ TÔI BÁO:
 
 #### Anh-08
 
-**T14: [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t14
-claude
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T14: [MUST] Sửa tìm địa chỉ offline (lỗi thật, tìm thấy ở QA): trang "Address to Quote" dùng find_building chỉ khớp chính xác hoặc chứa chuỗi con, nên "110 Franklin St" bị từ chối và "33 Franklin St" trả NHẦM toà "333 FRANKLIN ST" (không có cảnh báo). Cách sửa: bỏ khớp chuỗi con; find_building gọi geo.build_facts(address, offline=True) (chuẩn hoá của T3 đã đúng) và bắt ValueError; số nhà phải khớp CHÍNH XÁC; thêm xử lý chuỗi không dấu phẩy ("110 franklin st buffalo ny") và "Street/Avenue". Test: "33 Franklin St" KHÔNG được ra "333"; "110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO" đều ra đúng toà. Chỉ sửa các file: app/pages/noco_shared/__init__.py, find_building, src/features/noco_scout/geo.py, tests/test_noco_geo.py, tests/test_noco_mapdata.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t14
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa** — _sẵn sàng_
+**R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa** — _đang làm_
 
 ```bash
 git fetch origin
@@ -340,9 +315,7 @@ Review nhánh origin/task/t2 so với main (git diff origin/main...origin/task/t
 
 #### phamvotriduc241106
 
-**T11: [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T12 xong, tôi sẽ báo.
+**T11: [COULD, chỉ sau T12] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response** — _đang làm_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -358,26 +331,6 @@ Khi agent báo xong:
 ```bash
 make test && make lint
 git push -u origin task/t11
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần)** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t12
-codex
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T12: [SHOULD] Chỉnh máy tính theo công thức THẬT của NOCO (xem docs/DATA.md: mục "Group A", "Formula and example reconciliation", "National Grid Commercial Weatherization rules" và phần Addendum với các bảng tham chiếu): (1) quy tắc ưu đãi theo nhiên liệu sưởi, ΔR và DAC, có trần $150.000 điện / $250.000 gas (ưu tiên cao nhất); (2) HDD 6.750 nhân hệ số sưởi 0,9 và làm mát = LF × 0,75 thay vì LF²; (3) hồ sơ vận hành theo loại toà (LF, chiều cao tầng, % cửa) khi bảng Buffalo không có chiều cao; (4) chu vi dự phòng theo tỷ lệ cạnh. Hệ thống sưởi mặc định phải rõ ràng và gắn nhãn giả định. Test Golden hiện có VẪN phải qua; thêm 3 ca mới (gas, DAC, trần). Chỉ sửa các file: src/features/noco_scout/calc.py, src/features/noco_scout/contract.py, Assumptions, CalcInputs, tests/test_noco_calc.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t12
 gh pr create --base main --fill
 ```
 Rồi nhắn cho tôi số PR.
@@ -400,9 +353,7 @@ git add -A && git commit -m "T8: cập nhật" && git push -u origin task/t8
 gh pr create --base main --fill
 ```
 
-**T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T14 xong, tôi sẽ báo.
+**T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint** — _sẵn sàng_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone

@@ -126,7 +126,7 @@ hoàn_vốn         = (chi_phí_dự_án − ưu_đãi) / tiền_tiết_kiệm_n
 (hình vuông 10.000 sq ft chỉ có chu vi 400 ft, nên 500 chưa giải thích được); ô "NG Gas Rate 1.9 / NG Electric Rate 4"; khấu trừ cửa 35% so với ô ghi đè 0%; đơn vị ưu đãi;
 và **bảng không có chi phí dự án**, nên hoàn vốn và vốn ròng cần kịch bản chi phí *ghi nhãn minh họa* cho đến khi NOCO cung cấp số thật.
 
-## Phạm vi theo mức ưu tiên (còn khoảng 2 giờ 50 phút trước mốc đóng băng 14:00)
+## Phạm vi theo mức ưu tiên (còn khoảng 2 giờ 50 phút trước mốc đóng băng 14:30)
 
 | Mức | Nội dung | Hạn |
 |---|---|---|
@@ -135,7 +135,7 @@ và **bảng không có chi phí dự án**, nên hoàn vốn và vốn ròng c�
 | **COULD** (làm nếu dư giờ) | AI trích xuất ghi chú/hóa đơn giả (điểm cộng "utility bill analysis") + ước tính chi tiêu năng lượng (CBECS) + khung nhiều biện pháp | 13:50 |
 | **Để sau** | Cửa sổ, HVAC, đèn, pin, máy phát; tra ưu đãi tự động ngoài tham chiếu National Grid; mở rộng ngoài Buffalo | Slide "tương lai" |
 
-**Quy tắc cắt:** đến 13:15 mà MUST chưa xong thì bỏ hết SHOULD và COULD. Đóng băng 14:00 (tính toán của tôi, từ hạn nộp 15:30), sau đó chỉ sửa lỗi và tập pitch.
+**Quy tắc cắt:** đến 13:15 mà MUST chưa xong thì bỏ hết SHOULD và COULD. Đóng băng 14:30 (đã chốt, từ hạn nộp 15:30), sau đó chỉ sửa lỗi và tập pitch.
 
 ## Ánh xạ rubric (5 mục, mỗi mục 3 điểm)
 

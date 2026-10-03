@@ -227,6 +227,17 @@ def test_offline_looks_up_demo_buildings_first():
     assert facts == SAMPLE_BUILDINGS[0]
 
 
+def test_offline_matches_roll_address_without_street_suffix():
+    """The roll writes '110 FRANKLIN'; a user types '110 Franklin St'."""
+    roll_style = SAMPLE_BUILDINGS[1].model_copy(
+        update={"address": "110 FRANKLIN, BUFFALO, NY, 14202"}
+    )
+    geo.DEMO_BUILDINGS_PATH.write_text(json.dumps([roll_style.model_dump()]), encoding="utf-8")
+    assert geo._street_key("110 Franklin St, Buffalo NY") == "110 FRANKLIN"
+    assert geo.build_facts("110 Franklin St, Buffalo NY", offline=True) == roll_style
+    assert geo.build_facts("110 franklin street", offline=True) == roll_style
+
+
 def test_offline_unknown_address_raises_without_network():
     write_demo(geo.DEMO_BUILDINGS_PATH)
     with pytest.raises(ValueError, match="offline demo data"):

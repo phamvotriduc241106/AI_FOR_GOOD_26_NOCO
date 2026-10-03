@@ -14,12 +14,12 @@ import base64
 import csv
 import functools
 import io
+from collections import Counter
 from datetime import date
 from html import escape
 from pathlib import Path
 
 from .contract import (
-    ASSUMPTION_SOURCES,
     NOT_IN_PUBLIC_DATA,
     OSM_ATTRIBUTION,
     Assumptions,
@@ -27,6 +27,7 @@ from .contract import (
     CalcInputs,
     CalcResult,
     Opportunity,
+    Prices,
     Prospect,
 )
 
@@ -280,16 +281,38 @@ def _manager_row(p: Prospect) -> str:
     )
 
 
-def _assumption_rows(a: Assumptions) -> str:
-    rows = []
-    for name, value in a.model_dump(exclude={"prices"}).items():
-        shown = "not set" if value is None else value
-        rows.append((name, shown, ASSUMPTION_SOURCES.get(name, "user")))
-    for name, value in a.prices.model_dump().items():
-        rows.append((f"price: {name}", value, ASSUMPTION_SOURCES["prices"]))
+def _assumption_rows(prospects: list[Prospect], a: Assumptions) -> str:
+    """The calculator's own assumption lines (result.assumptions), so labels always match
+    what was computed: lines every prospect shares first, then lines that vary by building
+    with how many prospects they apply to. Then the cost, margin and price inputs."""
+    total = len(prospects)
+    counts = Counter(line for p in prospects for line in dict.fromkeys(p.result.assumptions))
+    shared = [
+        line
+        for line in (prospects[0].result.assumptions if prospects else [])
+        if counts[line] == total
+    ]
+    varying = sorted(
+        (line for line in counts if counts[line] < total), key=lambda s: (-counts[s], s)
+    )
+    rows = [(line, f"all {total}") for line in dict.fromkeys(shared)]
+    rows += [(line, f"{counts[line]} of {total}") for line in varying]
+
+    prices_src = "noco_sheet" if a.prices == Prices() else "user"
+    cost = "not set" if a.cost_per_sqft is None else f"${a.cost_per_sqft:g}/sq ft"
+    margin = "not set" if a.margin_pct is None else f"{a.margin_pct:.0%}"
+    rows += [
+        (f"Installed cost={cost} [user; ILLUSTRATIVE]", "revenue, payback"),
+        (f"NOCO margin={margin} [user; ILLUSTRATIVE]", "profit"),
+        (
+            f"Electricity=${a.prices.electricity_per_kwh:g}/kWh, gas=${a.prices.gas_per_therm:g}"
+            f"/therm [{prices_src}]",
+            "energy $ / yr",
+        ),
+    ]
     return "".join(
-        f"<tr><th>{escape(n)}</th><td>{escape(str(v))}</td><td class='src'>{escape(s)}</td></tr>"
-        for n, v, s in rows
+        f"<tr><td>{escape(line)}</td><td class='src'>{escape(scope)}</td></tr>"
+        for line, scope in rows
     )
 
 
@@ -332,7 +355,8 @@ outputs; orange columns are ILLUSTRATIVE.</div>
 <h2>Ranked prospects</h2>
 <table class="wide">{header}{"".join(_manager_row(p) for p in prospects)}</table>
 <h2>Assumptions</h2>
-<table>{_assumption_rows(a)}</table>
+<div class="muted">As used by the calculator for these prospects; [labels] give each source.</div>
+<table><tr><th>Assumption</th><th>Applies to</th></tr>{_assumption_rows(prospects, a)}</table>
 <h2>Data limits</h2>
 <ul>
 <li>NOCO revenue and profit are ILLUSTRATIVE: {escape(revenue_note)}. Margin guidance from
@@ -340,7 +364,9 @@ NOCO is 30 to 40%; installed cost per sq ft is not yet provided.</li>
 <li>Footprints and floors come from OpenStreetMap; building type and story height from the
 City of Buffalo assessment roll. "Match" is the confidence of that OSM ↔ roll join.</li>
 <li>The customer's current energy supplier is not public data: ask the customer.</li>
-<li>HDD, CDD and the cooling factor are labelled "assumed" until NOCO confirms them.</li>
+<li>Buffalo HDD and CDD and the heating and cooling realization factors come from NOCO's own
+calculator workbook (v5), labelled [noco_sheet]. Building-specific inputs (operating profile,
+heating system, DAC status) are [assumed] until confirmed with the customer.</li>
 </ul>
 <footer>Building data: {escape(OSM_ATTRIBUTION)} (ODbL); City of Buffalo assessment roll;
 US Census geocoder. Internal NOCO document.</footer>

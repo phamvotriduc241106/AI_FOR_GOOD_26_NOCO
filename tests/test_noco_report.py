@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import io
 import re
+from html import escape
 
 import pytest
 
@@ -144,9 +145,50 @@ def test_manager_report_labels_noco_money_illustrative(prospects):
     assert "needs cost" in plain and "needs margin" in plain
 
 
-def test_manager_report_lists_assumptions_with_source_labels(prospects):
-    html = report.render_manager_report(prospects, Assumptions(hdd=7000.0))
-    assert "hdd" in html and "7000.0" in html and "noco_sheet" in html and "assumed" in html
+def test_manager_report_assumptions_come_from_the_calculator(prospects):
+    """T16: the table shows result.assumptions, so labels match what was computed."""
+    html = visible(report.render_manager_report(prospects, Assumptions()))
+    for line in prospects[0].result.assumptions:
+        assert escape(line) in html
+    assert "HDD=6750 [noco_sheet]" in html
+    assert "Heating realization factor=0.9 [noco_sheet]" in html
+    assert "6075" not in html  # the old effective HDD shown as a raw "assumed" value
+    assert f"all {len(prospects)}" in html
+
+
+def test_manager_report_counts_assumptions_that_vary_by_building(prospects):
+    custom = [
+        p.model_copy(
+            update={"result": p.result.model_copy(update={"assumptions": ["Shared [noco_sheet]"]})}
+        )
+        for p in prospects
+    ]
+    custom[0] = custom[0].model_copy(
+        update={
+            "result": custom[0].result.model_copy(
+                update={"assumptions": ["Shared [noco_sheet]", "Only here [assumed]"]}
+            )
+        }
+    )
+    html = visible(report.render_manager_report(custom, Assumptions()))
+    assert "Shared [noco_sheet]" in html and f"all {len(custom)}" in html
+    assert "Only here [assumed]" in html and f"1 of {len(custom)}" in html
+
+
+def test_manager_report_shows_cost_margin_and_prices(prospects):
+    html = visible(
+        report.render_manager_report(prospects, Assumptions(cost_per_sqft=8.0, margin_pct=0.35))
+    )
+    assert "Installed cost=$8/sq ft [user; ILLUSTRATIVE]" in html
+    assert "NOCO margin=35% [user; ILLUSTRATIVE]" in html
+    assert "Electricity=$0.16/kWh, gas=$1.2/therm [noco_sheet]" in html
+    assert "Installed cost=not set" in visible(report.render_manager_report([], Assumptions()))
+
+
+def test_manager_report_data_limits_no_longer_call_hdd_unconfirmed(prospects):
+    html = visible(report.render_manager_report(prospects, Assumptions()))
+    assert "until NOCO confirms" not in html
+    assert "NOCO's own\ncalculator workbook (v5)" in html or "calculator workbook (v5)" in html
 
 
 def test_manager_report_escapes_html(prospects):

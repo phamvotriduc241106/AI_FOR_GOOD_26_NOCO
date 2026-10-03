@@ -1,0 +1,5 @@
+SYNTHETIC utility-bill snippet; no real customer or account.
+Service address: 202 Example Franklin St, Buffalo NY.
+Heating system: gas boiler.
+Monthly energy bill (USD): $1,830.50.
+Statement date: September 2026. Meter reading: 12,345 kWh.

@@ -5,6 +5,7 @@ from __future__ import annotations
 import httpx
 import streamlit as st
 from pages.noco_shared import (
+    apply_style,
     customer_report_button,
     find_building,
     load_buildings,
@@ -18,6 +19,7 @@ from pages.noco_shared import (
 from features.noco_scout.contract import Assumptions
 
 st.set_page_config(page_title="Address to Quote · NOCO", layout="wide")
+apply_style()
 
 st.title("Address to Quote")
 st.caption("Buffalo, NY · public building facts → deterministic insulation estimate")
@@ -62,14 +64,13 @@ cost_per_sqft = (
 assumptions = Assumptions(cost_per_sqft=cost_per_sqft)
 prospect = make_prospect(facts, assumptions)
 
-map_col, facts_col = st.columns([2, 1])
+map_col, facts_col = st.columns([3, 2], gap="medium")
 with map_col:
     st.subheader("Building footprint in 3D")
     render_map(
         [prospect],
         key="noco_address_map",
         center=(facts.lat, facts.lon),
-        height=520,
     )
     st.caption("3D height uses sourced floors and floor height. Hover for sources.")
 with facts_col:

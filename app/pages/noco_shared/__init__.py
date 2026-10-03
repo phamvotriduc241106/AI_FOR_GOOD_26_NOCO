@@ -27,9 +27,42 @@ from features.noco_scout.mapdata import TOOLTIP_TEMPLATE, prospects_to_deck_rows
 REPO_ROOT = Path(__file__).resolve().parents[3]
 DEMO_DATA = REPO_ROOT / "data/public/demo_buildings.json"
 LAYER_ID = "noco-buildings"
+# Dark palette shared by the Streamlit theme (.streamlit/config.toml), map and tooltip.
+ACCENT = "#2DD4BF"
+PAGE_BG = "#0B1418"
+PANEL_BG = "#14232A"
 BLANK_MAP_STYLE = "data:application/json," + quote(
-    json.dumps({"version": 8, "sources": {}, "layers": []})
+    json.dumps(
+        {
+            "version": 8,
+            "sources": {},
+            "layers": [{"id": "bg", "type": "background", "paint": {"background-color": PAGE_BG}}],
+        }
+    )
 )
+MAP_HEIGHT = 660
+
+_PAGE_CSS = f"""
+<style>
+.block-container {{ padding-top: 1.4rem; padding-bottom: 1rem; max-width: 100%; }}
+div[data-testid="stHeading"] h1 {{ font-size: 1.9rem !important; padding: 0 0 0.1rem; }}
+div[data-testid="stHeading"] h2, div[data-testid="stHeading"] h3 {{
+  font-size: 1.15rem !important; padding: 0.3rem 0 0.1rem; color: {ACCENT}; }}
+div[data-testid="stVerticalBlock"] {{ gap: 0.55rem; }}
+div[data-testid="stMetric"] {{ background: {PANEL_BG}; border: 1px solid #1F3640;
+  border-left: 3px solid {ACCENT}; border-radius: 10px; padding: 0.55rem 0.8rem; }}
+div[data-testid="stMetricValue"] {{ font-size: 1.2rem; }}
+div[data-testid="stMetricLabel"] p {{ font-size: 0.78rem; white-space: normal; }}
+div[data-testid="stDataFrame"], div[data-testid="stExpander"],
+div[data-testid="stAlert"] {{ border-radius: 10px; }}
+iframe, div[data-testid="stDeckGlJsonChart"] {{ border-radius: 12px; }}
+</style>
+"""
+
+
+def apply_style() -> None:
+    """Small layout polish on top of the dark theme: tighter margins, rounded cards."""
+    st.markdown(_PAGE_CSS, unsafe_allow_html=True)
 
 
 def offline_mode() -> bool:
@@ -137,7 +170,7 @@ def render_map(
     key: str,
     center: tuple[float, float] | None = None,
     ranked: bool = True,
-    height: int = 550,
+    height: int = MAP_HEIGHT,
 ) -> Prospect | None:
     """Draw 3D footprints and return the clicked prospect, if any."""
     rows = prospects_to_deck_rows(prospects)
@@ -161,7 +194,7 @@ def render_map(
         id=LAYER_ID,
         get_polygon="polygon",
         get_fill_color="color",
-        get_line_color=[25, 48, 67, 230],
+        get_line_color=[160, 196, 206, 140],
         get_line_width=1,
         get_elevation="elevation",
         elevation_scale=1,
@@ -180,10 +213,17 @@ def render_map(
             bearing=-15,
         ),
         map_provider="maplibre" if offline_mode() else "carto",
-        map_style=BLANK_MAP_STYLE if offline_mode() else "light",
+        map_style=BLANK_MAP_STYLE if offline_mode() else "dark",
         tooltip={
             "html": TOOLTIP_TEMPLATE,
-            "style": {"backgroundColor": "#0c2436", "color": "#fff", "fontSize": "12px"},
+            "style": {
+                "backgroundColor": PANEL_BG,
+                "color": "#E4EDEF",
+                "fontSize": "12px",
+                "border": f"1px solid {ACCENT}",
+                "borderRadius": "8px",
+                "padding": "8px 10px",
+            },
         },
     )
     event = st.pydeck_chart(

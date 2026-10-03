@@ -14,6 +14,7 @@ import base64
 import csv
 import functools
 import io
+import re
 from collections import Counter
 from datetime import date
 from html import escape
@@ -43,6 +44,50 @@ SOURCE_LABELS = {
 }
 HEATING = {"electric": "Electric", "natural_gas": "Natural gas"}
 MISSING = "Not found in public data"
+
+
+_BRACKET = re.compile(r"\s*\[([^\]]*)\]")
+_SOURCE_WORDS = {
+    "noco_sheet": "NOCO calculator (v5)",
+    "assumed": "Assumption",
+    "user": "User input",
+    "ILLUSTRATIVE": "illustrative",
+}
+
+
+def split_assumption(line: str) -> tuple[str, str]:
+    """Split a calculator line like "HDD=6750 [noco_sheet]" into readable text and source.
+
+    The calculator keeps its [source] tags (tests and the CSV rely on them); reports show the
+    same information as a separate, plain-English "Source" column instead of raw brackets.
+    """
+    text = _BRACKET.sub("", line).strip()
+    text = re.sub(r"\s*=\s*", " = ", text)
+    text = re.sub(r"\$(\d{4,})(?![\d.])", lambda m: f"${int(m.group(1)):,}", text)
+    parts: list[str] = []
+    for tag in _BRACKET.findall(line):
+        for part in (piece.strip() for piece in tag.split(";")):
+            if not part:
+                continue
+            if part in _SOURCE_WORDS:
+                part = _SOURCE_WORDS[part]
+            else:
+                part = part.replace("NOCO v5 values noco_sheet", "values from NOCO calculator (v5)")
+                part = part.replace("noco_sheet", "NOCO calculator (v5)")
+            part = part[0].upper() + part[1:]
+            if part not in parts:
+                parts.append(part)
+    return text, "; ".join(parts)
+
+
+def _assumption_table(lines: list[str]) -> str:
+    rows = "".join(
+        f"<tr><td>{escape(text)}</td>"
+        f"<td class='src'>{escape(source or 'Calculator note')}</td></tr>"
+        for text, source in (split_assumption(line) for line in dict.fromkeys(lines))
+    )
+    return f"<table><tr><th>Assumption</th><th>Source</th></tr>{rows}</table>"
+
 
 _CSS = """
 @page { size: letter; margin: 0.5in; }
@@ -252,8 +297,7 @@ National Fuel where they apply).</li>
 </ul>
 
 <h2>Assumptions and notes</h2>
-<ul>{"".join(f"<li>{escape(a)}</li>" for a in result.assumptions)}
-{"".join(f"<li>{escape(f)}</li>" for f in result.flags)}</ul>
+{_assumption_table([*result.assumptions, *result.flags])}
 
 <footer>This is an estimate from public data and NOCO's reference insulation calculator, not a
 quote. Building data: {escape(OSM_ATTRIBUTION)} (ODbL); City of Buffalo assessment roll;
@@ -344,8 +388,8 @@ def _assumption_rows(prospects: list[Prospect], a: Assumptions) -> str:
     cost = "not set" if a.cost_per_sqft is None else f"${a.cost_per_sqft:g}/sq ft"
     margin = "not set" if a.margin_pct is None else f"{a.margin_pct:.0%}"
     rows += [
-        (f"Installed cost={cost} [user; ILLUSTRATIVE]", "revenue, payback"),
-        (f"NOCO margin={margin} [user; ILLUSTRATIVE]", "profit"),
+        (f"Installed cost={cost} [DEMO value; ILLUSTRATIVE]", "revenue, payback"),
+        (f"NOCO margin={margin} [DEMO value; ILLUSTRATIVE]", "profit"),
         (
             f"Electricity=${a.prices.electricity_per_kwh:g}/kWh, gas=${a.prices.gas_per_therm:g}"
             f"/therm [{prices_src}]",
@@ -353,9 +397,10 @@ def _assumption_rows(prospects: list[Prospect], a: Assumptions) -> str:
         ),
     ]
     return "".join(
-        f"<tr><td class='{'demo' if demo else ''}'>{escape(line)}</td>"
-        f"<td class='src'>{escape(scope)}</td></tr>"
+        f"<tr><td class='{'demo' if demo else ''}'>{escape(text)}</td>"
+        f"<td class='src'>{escape(source)}</td><td class='src'>{escape(scope)}</td></tr>"
         for line, scope in rows
+        for text, source in [split_assumption(line)]
         for demo in [
             (line.startswith("Installed cost=") and a.cost_per_sqft is not None)
             or (line.startswith("NOCO margin=") and a.margin_pct is not None)
@@ -404,8 +449,9 @@ outputs; orange columns are ILLUSTRATIVE.</div>
 <h2>Ranked prospects</h2>
 <table class="wide">{header}{"".join(_manager_row(p) for p in prospects)}</table>
 <h2>Assumptions</h2>
-<div class="muted">As used by the calculator for these prospects; [labels] give each source.</div>
-<table><tr><th>Assumption</th><th>Applies to</th></tr>{_assumption_rows(prospects, a)}</table>
+<div class="muted">As used by the calculator for these prospects, with the source of each.</div>
+<table><tr><th>Assumption</th><th>Source</th><th>Applies to</th></tr>
+{_assumption_rows(prospects, a)}</table>
 <h2>Data limits</h2>
 <ul>
 <li>NOCO revenue and profit are ILLUSTRATIVE: {escape(revenue_note)}. Margin guidance from
@@ -414,8 +460,8 @@ NOCO is 30 to 40%; installed cost per sq ft is not yet provided.</li>
 City of Buffalo assessment roll. "Match" is the confidence of that OSM ↔ roll join.</li>
 <li>The customer's current energy supplier is not public data: ask the customer.</li>
 <li>Buffalo HDD and CDD and the heating and cooling realization factors come from NOCO's own
-calculator workbook (v5), labelled [noco_sheet]. Building-specific inputs (operating profile,
-heating system, DAC status) are [assumed] until confirmed with the customer.</li>
+calculator workbook (v5), shown as "NOCO calculator (v5)". Building-specific inputs (operating
+profile, heating system, DAC status) are assumptions until confirmed with the customer.</li>
 </ul>
 <footer>Building data: {escape(OSM_ATTRIBUTION)} (ODbL); City of Buffalo assessment roll;
 US Census geocoder. Internal NOCO document.</footer>

@@ -40,7 +40,8 @@ def test_customer_report_is_self_contained_and_sourced(prospects):
     assert "<script" not in html and "http://" not in html.replace("https://", "")
     assert "OpenStreetMap (0.9)" in html  # every fact shows its source and confidence
     for assumption in p.result.assumptions:
-        assert assumption.replace("&", "&amp;") in html or assumption in html
+        text, _ = report.split_assumption(assumption)
+        assert escape(text) in html
 
 
 def test_customer_report_uses_inputs_not_hard_coded_values(prospects):
@@ -51,7 +52,10 @@ def test_customer_report_uses_inputs_not_hard_coded_values(prospects):
     html = visible(report.render_customer_report(p.facts, inputs, result, p.opportunity))
     assert "R-13 → R-30" in html
     assert "$12,345" in html
-    assert all(text in html for text in shown)  # assumptions come from result.assumptions
+    # assumptions come from result.assumptions, shown with a readable Source column
+    assert "Heating system = natural gas boiler" in html and "Assumption" in html
+    assert "Incentive = $2.50/sq ft" in html and "User input" in html
+    assert "[assumed]" not in html and "[user]" not in html
     assert "R-11" not in html and "R-49" not in html and "$4/sq ft" not in html
 
 
@@ -149,9 +153,10 @@ def test_manager_report_assumptions_come_from_the_calculator(prospects):
     """T16: the table shows result.assumptions, so labels match what was computed."""
     html = visible(report.render_manager_report(prospects, Assumptions()))
     for line in prospects[0].result.assumptions:
-        assert escape(line) in html
-    assert "HDD=6750 [noco_sheet]" in html
-    assert "Heating realization factor=0.9 [noco_sheet]" in html
+        assert escape(report.split_assumption(line)[0]) in html
+    assert "HDD = 6750" in html and "NOCO calculator (v5)" in html
+    assert "Heating realization factor = 0.9" in html
+    assert "[noco_sheet]" not in html and "noco_sheet" not in html
     assert "6075" not in html  # the old effective HDD shown as a raw "assumed" value
     assert f"all {len(prospects)}" in html
 
@@ -171,18 +176,18 @@ def test_manager_report_counts_assumptions_that_vary_by_building(prospects):
         }
     )
     html = visible(report.render_manager_report(custom, Assumptions()))
-    assert "Shared [noco_sheet]" in html and f"all {len(custom)}" in html
-    assert "Only here [assumed]" in html and f"1 of {len(custom)}" in html
+    assert "Shared" in html and f"all {len(custom)}" in html
+    assert "Only here" in html and f"1 of {len(custom)}" in html
 
 
 def test_manager_report_shows_cost_margin_and_prices(prospects):
     html = visible(
         report.render_manager_report(prospects, Assumptions(cost_per_sqft=8.0, margin_pct=0.35))
     )
-    assert "Installed cost=$8/sq ft [user; ILLUSTRATIVE]" in html
-    assert "NOCO margin=35% [user; ILLUSTRATIVE]" in html
-    assert "Electricity=$0.16/kWh, gas=$1.2/therm [noco_sheet]" in html
-    assert "Installed cost=not set" in visible(report.render_manager_report([], Assumptions()))
+    assert "Installed cost = $8/sq ft" in html and "DEMO value; Illustrative" in html
+    assert "NOCO margin = 35%" in html
+    assert "Electricity = $0.16/kWh, gas = $1.2/therm" in html
+    assert "Installed cost = not set" in visible(report.render_manager_report([], Assumptions()))
 
 
 def test_manager_report_data_limits_no_longer_call_hdd_unconfirmed(prospects):
@@ -270,8 +275,8 @@ def test_demo_reports_label_actual_values_and_preserve_customer_privacy(cost, ma
     assert f"<td class='n ill demo'>${p.opportunity.project_revenue:,.0f}</td>" in manager_html
     assert f"<td class='n ill demo'>${p.opportunity.estimated_profit:,.0f}</td>" in manager_html
     assert f"<td class='n demo'>{p.result.simple_payback_years:.1f} yr</td>" in manager_html
-    assert "<td class='demo'>Installed cost=" in manager_html
-    assert "<td class='demo'>NOCO margin=" in manager_html
+    assert "<td class='demo'>Installed cost = " in manager_html
+    assert "<td class='demo'>NOCO margin = " in manager_html
     assert f"<b>${p.result.annual_cost_savings:,.0f}</b>" in customer_html
     assert f"<b>${p.result.incentive:,.0f}</b>" in customer_html
 
@@ -304,4 +309,41 @@ def test_manager_missing_margin_does_not_color_an_invented_profit():
     document = report.render_manager_report([p], assumptions)
     assert "<td class='n ill'>needs margin</td>" in document
     assert "margin 35%" not in document
-    assert "<td class='demo'>NOCO margin=not set" not in document
+    assert "<td class='demo'>NOCO margin = not set" not in document
+
+
+@pytest.mark.parametrize(
+    ("line", "text", "source"),
+    [
+        ("HDD=6750 [noco_sheet]", "HDD = 6750", "NOCO calculator (v5)"),
+        ("Incentive cap=$150000 [noco_sheet]", "Incentive cap = $150,000", "NOCO calculator (v5)"),
+        (
+            "Operating profile=office [assumed use-class mapping; NOCO v5 values noco_sheet]",
+            "Operating profile = office",
+            "Assumed use-class mapping; Values from NOCO calculator (v5)",
+        ),
+        (
+            "Heating system is assumed electric resistance (COP 1) [assumed]; confirm with the "
+            "customer.",
+            "Heating system is assumed electric resistance (COP 1); confirm with the customer.",
+            "Assumption",
+        ),
+        (
+            "DAC status is unknown; no DAC bonus assumed.",
+            "DAC status is unknown; no DAC bonus assumed.",
+            "",
+        ),
+    ],
+)
+def test_split_assumption_turns_brackets_into_a_readable_source(line, text, source):
+    assert report.split_assumption(line) == (text, source)
+
+
+def test_reports_show_no_raw_source_brackets(prospects):
+    a = Assumptions(cost_per_sqft=8.0, margin_pct=0.35)
+    p = prospects[0]
+    for html in (
+        visible(report.render_manager_report(prospects, a)),
+        visible(report.render_customer_report(p.facts, p.inputs, p.result, p.opportunity)),
+    ):
+        assert not re.search(r"\[(noco_sheet|assumed|user)[^\]]*\]", html)

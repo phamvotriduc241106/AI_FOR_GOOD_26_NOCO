@@ -45,7 +45,7 @@ rebuilt cell by cell from your spreadsheet. Every number keeps its source."
 | The map flies to it; an 11-floor block rises | "Public data found the building: its outline, eleven floors, office use." |
 | Point at the **Facts and confidence** table | "Every fact shows where it came from and how confident we are." |
 | Click **Estimate insulation upgrade** | "Upgrading the walls from R-11 to R-49 saves about **ten thousand dollars a year**, and National Grid pays about **a hundred and ten thousand** in incentives." |
-| Point at "Needs installed cost" | "We do not invent the installation cost. Until NOCO enters it, the app says so." |
+| Point at the red payback (about 10.8 years) | "The red numbers are demo values: we picked eight dollars per square foot because NOCO has not given us its installed cost yet. Red means: replace me with NOCO's real price." |
 
 ### D2: the whole city (50 s), tab `/Prospect_Map`
 
@@ -54,7 +54,7 @@ rebuilt cell by cell from your spreadsheet. Every number keeps its source."
 | Click **Show potential customers** | "Now the manager's view. The same calculator, for 300 buildings in 11 Buffalo neighborhoods." |
 | The blocks turn blue → orange; the ranked table appears | "Orange means bigger savings. This is a call list, ranked." |
 | Hover two orange buildings (tooltip with sources), then click the tallest tower (**#1, 1 Seneca St**) | "Number one is Seneca One, the tallest building in Buffalo: about **$235,000 a year** in savings. Its incentive stops at **$150,000**, exactly the National Grid cap in your spreadsheet." |
-| Point at the **Building details** panel | "Each building has its facts and sources. The current supplier is not public, so the app says: ask the customer. We never guess." |
+| Point at the **Building details** panel (red = DEMO revenue and profit) | "Each building has its facts and sources. The current supplier is not public, so the app says: ask the customer. We never guess." |
 | Click a second orange building | "A rep can pick the next call in a few seconds." |
 
 ### D3: the reports (20 s)
@@ -101,7 +101,8 @@ quote from an address looks like. Thank you. We are HELIX."
 
 | Question | Answer |
 |---|---|
-| Where do revenue and profit come from? | "They are illustrative. NOCO mentioned a 30 to 40 percent margin, but no installed cost yet, so the app labels them illustrative." |
+| Where do revenue and profit come from? | "They are demo values, shown in red: an eight-dollar installed cost we chose, and a 35 percent margin, the middle of the 30 to 40 percent NOCO mentioned. NOCO replaces them with real prices; the calculator does the rest." |
+| Why is Seneca One's profit so large? | "It is the tallest building in Buffalo, and the demo cost scales with wall area. The red label tells the manager it is a scenario, not a quote." |
 | How accurate is it? | "On NOCO's example we match the spreadsheet exactly. For other buildings, the inputs come from public data and each one shows its confidence. A rep confirms them on the first call." |
 | What heating system do you assume? | "Electric resistance, like NOCO's example, and the app flags it. For a gas-heated building the savings are lower; the calculator already supports gas." |
 | What if the map data is wrong? | "Each number shows its source, so a rep sees what to check. Complex landmarks like City Hall, which OpenStreetMap splits into parts, are next on our list." |

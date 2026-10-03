@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import httpx
 import pytest
 from streamlit.testing.v1 import AppTest
 
@@ -100,14 +101,93 @@ def test_offline_address_search_never_calls_live_gis(monkeypatch: pytest.MonkeyP
     from features.noco_scout import geo
 
     monkeypatch.setenv("NOCO_OFFLINE", "1")
+    real_build_facts = geo.build_facts
+
+    def offline_only(address: str, *, offline: bool = False) -> BuildingFacts:
+        if not offline:
+            pytest.fail("offline search attempted a live lookup")
+        return real_build_facts(address, offline=True)
+
+    monkeypatch.setattr(geo, "build_facts", offline_only)
+    monkeypatch.setattr(geo, "CACHE_DIR", Path(__file__).parent / "no-such-cache")
     monkeypatch.setattr(
-        geo,
-        "build_facts",
-        lambda _address: pytest.fail("offline search attempted a live lookup"),
+        geo, "_transport", httpx.MockTransport(lambda r: pytest.fail(f"network: {r.url}"))
     )
 
     assert find_building("not in the saved set", SAMPLE_BUILDINGS) is None
     assert find_building(SAMPLE_BUILDINGS[0].address, SAMPLE_BUILDINGS) == SAMPLE_BUILDINGS[0]
+
+
+def _offline_find(monkeypatch: pytest.MonkeyPatch, tmp_path: Path):
+    """find_building in offline mode with the network and the HTTP cache blocked."""
+    monkeypatch.syspath_prepend(str(Path(__file__).resolve().parents[1] / "app"))
+    from pages.noco_shared import find_building
+
+    from features.noco_scout import geo
+
+    monkeypatch.setenv("NOCO_OFFLINE", "1")
+    monkeypatch.setattr(geo, "CACHE_DIR", tmp_path / "cache")
+    monkeypatch.setattr(
+        geo, "_transport", httpx.MockTransport(lambda r: pytest.fail(f"network: {r.url}"))
+    )
+    return find_building
+
+
+def _at(address: str) -> BuildingFacts:
+    return SAMPLE_BUILDINGS[1].model_copy(update={"address": address})
+
+
+@pytest.mark.parametrize(
+    "typed",
+    [
+        "110 Franklin St",
+        "110 Franklin Street",
+        "110 FRANKLIN, BUFFALO",
+        "110 franklin st buffalo ny",
+        "110 Franklin St., Buffalo, NY 14202",
+    ],
+)
+def test_t14_house_number_and_street_variants_find_the_building(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, typed: str
+) -> None:
+    find_building = _offline_find(monkeypatch, tmp_path)
+    saved = [_at("333 FRANKLIN ST, BUFFALO, NY, 14202"), _at("110 FRANKLIN, BUFFALO, NY, 14202")]
+    assert find_building(typed, saved).address == "110 FRANKLIN, BUFFALO, NY, 14202"
+
+
+def test_t14_33_franklin_never_returns_333(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    find_building = _offline_find(monkeypatch, tmp_path)
+    from features.noco_scout import geo
+
+    monkeypatch.setattr(geo, "DEMO_BUILDINGS_PATH", tmp_path / "no_demo.json")
+    only_333 = [_at("333 FRANKLIN ST, BUFFALO, NY, 14202")]
+    assert find_building("33 Franklin St", only_333) is None
+    assert find_building("3 Franklin St", only_333) is None
+    assert find_building("333 Franklin Street", only_333).address.startswith("333 ")
+
+
+def test_t14_on_the_committed_demo_set(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    """The QA case on the real saved buildings: 33 and 333 Franklin are both in the set."""
+    find_building = _offline_find(monkeypatch, tmp_path)
+    from features.noco_scout import geo
+
+    saved = geo.load_demo_buildings()
+    addresses = {b.address for b in saved}
+    if not {"33 FRANKLIN, BUFFALO, NY, 14202", "333 FRANKLIN ST, BUFFALO, NY, 14202"} <= addresses:
+        pytest.skip("demo set no longer holds both Franklin buildings")
+    assert find_building("33 Franklin St", saved).address == "33 FRANKLIN, BUFFALO, NY, 14202"
+    assert find_building("333 Franklin St", saved).address == "333 FRANKLIN ST, BUFFALO, NY, 14202"
+    assert find_building("110 Franklin St", saved).address == "110 FRANKLIN, BUFFALO, NY, 14202"
+    assert find_building("34 Franklin St", saved) is None
+
+
+def test_t14_offline_also_reads_the_saved_demo_file(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    """Buildings not passed in still come from geo.build_facts(offline=True)'s demo lookup."""
+    find_building = _offline_find(monkeypatch, tmp_path)
+    assert find_building("110 franklin st buffalo ny", []).address.startswith("110 FRANKLIN")
+    assert find_building("33 Franklin St", []).address.startswith("33 FRANKLIN,")
 
 
 def test_online_address_search_uses_t3_connector(monkeypatch: pytest.MonkeyPatch) -> None:

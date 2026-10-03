@@ -103,6 +103,58 @@ def test_normalize_address():
     assert geo._normalize_address("110 FRANKLIN ST, BUFFALO, NY, 14202") == "110 FRANKLIN ST"
 
 
+@pytest.mark.parametrize(
+    "typed",
+    [
+        "110 franklin st buffalo ny",
+        "110 Franklin St Buffalo NY 14202",
+        "110 Franklin Street Buffalo New York",
+        "110 Franklin St., Buffalo, NY 14202",
+    ],
+)
+def test_normalize_address_without_commas_drops_city_state_zip(typed):
+    assert geo._normalize_address(typed) == "110 FRANKLIN ST"
+
+
+def test_normalize_address_keeps_number_and_street():
+    assert geo._normalize_address("12 Buffalo") == "12 BUFFALO"  # never strips below 2 words
+    assert geo._normalize_address("107 Delaware Avenue") == "107 DELAWARE AVE"
+
+
+def _demo(*addresses):
+    return [SAMPLE_BUILDINGS[0].model_copy(update={"address": a}) for a in addresses]
+
+
+def test_match_address_requires_the_exact_house_number():
+    saved = _demo("333 FRANKLIN ST, BUFFALO, NY, 14202", "110 FRANKLIN, BUFFALO, NY, 14202")
+    assert geo.match_address("33 Franklin St", saved) is None
+    assert geo.match_address("3 Franklin St", saved) is None
+    assert geo.match_address("333 Franklin Street", saved).address.startswith("333 ")
+    for typed in ("110 Franklin St", "110 Franklin Street", "110 FRANKLIN, BUFFALO"):
+        assert geo.match_address(typed, saved).address.startswith("110 FRANKLIN")
+    assert geo.match_address("110 franklin st buffalo ny", saved).address.startswith("110 ")
+
+
+def test_match_address_suffixless_ambiguity_returns_none():
+    saved = _demo("110 FRANKLIN ST, BUFFALO, NY", "110 FRANKLIN AVE, BUFFALO, NY")
+    assert geo.match_address("110 Franklin", saved) is None  # which one? do not guess
+    assert geo.match_address("110 Franklin Avenue", saved).address.startswith("110 FRANKLIN AVE")
+
+
+def test_match_address_empty_input():
+    assert geo.match_address("   ", _demo("110 FRANKLIN ST, BUFFALO, NY")) is None
+
+
+def test_offline_build_facts_never_returns_a_different_house_number():
+    geo.DEMO_BUILDINGS_PATH.write_text(
+        json.dumps([b.model_dump() for b in _demo("333 FRANKLIN ST, BUFFALO, NY, 14202")]),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="offline demo data"):
+        geo.build_facts("33 Franklin St", offline=True)
+    assert geo.build_facts("333 Franklin St", offline=True).address.startswith("333 ")
+
+
 # --- lookups on recorded responses ---
 
 

@@ -58,20 +58,27 @@ def load_buildings() -> tuple[list[BuildingFacts], bool]:
 
 
 def find_building(address: str, available: list[BuildingFacts]) -> BuildingFacts | None:
-    """Look up a typed address, without network in offline mode."""
-    query = address.strip().casefold()
-    if not query:
-        return None
-    matches = [facts for facts in available if facts.address.casefold() == query]
-    if len(matches) == 1:
-        return matches[0]
-    matches = [facts for facts in available if query in facts.address.casefold()]
-    if len(matches) == 1:
-        return matches[0]
-    if offline_mode():
+    """Look up a typed address; the house number must match exactly (no substring matches).
+
+    First the buildings already on the page (T3's address normalisation), then T3's lookup:
+    offline it reads the saved demo set and the cache only and returns None when the address
+    is not there; online it may call the public services (ValueError reaches the page).
+    """
+    if not address.strip():
         return None
     geo = _optional_module("features.noco_scout.geo")
-    return geo.build_facts(address) if geo is not None else None
+    if geo is None:
+        query = address.strip().casefold()
+        return next((f for f in available if f.address.casefold() == query), None)
+    found = geo.match_address(address, available)
+    if found is not None:
+        return found
+    if offline_mode():
+        try:
+            return geo.build_facts(address, offline=True)
+        except ValueError:
+            return None
+    return geo.build_facts(address)
 
 
 def make_prospect(facts: BuildingFacts, assumptions: Assumptions, rank: int = 1) -> Prospect:

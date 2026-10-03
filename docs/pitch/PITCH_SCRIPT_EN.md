@@ -7,11 +7,10 @@ Numbers come from our code on `main` (2026-10-03, 14:20, default assumptions).
 ## Before going on stage (checklist)
 
 - [ ] MacBook plugged in, display mirrored, notifications off, sleep off.
-- [ ] `make run` is already running. Two browser tabs are open: `/Address_to_Quote` and `/Prospect_Map`. The "hackkit" tab is closed.
+- [ ] `make run` is already running. Two browser tabs are open: `/Address_to_Quote` and `/Prospect_Map` (the NOCO Scout home page links to both).
 - [ ] On `/Address_to_Quote`, the address box already contains `33 Franklin St`.
 - [ ] On `/Prospect_Map`, "Show potential customers" is **not** clicked yet (the reveal is part of the demo).
 - [ ] Backup video `docs/pitch/demo_backup.mp4` is open in a second window.
-- [ ] Until bug T18 is fixed, **click** buildings on the Prospect Map. **Do not hover** there.
 
 ---
 
@@ -54,7 +53,7 @@ rebuilt cell by cell from your spreadsheet. Every number keeps its source."
 |---|---|
 | Click **Show potential customers** | "Now the manager's view. The same calculator, for 300 buildings in 11 Buffalo neighborhoods." |
 | The blocks turn blue → orange; the ranked table appears | "Orange means bigger savings. This is a call list, ranked." |
-| Click the tallest orange tower (**#1, 1 Seneca St**) | "Number one is Seneca One, the tallest building in Buffalo: about **$235,000 a year** in savings. Its incentive stops at **$150,000**, exactly the National Grid cap in your spreadsheet." |
+| Hover two orange buildings (tooltip with sources), then click the tallest tower (**#1, 1 Seneca St**) | "Number one is Seneca One, the tallest building in Buffalo: about **$235,000 a year** in savings. Its incentive stops at **$150,000**, exactly the National Grid cap in your spreadsheet." |
 | Point at the **Building details** panel | "Each building has its facts and sources. The current supplier is not public, so the app says: ask the customer. We never guess." |
 | Click a second orange building | "A rep can pick the next call in a few seconds." |
 

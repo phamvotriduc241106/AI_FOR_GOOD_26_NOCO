@@ -17,13 +17,9 @@ make run                           # có mạng: có nền bản đồ đường
 
 Trình duyệt mở `http://localhost:8501`.
 
-> **QUAN TRỌNG: trang đầu tiên ("hackkit") KHÔNG phải sản phẩm.** Đó là khung chung của bộ công cụ.
-> Bỏ qua nó. Ở **thanh bên trái**, bấm **Address to Quote** hoặc **Prospect Map**.
-> Hoặc mở thẳng địa chỉ:
-> - `http://localhost:8501/Address_to_Quote`
-> - `http://localhost:8501/Prospect_Map`
->
-> Trước khi lên sân khấu: mở sẵn 2 tab trình duyệt, mỗi tab một trang, và đóng tab "hackkit".
+Trang đầu là **trang chủ NOCO Scout** (T19): bấm thẻ **Address to Quote** hoặc **Prospect Map**,
+hoặc chọn ở thanh bên trái. Trang **AI site notes** ở cuối là phần AI đọc ghi chú hiện trường (không dùng trong demo chính).
+Mở thẳng: `http://localhost:8501/Address_to_Quote` và `http://localhost:8501/Prospect_Map`.
 
 ---
 
@@ -63,8 +59,7 @@ Dùng khi: quản lý muốn biết **nên gọi cho toà nào trước** trong 
 | 6 | (Tuỳ chọn) mở **ILLUSTRATIVE NOCO cost and margin inputs**, bật cost $8 và margin 0.20 | Hiện doanh thu và lợi nhuận NOCO, luôn có nhãn ILLUSTRATIVE |
 | 7 | **Download manager report (HTML)** và **Download prospect CSV** | Báo cáo cho sếp (xếp hạng, các cột "xanh" của bảng tính NOCO, bảng giả định có nguồn) và file CSV |
 
-> **Lỗi đang sửa (T18): rê chuột (hover) ở trang này làm khung thông tin bay ra khỏi màn hình.**
-> Cho tới khi sửa xong: **đừng rê chuột để giới thiệu**. Hãy **bấm** vào toà, rồi chỉ vào panel **Building details** bên phải.
+Rê chuột (hover) lên toà: khung nhỏ hiện địa chỉ, loại toà, số tầng, tiết kiệm, ưu đãi và nguồn (đã sửa ở T18, không còn bay ra ngoài).
 
 ---
 
@@ -90,5 +85,4 @@ Quyền riêng tư: app **không bao giờ** lưu hay hiện tên chủ sở h�
 | Mất mạng, bản đồ không có nền | Không sao: khối 3D vẫn chạy. Nói "we also run fully offline" và đi tiếp |
 | Trang báo lỗi đỏ | Bấm F5. Vẫn lỗi → chuyển sang video dự phòng `docs/pitch/demo_backup.mp4` |
 | Địa chỉ báo "not found" | Gõ lại đúng `33 Franklin St` |
-| Khung hover bay ra ngoài | Bấm vào toà thay vì rê chuột |
 | App treo | Ctrl+C trong terminal, chạy lại `make run` (khoảng 10 giây) |

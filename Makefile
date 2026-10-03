@@ -4,10 +4,10 @@ setup:  ## create venv and install everything
 	python -m venv .venv && . .venv/bin/activate && pip install -e ".[dev]" && cp -n .env.example .env || true
 
 run:    ## start the demo app with the provider from .env
-	streamlit run app/streamlit_app.py
+	streamlit run app/NOCO_Scout.py
 
 demo:   ## offline rehearsal: fake provider, no key, no network
-	LLM_PROVIDER=fake streamlit run app/streamlit_app.py
+	LLM_PROVIDER=fake streamlit run app/NOCO_Scout.py
 
 test:
 	pytest

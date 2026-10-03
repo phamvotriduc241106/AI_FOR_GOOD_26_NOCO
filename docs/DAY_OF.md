@@ -206,7 +206,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 ## 5. LUỒNG VIỆC HIỆN TẠI (tự sinh, đừng sửa tay)
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 11:48 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 12:07 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -324,7 +324,7 @@ claude
 ```
 Lời nhắc cho agent:
 ```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T3: [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi. Chỉ sửa các file: src/features/noco_scout/geo.py, tests/test_noco_geo.py, tests/fixtures/noco/. Tuân thủ đúng phần Contract trong docs/TASKS.md. Task này chỉ phụ thuộc mềm vào T1: bắt đầu ngay được, nhưng chỉ chạy eval và hoàn tất sau khi T1 đã merge vào main (khi đó chạy `git fetch origin && git merge origin/main`). Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T3: [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi. Chỉ sửa các file: src/features/noco_scout/geo.py, tests/test_noco_geo.py, tests/fixtures/noco/, .gitignore, data/public/cache/. Tuân thủ đúng phần Contract trong docs/TASKS.md. Task này chỉ phụ thuộc mềm vào T1: bắt đầu ngay được, nhưng chỉ chạy eval và hoàn tất sau khi T1 đã merge vào main (khi đó chạy `git fetch origin && git merge origin/main`). Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
 ```
 Khi agent báo xong:
 ```bash

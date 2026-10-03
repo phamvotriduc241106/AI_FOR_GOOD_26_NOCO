@@ -206,7 +206,7 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 ## 5. LUỒNG VIỆC HIỆN TẠI (tự sinh, đừng sửa tay)
 
 <!-- LANES:START -->
-> Tự sinh bởi `make lanes` lúc 2026-10-03 12:18 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
+> Tự sinh bởi `make lanes` lúc 2026-10-03 12:35 từ `docs/TASKS.md`. **Đừng sửa tay trong khối này**: sửa `docs/TASKS.md` (cột Status, Owner) rồi chạy lại.
 
 ### Đội hình và việc được giao
 
@@ -220,20 +220,24 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 ### Ngay bây giờ
 
 **▶ SẴN SÀNG làm ngay (chạy song song được)**
-- `T1` [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút — Anh-08 (Claude Code)
-- `T2` [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ) — phamvotriduc241106 (Codex) — làm được ngay, chỉ HOÀN TẤT sau khi T1 merge
-- `T3` [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi — Anh-08 (Claude Code) — làm được ngay, chỉ HOÀN TẤT sau khi T1 merge
-- `T4` [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge — phamvotriduc241106 (Codex) — làm được ngay, chỉ HOÀN TẤT sau khi T1 merge
-- `T6` [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md — NguyenQBao
+- `T5` [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects — phamvotriduc241106 (Codex)
 - `T8` [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng — NguyenQBao
+- `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện) — Anh-08 (Claude Code)
+- `T11` [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex)
+- `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code)
+
+**🔄 ĐANG LÀM**
+- `T6` [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md — NguyenQBao
+- `T7` [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được — Anh-08 (Claude Code)
 
 **⏳ ĐANG CHỜ**
-- `T5` [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects — phamvotriduc241106 (Codex) — chờ T2 (phamvotriduc241106 (Codex))
-- `T7` [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được — Anh-08 (Claude Code) — chờ T3 (Anh-08 (Claude Code))
-- `T10` [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện) — Anh-08 (Claude Code) — chờ T2 (phamvotriduc241106 (Codex))
-- `T11` [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response — phamvotriduc241106 (Codex) — chờ T2 (phamvotriduc241106 (Codex))
-- `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao — chờ T4 (phamvotriduc241106 (Codex)), T5 (phamvotriduc241106 (Codex)), T7 (Anh-08 (Claude Code)), T10 (Anh-08 (Claude Code))
-- `R1` Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa — Anh-08 (Claude Code) — chờ T2 (phamvotriduc241106 (Codex))
+- `T9` [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint — NguyenQBao — chờ T5 (phamvotriduc241106 (Codex)), T7 (Anh-08 (Claude Code)), T10 (Anh-08 (Claude Code))
+
+**✅ XONG**
+- `T1` [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút — Anh-08 (Claude Code)
+- `T2` [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ) — phamvotriduc241106 (Codex)
+- `T3` [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi — Anh-08 (Claude Code)
+- `T4` [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge — phamvotriduc241106 (Codex)
 
 ### Các đợt (thứ tự tối ưu, tính từ phụ thuộc)
 
@@ -259,13 +263,13 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 | ID | Việc | Người | Nhánh | Chờ | Trạng thái |
 |---|---|---|---|---|---|
-| T1 | [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút | Anh-08 | `task/t1` | — | todo |
-| T2 | [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ) | phamvotriduc241106 | `task/t2` | T1~ (Anh-08, chỉ để hoàn tất) | todo |
-| T3 | [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi | Anh-08 | `task/t3` | T1~ (Anh-08, chỉ để hoàn tất) | todo |
-| T4 | [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge | phamvotriduc241106 | `task/t4` | T1~ (Anh-08, chỉ để hoàn tất) | todo |
+| T1 | [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút | Anh-08 | `task/t1` | — | merged |
+| T2 | [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ) | phamvotriduc241106 | `task/t2` | T1~ (Anh-08, chỉ để hoàn tất) | merged |
+| T3 | [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi | Anh-08 | `task/t3` | T1~ (Anh-08, chỉ để hoàn tất) | merged |
+| T4 | [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge | phamvotriduc241106 | `task/t4` | T1~ (Anh-08, chỉ để hoàn tất) | merged |
 | T5 | [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects | phamvotriduc241106 | `task/t5` | T2 (phamvotriduc241106) | todo |
-| T6 | [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md | NguyenQBao | `task/t6` | — | todo |
-| T7 | [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được | Anh-08 | `task/t7` | T3 (Anh-08) | todo |
+| T6 | [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md | NguyenQBao | `task/t6` | — | doing |
+| T7 | [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được | Anh-08 | `task/t7` | T3 (Anh-08) | doing |
 | T8 | [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng | NguyenQBao | `task/t8` | — | todo |
 | T10 | [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện) | Anh-08 | `task/t10` | T2 (phamvotriduc241106) | todo |
 | T11 | [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response | phamvotriduc241106 | `task/t11` | T2 (phamvotriduc241106) | todo |
@@ -275,68 +279,20 @@ cd ~/Desktop/AI_FOR_GOOD && read -rsp "Dán khóa Groq rồi Enter: " K && echo 
 
 ```text
 LÀM NGAY:
-@Anh-08 -> T1: [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút
-@phamvotriduc241106 -> T2: [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ)
-@Anh-08 -> T3: [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi
-@phamvotriduc241106 -> T4: [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge
-@NguyenQBao -> T6: [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md
-@NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng
-CHUẨN BỊ, CHỜ TÔI BÁO:
 @phamvotriduc241106 -> T5: [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects
-@Anh-08 -> T7: [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được
+@NguyenQBao -> T8: [MUST] Pitch: kịch bản 4 phút, slide PDF/PowerPoint ánh xạ rubric, kịch bản demo, video dự phòng
 @Anh-08 -> T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện)
 @phamvotriduc241106 -> T11: [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response
-@NguyenQBao -> T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint
 @Anh-08 -> R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa
+CHUẨN BỊ, CHỜ TÔI BÁO:
+@NguyenQBao -> T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint
 ```
 
 ### Lệnh cho từng người (copy–paste)
 
 #### Anh-08
 
-**T1: [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t1
-claude
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T1: [MUST] Khung hợp đồng: contract.py, fixtures.py (ví dụ NOCO + 5 tòa nhà giả có đa giác), __init__.py đăng ký feature noco_scout. Mở PR trong ~15 phút. Chỉ sửa các file: src/features/noco_scout/contract.py, src/features/noco_scout/fixtures.py, src/features/noco_scout/__init__.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t1
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T3: [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t3
-claude
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T3: [MUST] Bộ nối dữ liệu GIS: geocode, fetch_footprint, fetch_property, build_facts, bộ nhớ đệm; test chỉ dùng phản hồi đã ghi. Chỉ sửa các file: src/features/noco_scout/geo.py, tests/test_noco_geo.py, tests/fixtures/noco/, .gitignore, data/public/cache/. Tuân thủ đúng phần Contract trong docs/TASKS.md. Task này chỉ phụ thuộc mềm vào T1: bắt đầu ngay được, nhưng chỉ chạy eval và hoàn tất sau khi T1 đã merge vào main (khi đó chạy `git fetch origin && git merge origin/main`). Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t3
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T7: [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T3 xong, tôi sẽ báo.
+**T7: [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được** — _đang làm_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -346,7 +302,7 @@ claude
 ```
 Lời nhắc cho agent:
 ```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T7: [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được. Chỉ sửa các file: scripts/prefetch_noco_data.py, data/public/. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
+Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T7: [MUST ≥40 tòa, SHOULD 150-300] Lấy trước bộ dữ liệu Buffalo (Downtown, Allentown, Elmwood): đa giác, tầng, loại tài sản, độ chắc chắn của phép nối OSM <-> bảng Buffalo, vào data/public/demo_buildings.json, script chạy lại được. Chỉ sửa các file: scripts/prefetch_noco_data.py, data/public/, tests/test_noco_demo_data.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
 ```
 Khi agent báo xong:
 ```bash
@@ -356,9 +312,7 @@ gh pr create --base main --fill
 ```
 Rồi nhắn cho tôi số PR.
 
-**T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện)** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T2 xong, tôi sẽ báo.
+**T10: [MUST báo cáo khách, SHOULD báo cáo sếp + CSV] Xuất báo cáo: render_customer_report, render_manager_report, prospects_to_csv (HTML in được, không thêm thư viện)** — _sẵn sàng_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -378,9 +332,7 @@ gh pr create --base main --fill
 ```
 Rồi nhắn cho tôi số PR.
 
-**R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T2 xong, tôi sẽ báo.
+**R1: Review T2 so với công thức trong spec và các con số Golden. Chỉ báo cáo, không sửa** — _sẵn sàng_
 
 ```bash
 git fetch origin
@@ -394,49 +346,7 @@ Review nhánh origin/task/t2 so với main (git diff origin/main...origin/task/t
 
 #### phamvotriduc241106
 
-**T2: [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ)** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t2
-codex
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T2: [MUST] Máy tính: estimate_insulation, inputs_from_facts; test Golden với ví dụ NOCO (dung sai 0,1%) và các ca biên (thiếu chi phí, tiết kiệm bằng 0, R không hợp lệ). Chỉ sửa các file: src/features/noco_scout/calc.py, tests/test_noco_calc.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Task này chỉ phụ thuộc mềm vào T1: bắt đầu ngay được, nhưng chỉ chạy eval và hoàn tất sau khi T1 đã merge vào main (khi đó chạy `git fetch origin && git merge origin/main`). Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t2
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T4: [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge** — _sẵn sàng_
-
-```bash
-cd AI_FOR_GOOD   # thư mục repo bạn đã clone
-git switch main && git pull origin main
-git switch -c task/t4
-codex
-```
-Lời nhắc cho agent:
-```text
-Đọc AGENTS.md, docs/spec.md và docs/TASKS.md. Chỉ làm task T4: [MUST] Bản đồ Buffalo 3D và các trang: tooltip nguồn khi rê chuột, bấm ra bảng chi tiết, trang "Address to Quote", nút "Show potential customers" và bộ lọc, chế độ offline. Làm trên fixtures.py trước, nối T2/T3/T5/T7 khi chúng merge. Chỉ sửa các file: src/features/noco_scout/mapdata.py, app/pages/, tests/test_noco_mapdata.py. Tuân thủ đúng phần Contract trong docs/TASKS.md. Task này chỉ phụ thuộc mềm vào T1: bắt đầu ngay được, nhưng chỉ chạy eval và hoàn tất sau khi T1 đã merge vào main (khi đó chạy `git fetch origin && git merge origin/main`). Chạy pytest và ruff check . rồi commit nhỏ; xong thì dừng và báo kết quả. Không merge, không push lên main.
-```
-Khi agent báo xong:
-```bash
-make test && make lint
-git push -u origin task/t4
-gh pr create --base main --fill
-```
-Rồi nhắn cho tôi số PR.
-
-**T5: [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T2 xong, tôi sẽ báo.
+**T5: [SHOULD] Khách tiềm năng: build_opportunity (utility, ưu đãi, doanh thu và lợi nhuận minh họa) và rank_prospects** — _sẵn sàng_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -456,9 +366,7 @@ gh pr create --base main --fill
 ```
 Rồi nhắn cho tôi số PR.
 
-**T11: [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response** — _đang chờ_
-
-⏳ CHƯA chạy các lệnh dưới. Chờ T2 xong, tôi sẽ báo.
+**T11: [COULD] AI trích xuất ghi chú hiện trường/hóa đơn giả thành SiteNote, 3 ca eval với fake_response** — _sẵn sàng_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -480,7 +388,7 @@ Rồi nhắn cho tôi số PR.
 
 #### NguyenQBao
 
-**T6: [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md** — _sẵn sàng_
+**T6: [MUST] Nghiên cứu và hỏi NOCO: xác nhận hằng số (HDD, CDD, hệ số làm mát), ưu đãi, chi phí cách nhiệt/sq ft, biên lợi nhuận, "provider" nghĩa là gì, câu hỏi chu vi; lấy gói tài liệu NOCO ở cuối phòng; ghi nguồn, giấy phép, kịch bản chi phí vào docs/DATA.md** — _đang làm_
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone
@@ -514,7 +422,7 @@ gh pr create --base main --fill
 
 **T9: [MUST] QA: chạy toàn luồng offline, kiểm tra quy tắc dữ liệu (không có chủ sở hữu, có ghi nguồn OSM, nhãn ILLUSTRATIVE), tập demo 3 lần, make test && make lint** — _đang chờ_
 
-⏳ CHƯA chạy các lệnh dưới. Chờ T4, T5, T7, T10 xong, tôi sẽ báo.
+⏳ CHƯA chạy các lệnh dưới. Chờ T5, T7, T10 xong, tôi sẽ báo.
 
 ```bash
 cd AI_FOR_GOOD   # thư mục repo bạn đã clone

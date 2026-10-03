@@ -9,7 +9,7 @@ from .contract import OSM_ATTRIBUTION, BuildingFacts, Prospect
 
 FT_TO_M = 0.3048
 TOOLTIP_TEMPLATE = "<strong>{tooltip_0}</strong>" + "".join(
-    f"<br/>{{tooltip_{index}}}" for index in range(1, 12)
+    f"<br/>{{tooltip_{index}}}" for index in range(1, 6)
 )
 
 
@@ -17,62 +17,30 @@ def _source(facts: BuildingFacts, field: str) -> str:
     source = facts.sources.get(field)
     if source is None:
         return "source not recorded"
-    return f"{source.source} ({source.confidence:.2f})"
+    return html.escape(source.source)
 
 
 def _money(value: float | None, missing: str) -> str:
     return f"${value:,.0f}" if value is not None else missing
 
 
-def _source_summary(facts: BuildingFacts) -> str:
-    parts: list[str] = []
-    for field in ("address", "footprint_geojson", "floors", "use_class", "join"):
-        source = facts.sources.get(field)
-        if source is None:
-            continue
-        label = source.source
-        if label == "osm" and facts.osm_id is not None:
-            label = f"OSM way {facts.osm_id}"
-        entry = f"{label} ({source.confidence:.2f})"
-        if entry not in parts:
-            parts.append(entry)
-    if any("synthetic" in source.note.lower() for source in facts.sources.values()):
-        parts.insert(0, "SYNTHETIC SAMPLE")
-    parts.append(OSM_ATTRIBUTION)
-    return " · ".join(parts)
-
-
 def _tooltip_lines(p: Prospect) -> list[str]:
     """Escape dynamic text before it enters the fixed HTML tooltip template."""
     f = p.facts
     r = p.result
-    opportunity = p.opportunity
-    footprint = (
-        f"{f.footprint_sqft:,.0f} sq ft" if f.footprint_sqft is not None else "not available"
-    )
     floors = str(f.floors) if f.floors is not None else "unknown"
-    payback = (
-        f"{r.simple_payback_years:,.1f} years"
-        if r.simple_payback_years is not None
-        else "needs installed cost"
+    sample = (
+        "SYNTHETIC SAMPLE · "
+        if any("synthetic" in source.note.lower() for source in f.sources.values())
+        else ""
     )
-    revenue = _money(opportunity.project_revenue, "needs NOCO cost")
-    profit = _money(opportunity.estimated_profit, "needs NOCO margin")
     return [
         html.escape(f.address),
         f"Use: {html.escape(f.use_class or 'unknown')} [{_source(f, 'use_class')}]",
         f"Floors: {floors} [{_source(f, 'floors')}]",
-        f"Footprint: {footprint} [{_source(f, 'footprint_sqft')}]",
-        f"Savings/year: {_money(r.annual_cost_savings, 'unavailable')} "
-        "[deterministic NOCO calculation]",
-        f"Incentive: {_money(r.incentive, 'unavailable')} [noco_sheet calculation]",
-        f"Payback: {payback} [ILLUSTRATIVE user cost]",
-        f"NOCO opportunity (ILLUSTRATIVE): revenue {revenue}; profit {profit}",
-        f"Utility: {html.escape(opportunity.utility)} [noco_sheet]",
-        f"Incentive program: {html.escape(opportunity.incentive_program or 'not confirmed')} "
-        "[noco_sheet reference]",
-        f"Current supplier: {html.escape(opportunity.current_supplier)}",
-        f"Sources: {html.escape(_source_summary(f))}",
+        f"Savings/year: {_money(r.annual_cost_savings, 'unavailable')} [NOCO calc]",
+        f"Incentive: {_money(r.incentive, 'unavailable')} [NOCO calc]",
+        f"{sample}{OSM_ATTRIBUTION}",
     ]
 
 

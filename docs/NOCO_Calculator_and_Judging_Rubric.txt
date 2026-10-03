@@ -1,0 +1,137 @@
+NOCO CALCULATOR AND JUDGING RUBRIC
+
+Ghi chú: Bản chép từ hai ảnh mới, giữ nội dung tiếng Anh và chuyển bảng thành các dòng tên mục: giá trị. [trống] là ô không có nội dung. [không đọc rõ] hoặc [chưa chắc] chỉ phần quá mờ để xác nhận; không tự điền dữ liệu bằng phép tính. Ảnh bảng tính có độ phân giải 480 × 853 nên một số chữ nhỏ và chữ số không thể xác nhận hoàn toàn.
+
+======================================================================
+IMAGE 1 — image(20261003-144144).png
+======================================================================
+
+NOCO Commercial Insulation Savings Sales Calculator
+
+SALES INPUTS (HY-GRADE)
+[Chữ trong ngoặc của tiêu đề nhỏ chưa chắc: HY-GRADE.]
+
+Project / Customer: [trống]
+Location: Buffalo, NY
+Building / Operating Profile: Office / School / Daytime Commercial
+Building Square Footage (sq ft): 10,000
+Incentive Program: National Grid - Commercial Weatherization
+National Grid DAC? (if applicable): No
+Number of Floors: 1
+Building Shape: Very Long / Narrow
+Existing Insulation: R-11
+Proposed Insulation: R-49 [chữ số cuối hơi mờ]
+Heating System: Electric Resistance
+Heating Efficiency / COP: 1.00
+Cooling System: Packaged Rooftop Unit
+Cooling COP: 3.00
+Natural Gas Price ($/therm): $1.20
+Electricity Price ($/kWh): $0.16
+Propane Price ($/gal): $2.80
+Fuel Oil Price ($/gal): $3.40
+District Energy Price ($/MMBtu): $18.00
+
+OPTIONAL OVERRIDES / ADVANCED INPUTS
+
+Custom HDD (only used if Location = Custom): 6,500
+Custom CDD (only used if Location = Custom): 700
+Custom Operating Load Factor (only if Profile = Custom): 1
+Actual Insulated Area Override (sq ft, optional): 0
+Custom Existing R-Value (only if Existing Insulation = Custom): 0
+Custom Proposed R-Value (only if Proposed Insulation = Custom): 0
+Average Floor Height Override (ft, optional): 0
+Window/Door Area Override (%, of exterior walls, optional): 0%
+Exposed Exterior Wall Override (%, of perimeter, optional): 100%
+
+ESTIMATED ANNUAL SAVINGS
+
+Heating Energy Savings: 8,812 [chưa chắc chữ số hàng trăm do ảnh mờ]
+  Unit note: therms/yr, kWh/yr, gal/yr, or MMBtu/yr
+Cooling Energy Savings: 236 kWh/yr
+Total Electric Savings: 9,048 kWh/yr
+Annual Site Energy Savings: 30.9 MMBtu/yr
+Annual Energy Cost Savings: $1,448 $/yr
+Estimated Incentive: $15,600 $
+Simple 10-Year Energy Value: $14,476 $
+
+CALCULATION SUMMARY
+
+Existing Effective R: 11.0
+Proposed Effective R: 49.0 [chữ số đầu hơi mờ]
+Existing U-Factor: 0.091 Btu/hr-ft²-°F [đơn vị rất mờ]
+Proposed U-Factor: 0.020 Btu/hr-ft²-°F [đơn vị rất mờ]
+ΔU: 0.071 Btu/hr-ft²-°F [đơn vị rất mờ]
+HDD Used: [không đọc rõ toàn bộ chữ số; hiển thị khoảng 6,xxx] °F-days
+CDD Used: [không đọc chắc: 600 hoặc 650] °F-days
+Operating Load Factor: 75%
+Heating Fuel: Electric
+Building Footprint: 10,000 sq ft
+Estimated Perimeter: 500.0 ft
+Floor Height Used: 12.0 ft / floor
+Gross Exposed Wall Area: 6,000.0 sq ft
+Window / Door Deduction: 35% %
+Estimated Insulated Wall Area: 3,900.0 sq ft
+Insulated Area Used: 3,900.0 sq ft
+Building Shape: Very Long / Narrow
+Incentive Program: National Grid - Commercial Weatherization
+Incentive Rate Applied: $4.00
+  Small note: $/sq ft or $150/[không đọc rõ] MMBtu for [không đọc rõ]
+
+HELPER TABLE
+
+Helper                         Value
+Heating Load Saved Btu/yr:     30,066,178 [chưa chắc các chữ số giữa]
+Cooling Load Saved Btu/yr:     2,412,718 [chưa chắc các chữ số giữa]
+Heating Input Btu Saved/yr:    30,066,178 [chưa chắc các chữ số giữa]
+Heating kWh Saved/yr:          8,812 [chưa chắc chữ số hàng trăm]
+Heating Therms Saved/yr:       0.0
+Heating Propane gal Saved/yr:  0.0
+Heating Oil gal Saved/yr:      0.0
+Heating District MMBtu Saved/yr: 0.0
+Cooling kWh Saved/yr:          235.7
+Heating $ Saved/yr:            $1,409.90 [chưa chắc phần thập phân]
+Cooling $ Saved/yr:            $37.71
+Insulated Area Used (sq ft):   3,900
+Incentive Rate Applied:        4
+Delta R:                      38
+NG Gas Rate:                  1.9
+NG Electric Rate:             4
+Building Footprint (sq ft):    10,000
+Base Perimeter (ft):           500.0
+Shape Perimeter Multiplier:   1.0
+Estimated Perimeter (ft):      500.0
+Floor Height Used (ft):        12.0
+Exposed Exterior Wall %:       1
+Gross Exposed Wall Area:       6,000
+Window/Door % Used:            0.35
+Net Opaque Wall Factor:        0.65
+
+======================================================================
+IMAGE 2 — image(20261003-144150).png
+======================================================================
+
+JUDGING RUBRIC
+
+YOU will have access to a detailed copy of this rubric in UB Box.
+
+CATEGORY | DETAILS | SCORE
+
+IMPACT AND FEASIBILITY
+Your project demonstrates a clear and substantial impact on the problem statement and is highly feasible to implement
+Score: __/3
+
+INNOVATION AND CREATIVITY
+Your project exhibits exceptional creativity and innovation in its approach, concept, and technology
+Score: __/3
+
+PRESENTATION AND COMMUNICATION
+The presentation is exceptionally clear, engaging, and well-structured. The team presents confidently and effectively explains their project, including to non-technical judges
+Score: __/3
+
+POTENTIAL FOR FUTURE DEVELOPMENT
+Your project has clear potential for future development and expansion
+Score: __/3
+
+SOLUTION EXECUTION
+Your project demonstrates a high level of technical proficiency in design and user implementation with no mistakes
+Score: __/3

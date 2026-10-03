@@ -1,47 +1,41 @@
-# Plan review
+# Plan review: NOCO
 
-Proposals for human decision, based on BRIEF.md, PLANS.md, CLAUDE.md, README.md and repo instructions. Assignment, partner data/API access and event logistics remain unconfirmed; spec and task contracts are still placeholders.
+Proposal for human decision; the chosen challenge remains NOCO. Sources: BRIEF.md, PLANS.md, CLAUDE.md, README.md and AGENTS.md. `docs/spec.md` and `docs/TASKS.md` still contain placeholders; humans must record the approved scope and ownership there.
 
-The listed tasks total A: 270m, B: 285m, C: 270m. Each leaves less than the required 90m demo freeze in a five-hour window, before integration or pitch work. Budget at most 210m before freeze. Below, each task is capped at 30m; cut further if it cannot fit. Use spare time for integration and human review, not extra features.
+## Over-scoped for five hours
 
-## A — NOCO
+- The first five tasks total **270 minutes**, before rehearsal or submission. A five-hour window with a 90-minute freeze permits only **210 minutes before freeze**. The proposed 45–90-minute tasks also exceed the repo’s roughly 30-minute task limit.
+- Cut lighting, windows/HVAC, cross-measure ranking, NPV, multiple fuels/cities, bill parsing and optional APIs. Each adds inputs, assumptions and validation beyond the reference insulation case. A single-measure demo leaves opportunity ranking unmet: disclose that limitation and ask NOCO to accept the slice.
+- Keep the assumption ledger; defer automatic “which missing input matters most” analysis and multi-variable sensitivity. Show one explicitly supplied project-cost range only if available; otherwise report payback as unavailable.
+- Replace the promised “reproduces NOCO sheet” badge with a reference comparison showing confirmed, approximate and unresolved results. Blurry inputs cannot support a verified-reproduction claim.
 
-- **Over-scoped:** seven measure models, incentive stacking, editable sensitivity UI, NPV, and two possible APIs. Even three or four measures require defensible benchmarks. Cut to lighting for one building type and one territory; omit solar, batteries, EV, GIS and API work unless humans confirm a requirement.
-- **Duplicates:** scaffolding, validation, provider setup, caching, replay, generic results and Markdown/JSON downloads already exist. Only feature-specific assumptions and report content need work; a new export system does not.
-- **Missing:** three months of bills cannot silently become annual usage. Define billing periods, units, rate provenance and any annualization assumption. Whole-building usage is not automatically lighting usage. Define zero/negative-savings behavior, simple ROI versus payback, and evidence mapping per field. Incentives need verified eligibility; otherwise show “unknown/excluded,” not an invented available rebate. Multiple measures would also need overlap handling.
-- **Cut-down version (four tasks):**
-  1. Scaffold a nullable lighting input schema with field descriptions, quoted evidence, annual usage or an explicit illustrative baseline, and fake sample data.
-  2. Add one labeled lighting assumptions row and deterministic savings, net cost, simple ROI and payback; test missing inputs, units and zero savings. Defer results when essential inputs are absent.
-  3. Show one recommendation with an assumption/source ledger and next steps in the existing results/export flow; no editable sensitivity controls. Mark it an illustrative estimate.
-  4. Add three labeled eval cases with fake responses, run tests/lint and an allowed real-model extraction check, then verify the chosen feature offline before freeze.
+## What hackkit already provides
 
-## B — AAO
+- Reuse the scaffold, feature registry, Pydantic extraction/validation retry, providers and `Reviewable` flags. Only the NOCO schema, extraction instructions, samples and deterministic rules are new.
+- Reuse the Streamlit shell, Markdown/JSON downloads, cache, fake provider and demo replay. A concise customer summary may need feature-specific formatting; a new reporting engine, PDF exporter or UI is unnecessary. The pitch PDF/PPT is a separate deliverable.
+- Reuse the eval runner and, if later justified, `HttpConnector`. Write cases and calculation tests, not another evaluation or API framework. Field-level provenance and assumption explanations remain genuine feature work beyond generic review flags.
 
-- **Over-scoped:** intake, scored urgency, placement/capacity matching, referrals, generated replies, open-ended records questions, conflict detection and a journey timeline are several products. A second LLM generation step also exceeds the template's extraction-only pattern. Keep intake plus one fixed history check; defer placement and general Q&A.
-- **Duplicates:** structured extraction, validation retry, confidence/review flags, the demo shell, exports and replay already exist. Source citations, identity matching and conflict semantics do not; they are the actual feature work.
-- **Missing:** reliable case identity, source IDs/dates, unknown versus explicitly denied bite history, and handling ambiguous deadlines. “Snapped” does not establish a bite. Staff must validate escalation rules; no automatic acceptance or care advice. “Staff only” is not authentication. Confirm whether a local synthetic prototype with limited history meets the challenge's broader journey/security expectation; anonymization alone does not authorize real records.
-- **Cut-down version (four tasks):**
-  1. Scaffold nullable intake facts, evidence and a human-selected synthetic case ID; provide a fake sample and two dated history records for that case.
-  2. Implement missing-field questions and explicit staff-review flags with tests for ambiguous wording and unknown facts; omit urgency scores and capacity/pathway decisions.
-  3. Add one fixed “reported bite history” view quoting dated sources, flag explicit contradictions for the selected case, and assemble a compassionate template reply for staff review only.
-  4. Add three extraction eval cases plus rule tests for conflict/unknown handling, run tests/lint and an allowed real-model check, then verify offline output before freeze.
+## Missing decisions and correctness checks
 
-## C — ACV + Copart
+- **Formula contract:** the sketch refers to absent `area_basis` and omits perimeter, height, window share, exposure, HDD/CDD and load factor inputs or explicit constants. Confirm units, defaults and override precedence; apply shape adjustment once. Separate heating and cooling degree-days/COP calculations. Prefer a confirmed insulated-wall area for the first slice.
+- **Reference truth:** obtain readable values and formula explanations locally from NOCO. Agree tolerances only for confirmed outputs; do not infer HDD to force agreement. Until then, test the legible arithmetic (including 3,900 × $4 = $15,600) separately from unresolved physical-model reproduction.
+- **Economics:** require an explicit quote or labelled synthetic cost scenario. Define simple payback and any displayed ROI; ten-year energy value is not ROI. Missing cost or nonpositive savings must not yield a numeric payback. Incentive eligibility, caps and stacking are unknown; the screenshot’s rate is a reference assumption, not proof of a current entitlement. Flag incentives exceeding cost for review.
+- **Extraction contract:** “no unit conversion” conflicts with expecting “40k sf” as 40,000; choose a documented normalization rule or remove that case. Nested electricity prices are outside the stated top-level eval scope; flatten the selected tariff or test nested values separately. Include per-case fake responses and test invalid R/COP, missing costs, zero savings and contradictory inputs.
+- **Evidence and story:** “days researching” is unsupported by BRIEF; say “returns to the office to research.” Confirm the advisor persona. Use synthetic/public notes for cloud extraction; partner spreadsheet sharing needs permission. No sponsor API is specified, so none should block the demo.
 
-- **Over-scoped:** market valuation, repairs, bid ranges, two-channel economics, VIN decoding, recalls and custom presentation depend on data not supplied. Keep one synthetic vehicle scenario and a transparent two-channel comparison; defer APIs unless required.
-- **Duplicates:** VIN HTTP transport, retries, cache and replay are already covered by HttpConnector; only endpoint mapping would be new. Feature registration, generic output and downloads also exist. Do not build another valuation framework or report renderer.
-- **Missing:** a precise cash-flow equation: resale price is distinct from resale proceeds after repairs/fees, and the bid ceiling must include the desired margin without subtracting costs twice. Define channel-specific costs, unknown mechanical damage, missing severity and comparable provenance. The example's “cracked/dent” wording supplies no severity level. Synthetic economics cannot substantiate a 3–5× value claim or a real channel recommendation.
-- **Cut-down version (four tasks):**
-  1. Scaffold a condition schema with nullable severity, exact evidence and a fake sample; attach one explicitly synthetic resale/repair/fee scenario.
-  2. Implement two-channel net proceeds and an illustrative bid ceiling from explicit inputs; test arithmetic and withhold the ceiling when a material cost is unknown.
-  3. Display the two outcomes, assumptions and risk flags using the existing shell/export; frame the novelty as making the channel tradeoff inspectable.
-  4. Add three extraction eval cases and nested-damage rule tests, run tests/lint and an allowed real-model check, then verify offline output before freeze.
+## Recommended cut-down version: four tasks
 
-All plans: humans approve the feature contract and assign non-overlapping files before parallel work. Fake eval scores prove the harness, not model accuracy. During the final 90m, rehearse the selected feature and its cached/offline path, finish the pitch/submission, and disclose synthetic assumptions and template use. A public API is not automatically a sponsor API; confirm that requirement before choosing an integration.
+1. **Humans, 30 min — lock the contract.** Confirm insulation-only, one Buffalo commercial example with electric heating/cooling, area/weather assumptions, incentive status and cost handling. Record approved fields, output definitions and nonoverlapping file ownership. If formulas remain unavailable, label the model illustrative and the sheet comparison partial.
+2. **Claude Code, 30 min — build one vertical slice.** Scaffold `noco_savings`; add schema, instructions, synthetic sample/response and insulation/economics rules with focused tests. Output annual kWh/$ savings, conditional incentive, net investment and simple payback or a specific missing-input reason. Cut unsupported branches at the time limit.
+3. **Codex, 30 min — independently check evidence.** After contract approval, prepare three synthetic extraction cases: complete, missing cost, contradictory input. Review calculator results against confirmed reference arithmetic; test unresolved assumptions explicitly. Run fake evals and one permitted real-model evaluation; distinguish extraction accuracy from arithmetic correctness.
+4. **Humans with agents, 30 min — accept the demo.** Use existing UI/export to show the recommendation, evidence/assumptions and next steps. Run tests, lint and offline demo; verify replay and rehearse the complete input-to-report flow. Keep file edits within assigned ownership.
 
-## Humans: read these five lines first
-- [ ] Confirm the assigned challenge, actual deadline, deliverables, judging criteria and API requirement.
-- [ ] Choose one cut-down flow and approve its user, inputs, outputs and deferred scope in docs/spec.md.
-- [ ] Confirm permitted data/model use and label every synthetic benchmark or unverified assumption.
-- [ ] Fill docs/TASKS.md with the schema contract, owners, allowed files and dependencies; reserve 90m for freeze.
-- [ ] Require passing tests/lint, honest eval results and a rehearsed offline feature demo before submission.
+These are time-boxed proposals, with remaining pre-freeze time reserved for integration defects and partner answers. Freeze 90 minutes before the confirmed deadline (2:00 p.m. if 3:30 p.m. holds); reserve the final 90 minutes for PDF/PPT, submission and four-minute rehearsals. Address all five rubric categories: advisor value/feasibility; visible assumptions as innovation; a clear customer report; more measures/incentive integrations as future work; checked arithmetic and offline execution. Do not claim measured time savings without measurement.
+
+## Humans: read this checklist first
+
+- [ ] Approve insulation-only and record the scope, contract and owners.
+- [ ] Confirm spreadsheet formulas; label unresolved comparisons honestly.
+- [ ] Supply a cost scenario and verify incentives, or show them as unknown/illustrative.
+- [ ] Require tested arithmetic, visible assumptions and a working offline demo.
+- [ ] Confirm deadline, freeze 90 minutes early, and submit/rehearse the PDF/PPT pitch.

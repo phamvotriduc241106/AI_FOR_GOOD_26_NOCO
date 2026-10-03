@@ -4,12 +4,29 @@ Shared instructions for every coding agent in this repo. Codex reads this file d
 Code reads it through `CLAUDE.md` (`@AGENTS.md`). Agents PREPARE and BUILD; humans DECIDE.
 
 ## Project (FILL ON EVENT DAY)
-- Problem: <one sentence: who has what pain>
-- User: <the one person who uses this demo>
-- Demo flow: <input> -> <processing> -> <output the judges will see>
-- Novel feature: <the one thing other teams won't have>
-- Sponsor API: <name, docs link, what we call>
-- Spec: @docs/spec.md
+- Problem: NOCO staff spend days visiting commercial buildings and researching before they can quote an energy upgrade,
+  so quotes are slow and most buildings in the city are never quoted.
+- User: A NOCO energy sales rep preparing a quote for a building owner, and the sales manager who wants a ranked list of prospects.
+- Scope: the city of Buffalo ONLY. Depth over breadth: one very good interactive Buffalo map.
+- Demo flow: type an address -> public data (US Census geocoder, OpenStreetMap footprint, City of Buffalo assessment roll) fills the building
+  facts, each with a source and confidence -> a deterministic insulation calculator that reproduces NOCO's own spreadsheet -> 3D map. The "Show
+  potential customers" button lights up ranked Buffalo buildings; hovering any building shows its facts, savings, incentive, NOCO opportunity and
+  its sources; clicking opens details. Two exports: a one-page customer report (persuade the owner to upgrade) and a manager report + CSV.
+- Novel feature: "Address-to-quote": the calculator's inputs (perimeter, footprint, levels) come from GIS geometry instead of a site visit, it
+  scales to a city-wide prospecting map, and every number shows its source. Verified against NOCO's own example (0.000% on the cooling load).
+- Sponsor API: none provided. Public sources only: Census Geocoder, OpenStreetMap (Overpass), City of Buffalo open data (Socrata `4t8s-9yih`).
+- Spec: @docs/spec.md (DRAFT until the team approves it; tasks and the frozen contract are in docs/TASKS.md)
+
+## Project rules (NOCO)
+- The contract in `docs/TASKS.md` is frozen after T1 merges. Implement exactly those names, types and signatures; ask before changing them.
+- Tests NEVER call the network. Use recorded responses in `tests/fixtures/noco/`. Live calls only go through `geo._http_get_json` (disk cache, >= 1 s between Overpass calls).
+- Never store or show owner or mailing fields from the assessment roll (`owner1`, `mail3`, `mail4`, ...). Keep only `use_class` and `story_height_ft`.
+- Every number a user can see (map tooltip, panel, report) shows its source. Map and reports show "(c) OpenStreetMap contributors". UI, reports and slides are in English.
+- The calculator never invents numbers: unknown project cost => no payback (`None`) and a flag. Constants are labelled `noco_sheet` or `assumed`.
+- NOCO's revenue/profit per prospect is ILLUSTRATIVE until NOCO provides a margin and costs; label it so everywhere. The customer's current energy
+  supplier is not public data: show "Not in public data: ask the customer", never guess it.
+- Do not add dependencies (shapely, pyproj, geopandas, reportlab are NOT installed): geometry in pure Python, reports as printable HTML + CSV.
+- The LLM only sees synthetic or public text, and never decides a number: extraction in, deterministic rules out.
 
 ## What already exists (do not rebuild it)
 - `src/hackkit/`: framework. LLM providers (anthropic, groq, ollama, fake), structured extraction

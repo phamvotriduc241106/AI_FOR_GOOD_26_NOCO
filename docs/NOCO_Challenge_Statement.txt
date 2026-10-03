@@ -1,0 +1,58 @@
+NOCO CHALLENGE STATEMENT (AI for Good Hackathon, University at Buffalo)
+Extracted from the official handout; the other two tracks were removed on purpose. The text was
+converted from photos by an AI tool, so numbers and wording may contain conversion errors.
+
+NOCO
+
+Challenge Question
+
+How can NOCO use AI, building data, and available incentive programs to quickly estimate energy savings, project economics, and customer ROI for commercial buildings?
+
+• Build an AI-powered tool that estimates energy and cost savings for commercial buildings.
+
+• User inputs could include:
+  ○ Building address
+  ○ Square footage
+  ○ Building type (office, warehouse, school, retail, etc.)
+  ○ Year built
+  ○ Existing heating/cooling systems
+  ○ Utility usage or utility bill information (if available)
+
+
+• Tool should evaluate potential opportunities such as:
+  ○ Insulation and weatherization
+  ○ Windows
+  ○ HVAC upgrades
+  ○ Natural Gas
+  ○ Electric
+  ○ Solar
+  ○ EV charging
+  ○ Lighting upgrades
+  ○ Energy monitoring and management
+  ○ Generators
+  ○ Battery Storage
+  ○ Other NOCO energy solutions
+
+• For each recommendation, calculate:
+  ○ Estimated annual energy savings
+  ○ Estimated annual cost savings
+  ○ Estimated project cost
+  ○ Available utility and government incentives
+  ○ Customer payback period
+  ○ Net customer investment after incentives
+
+• Rank opportunities from highest to lowest value.
+
+• Generate a simple customer-facing report showing:
+  ○ Recommended project(s)
+  ○ Estimated savings
+  ○ Available incentives
+  ○ ROI and payback
+  ○ Recommended next steps
+
+• Bonus points for teams that incorporate:
+  ○ Public property data
+  ○ Utility bill analysis
+  ○ GIS mapping
+  ○ AI-driven recommendations
+  ○ Automated incentive identification
